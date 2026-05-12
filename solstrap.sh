@@ -32,6 +32,8 @@ usage: ${0##*/} [options] root [packages...]
   Options:
     -R <repo>  Choose a repository to use for installation. solus | unstable <Default is Solus> 
     -r <root>  Specify the root directory for the new system. <Default is /sol>
+    -b         Install bootloader (CLR Boot Manager)
+    -f         Generate fstab for the specified root directory and exit
 EOF
 }
 
@@ -60,7 +62,7 @@ install_base_system() {
     msg "Installing base system using repository: $repo"
     $pkg add-repo "$repo" || die "Failed to add repository: $repo"
     $pkg install -c system.base || die "Failed to install base system packages"
-    $pkg install perl neovim || die "Failed to install additional base packages"
+    $pkg install perl neovim btrfs-progs dosfstools  || die "Failed to install additional base packages"
     $pkg install network-manager || die "Failed to install NetworkManager"
     $nspawn usysconf run -f || die "Failed to install base system packages in nspawn environment"
     $pkg install linux-current linux-current-headers || die "Failed to install Linux kernel"
@@ -80,6 +82,23 @@ install_bootloader() {
     fi
 }
 
+gen_fstab() {
+    msg "Generating fstab for $root"
+    cp $root/usr/share/baselayout/fstab "$root/etc/fstab" || die "Failed to copy fstab"
+    fs_whitelist="btrfs|ext4|ext3|ext2|vfat|ntfs|swap"
+
+    while read -r src target fstype opts fsroot; do
+        dump=0 pass=0
+    
+        if [[ $fstype =~ $fs_whitelist ]]; then
+            uuid=$(lsblk -rno UUID "$src" 2>/dev/null)
+            printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "${target#/}" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
+        else
+            warning "Skipping unsupported filesystem type: $fstype for $src"
+        fi
+
+    done < <(findmnt -Recvruno SOURCE,TARGET,FSTYPE,OPTIONS,FSROOT "$root")
+}
 
 
 
@@ -88,7 +107,7 @@ if [[ -z $1 || $1 = @(-h|--help) ]]; then
   exit $(( $# ? 0 : 1 ))
 fi
 
-while getopts ':R:r:' flag; do
+while getopts ':R:r:bf' flag; do
   case $flag in
     R)
          repo=$OPTARG
@@ -110,6 +129,10 @@ while getopts ':R:r:' flag; do
     b)
         bootloader=1
         ;;
+    f)
+        gen_fstab
+        exit 0
+        ;;
     :)
       die '%s: option requires an argument -- '\''%s'\' "${0##*/}" "$OPTARG"
       ;;
@@ -124,8 +147,11 @@ packages=("$@")
 
 
 check_necessary_commands
-echo $pkg
 prepare_root
+install_base_system
+install_additional_packages
+gen_fstab
+install_bootloader
 
 [[ -d $root ]] || die "%s is not a directory" "$root"
 
