@@ -20,7 +20,7 @@ REPO_UNSTABLE='https://cdn.getsol.us/repo/unstable/eopkg-index.xml.xz'
 repo="$REPO_SOLUS"
 root="/sol"
 bootloader=0
-pkg="eopkg --destdir --ignore-safety"
+pkg="eopkg -y --destdir --ignore-safety"
 nspawn="systemd-nspawn -D $root"
 
 
