@@ -21,7 +21,7 @@ repo="$REPO_SOLUS"
 repo_name="Solus"
 root="/sol"
 bootloader=0
-pkg="eopkg -y --destdir --ignore-safety"
+pkg="eopkg -y --destdir $root --ignore-safety"
 nspawn="systemd-nspawn -D $root"
 
 
