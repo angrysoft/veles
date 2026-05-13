@@ -138,7 +138,7 @@ gen_fstab() {
             fi
 
             if [[ "$fstype" == "btrfs" ]]; then
-                opts=$(echo "$opts" | ${string//,subvolid=[0-9]/}  
+                opts=${opts//,subvolid=[0-9]/}
             elif [[ "$mount_point" == "/" ]]; then
                 pass=1
             else
