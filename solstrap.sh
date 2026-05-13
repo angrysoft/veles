@@ -132,7 +132,7 @@ gen_fstab() {
     
         if [[ $fstype =~ $fs_whitelist ]]; then
             uuid=$(lsblk -rno UUID "$src" 2>/dev/null)
-            mount_point=$(echo "$target" | sed "#$root##")
+            mount_point="${target//$root}"
             if [[ -z "$mount_point" ]]; then
                 mount_point="/"
             fi
