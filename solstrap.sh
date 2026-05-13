@@ -72,7 +72,7 @@ chroot_setup() {
   mount -t proc proc "$root/proc" || die "Failed to mount proc filesystem"
   mount -t sysfs sys "$root/sys" || die "Failed to mount sys filesystem"
   if [[ -d "/sys/firmware/efi/efivars" ]]; then
-      mount -t efivarfs "$root/sys/firmware/efi/efivars" || die "Failed to mount efivarfs"
+      mount -t efivarfs efivarfs "$root/sys/firmware/efi/efivars" || die "Failed to mount efivarfs"
   fi
   mount -t devtmpfs udev "$root/dev" || die "Failed to mount devtmpfs"
   mount -t devpts devpts "$root/dev/pts"  || die "Failed to mount devpts"
@@ -132,7 +132,16 @@ gen_fstab() {
     
         if [[ $fstype =~ $fs_whitelist ]]; then
             uuid=$(lsblk -rno UUID "$src" 2>/dev/null)
-            printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "${target#/}" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
+            mount_point=$(echo "$target" | sed "#$root##")
+            if [[ -z "$mount_point" ]]; then
+                mount_point="/"
+            fi
+            if [[ "$mount_point" == "/" && "$fstype" != "btrfs" ]]; then
+                pass=1
+            else
+                pass=2
+            fi
+            printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "$mount_point" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
         else
             warning "Skipping unsupported filesystem type: $fstype for $src"
         fi
