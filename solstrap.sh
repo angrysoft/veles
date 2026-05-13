@@ -21,7 +21,7 @@ repo="$REPO_SOLUS"
 repo_name="Solus"
 root="/sol"
 bootloader=0
-pkg="eopkg -y --destdir=\"$root\""
+pkg="eopkg -y --destdir=$root"
 nspawn="systemd-nspawn -D $root"
 
 
@@ -44,8 +44,10 @@ check_command() {
 
 check_necessary_commands() {
     check_command "eopkg"
-    check_command "systemd-nspawn"
-    check_command "clr-boot-manager"
+    # check_command "systemd-nspawn"
+    if [[ $bootloader -eq 1 ]]; then
+        check_command "clr-boot-manager"
+    fi
     # Add any other necessary commands here
 }
 
@@ -60,9 +62,10 @@ prepare_root() {
     elif [[ -e "$root" ]];then
       die "root exist and is not a directory: $root"
     else
-      msg "Crate root dir: $root"
+      msg "Creating root directory: $root"
       mkdir -p "$root" || die "Failed to create root directory: $root"
     fi
+    mkdir -p "$root"/{dev/{pts,shm},run,tmp,proc} || die "Failed to create root directory: $root"
 }
 
 chroot_setup() {
