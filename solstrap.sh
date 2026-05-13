@@ -21,7 +21,7 @@ repo="$REPO_SOLUS"
 repo_name="Solus"
 root="/sol"
 bootloader=0
-pkg="eopkg -y --destdir $root --ignore-safety"
+pkg="eopkg -y --destdir=\"$root\""
 nspawn="systemd-nspawn -D $root"
 
 
@@ -154,7 +154,8 @@ done
 shift $(( OPTIND - 1 ))
 packages=("$@")
 
-
+echo $repo $repo_name $root $bootloader ${packages[*]}
+exit 0
 check_necessary_commands
 prepare_root
 install_base_system
