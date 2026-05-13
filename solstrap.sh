@@ -141,6 +141,7 @@ gen_fstab() {
             else
                 pass=2
             fi
+            echo "UUID=$uuid	$mount_point	$fstype	$opts	$dump	$pass"
             printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "$mount_point" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
         else
             warning "Skipping unsupported filesystem type: $fstype for $src"
