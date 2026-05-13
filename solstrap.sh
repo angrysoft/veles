@@ -136,13 +136,17 @@ gen_fstab() {
             if [[ -z "$mount_point" ]]; then
                 mount_point="/"
             fi
-            if [[ "$mount_point" == "/" && "$fstype" != "btrfs" ]]; then
+
+            if [[ "$fstype" == "btrfs" ]]; then
+                opts=$(echo "$opts" | ${string//,subvolid=[0-9]/}  
+            elif [[ "$mount_point" == "/" ]]; then
                 pass=1
             else
                 pass=2
             fi
-            echo "UUID=$uuid	$mount_point	$fstype	$opts	$dump	$pass"
-            printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "$mount_point" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
+            echo "UUID=$uuid	$mount_point	$fstype	$opts	$dump	$pass" 
+            echo "UUID=$uuid	$mount_point	$fstype	$opts	$dump	$pass" >> "$root/etc/fstab"
+            # printf 'UUID=%s\t%-10s\t%s %s\n\n' "$uuid" "$mount_point" "$fstype" "$opts"  "$dump" "$pass" >> "$root/etc/fstab"
         else
             warning "Skipping unsupported filesystem type: $fstype for $src"
         fi
