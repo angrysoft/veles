@@ -65,14 +65,44 @@ prepare_root() {
     fi
 }
 
+chroot_setup() {
+  mount -t proc proc "$root/proc" || die "Failed to mount proc filesystem"
+  mount -t sysfs sys "$root/sys" || die "Failed to mount sys filesystem"
+  if [[ -d "/sys/firmware/efi/efivars" ]]; then
+      mount -t efivarfs "$root/sys/firmware/efi/efivars" || die "Failed to mount efivarfs"
+  fi
+  mount -t devtmpfs udev "$root/dev" || die "Failed to mount devtmpfs"
+  mount -t devpts devpts "$root/dev/pts"  || die "Failed to mount devpts"
+  mount -t tmpfs shm "$root/dev/shm"  || die "Failed to mount tmpfs for /dev/shm"
+  mount /run "$root/run" --bind --make-private || die "Failed to mount /run"
+  mount -t tmpfs tmp "$root/tmp" || die "Failed to mount tmpfs for /tmp"
+}
+
+umount_chroot() {
+  umount -l "$root/proc" || warning "Failed to unmount proc filesystem"
+  umount -l "$root/sys" || warning "Failed to unmount sys filesystem"
+  if [[ -d "/sys/firmware/efi/efivars" ]]; then
+      umount -l "$root/sys/firmware/efi/efivars" || warning "Failed to unmount efivarfs"
+  fi
+  umount -l "$root/dev/pts" || warning "Failed to unmount devpts"
+  umount -l "$root/dev/shm" || warning "Failed to unmount tmpfs for /dev/shm"
+  umount -l "$root/dev" || warning "Failed to unmount devtmpfs"
+  umount -l "$root/run" || warning "Failed to unmount /run"
+  umount -l "$root/tmp" || warning "Failed to unmount tmpfs for /tmp"
+}
+
+
 install_base_system() {
     msg "Installing base system using repository: $repo"
     $pkg add-repo "$repo_name" "$repo" || die "Failed to add repository: $repo"
     $pkg install -c system.base || die "Failed to install base system packages"
     $pkg install perl neovim btrfs-progs dosfstools  || die "Failed to install additional base packages"
     $pkg install network-manager || die "Failed to install NetworkManager"
-    $nspawn usysconf run -f || die "Failed to install base system packages in nspawn environment"
+    chroot_setup
+    chroot "$root" usysconf run -f || die "Failed to install base system packages in chroot environment"
+    #$nspawn usysconf run -f || die "Failed to install base system packages in nspawn environment"
     $pkg install linux-current linux-current-headers || die "Failed to install Linux kernel"
+    umount_chroot
 }
 
 install_additional_packages() {
@@ -153,9 +183,7 @@ done
 
 shift $(( OPTIND - 1 ))
 packages=("$@")
-
-echo $repo $repo_name $root $bootloader ${packages[*]}
-exit 0
+0
 check_necessary_commands
 prepare_root
 install_base_system
