@@ -83,10 +83,10 @@ chroot_setup() {
 
 umount_chroot() {
   umount -l "$root/proc" || warning "Failed to unmount proc filesystem"
-  umount -l "$root/sys" || warning "Failed to unmount sys filesystem"
   if [[ -d "/sys/firmware/efi/efivars" ]]; then
       umount -l "$root/sys/firmware/efi/efivars" || warning "Failed to unmount efivarfs"
   fi
+  umount -l "$root/sys" || warning "Failed to unmount sys filesystem"
   umount -l "$root/dev/pts" || warning "Failed to unmount devpts"
   umount -l "$root/dev/shm" || warning "Failed to unmount tmpfs for /dev/shm"
   umount -l "$root/dev" || warning "Failed to unmount devtmpfs"
@@ -154,6 +154,13 @@ gen_fstab() {
     done < <(findmnt -Recvruno SOURCE,TARGET,FSTYPE,OPTIONS,FSROOT "$root")
 }
 
+setup_locale() {
+    msg "Setting up locale"
+    echo "en_US.UTF-8 UTF-8" > "$root/etc/locale.gen" || die "Failed to write locale.gen"
+    chroot "$root" locale-gen || die "Failed to generate locale in chroot environment"
+    #$nspawn locale-gen || die "Failed to generate locale in nspawn environment"
+}
+
 
 
 if [[ -z $1 || $1 = @(-h|--help) ]]; then
@@ -206,8 +213,9 @@ install_base_system
 install_additional_packages
 gen_fstab
 install_bootloader
+setup_locale
 
 [[ -d $root ]] || die "%s is not a directory" "$root"
 
 
-echo "Selected repository: ${repo:-Solus}"
+echo "Umount filesystems in $root"
