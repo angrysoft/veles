@@ -183,7 +183,6 @@ done
 
 shift $(( OPTIND - 1 ))
 packages=("$@")
-0
 check_necessary_commands
 prepare_root
 install_base_system
