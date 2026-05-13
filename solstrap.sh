@@ -18,6 +18,7 @@ shopt -s extglob
 REPO_SOLUS='https://cdn.getsol.us/repo/polaris/eopkg-index.xml.xz'
 REPO_UNSTABLE='https://cdn.getsol.us/repo/unstable/eopkg-index.xml.xz'
 repo="$REPO_SOLUS"
+repo_name="Solus"
 root="/sol"
 bootloader=0
 pkg="eopkg -y --destdir --ignore-safety"
@@ -66,7 +67,7 @@ prepare_root() {
 
 install_base_system() {
     msg "Installing base system using repository: $repo"
-    $pkg add-repo "$repo" || die "Failed to add repository: $repo"
+    $pkg add-repo "$repo_name" "$repo" || die "Failed to add repository: $repo"
     $pkg install -c system.base || die "Failed to install base system packages"
     $pkg install perl neovim btrfs-progs dosfstools  || die "Failed to install additional base packages"
     $pkg install network-manager || die "Failed to install NetworkManager"
@@ -120,9 +121,11 @@ while getopts ':R:r:bf' flag; do
          case $repo in
             solus)
               repo="$REPO_SOLUS"
+              repo_name="Solus"
               ;;
             unstable)
               repo="$REPO_UNSTABLE"
+              repo_name="Unstable"
               ;;
             *)
               die "Invalid repository specified: %s" "$repo"
