@@ -52,10 +52,16 @@ prepare_root() {
     msg "Preparing root directory: $root"
     if [[ -z "$root" ]]; then
         die "Root directory cannot be empty."
-    elif [[ -e "$root" ]]; then
-        die "Root directory already exists: $root"
     fi
-    mkdir -p "$root" || die "Failed to create root directory: $root"
+
+    if [[ -d "$root" ]]; then
+        msg "Root directory already exists: $root"
+    elif [[ -e "$root" ]];then
+      die "root exist and is not a directory: $root"
+    else
+      msg "Crate root dir: $root"
+      mkdir -p "$root" || die "Failed to create root directory: $root"
+    fi
 }
 
 install_base_system() {
