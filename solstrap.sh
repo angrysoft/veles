@@ -9,9 +9,9 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 out() { printf "$1 $2\n" "${@:3}"; }
-error() { out "==> ERROR:" "$@"; } >&2
-warning() { out "==> WARNING:" "$@"; } >&2
-msg() { out "==>" "$@"; }
+error() { out ">>> ERROR:" "$@"; } >&2
+warning() { out ">>> WARNING:" "$@"; } >&2
+msg() { out ">>> INFO:" "$@"; }
 die() { error "$@"; exit 1; }
 
 shopt -s extglob
@@ -22,7 +22,7 @@ repo_name="Solus"
 root="/sol"
 bootloader=0
 pkg="eopkg -y --destdir=$root"
-nspawn="systemd-nspawn -D $root"
+nspawn="sudo systemd-nspawn --as-pid2 --private-users=identity --user=0 --quiet"
 
 
 
@@ -99,13 +99,13 @@ install_base_system() {
     msg "Installing base system using repository: $repo"
     $pkg add-repo "$repo_name" "$repo" || die "Failed to add repository: $repo"
     $pkg install -c system.base || die "Failed to install base system packages"
-    $pkg install perl neovim btrfs-progs dosfstools  || die "Failed to install additional base packages"
+    $pkg install perl neovim btrfs-progs dosfstools zsh zsh-syntax-highlighting || die "Failed to install additional base packages"
     $pkg install network-manager || die "Failed to install NetworkManager"
-    chroot_setup
-    chroot "$root" usysconf run -f || die "Failed to install base system packages in chroot environment"
-    #$nspawn usysconf run -f || die "Failed to install base system packages in nspawn environment"
+    #chroot_setup
+    #chroot "$root" usysconf run -f || die "Failed to install base system packages in chroot environment"
+    $nspawn -D "$root" usysconf run -f || die "Failed to install base system packages in nspawn environment"
     $pkg install linux-current linux-current-headers || die "Failed to install Linux kernel"
-    umount_chroot
+    #umount_chroot
 }
 
 install_additional_packages() {
@@ -154,11 +154,23 @@ gen_fstab() {
     done < <(findmnt -Recvruno SOURCE,TARGET,FSTYPE,OPTIONS,FSROOT "$root")
 }
 
-setup_locale() {
-    msg "Setting up locale"
-    echo "en_US.UTF-8 UTF-8" > "$root/etc/locale.gen" || die "Failed to write locale.gen"
-    chroot "$root" locale-gen || die "Failed to generate locale in chroot environment"
+setup_environment() {
+    msg "Setting base environment"
+    #echo "en_US.UTF-8 UTF-8" > "$root/etc/locale.gen" || die "Failed to write locale.gen"
+    #chroot "$root" locale-gen || die "Failed to generate locale in chroot environment"
     #$nspawn locale-gen || die "Failed to generate locale in nspawn environment"
+    
+    local locale="en_US.UTF-8"
+    if [[ -n "$LANG" ]]; then
+        locale="$LANG"
+    fi
+    local timezone="UTC"
+    TZ=$(readlink -n /etc/localtime)
+    if [[ -n "$TZ" ]]; then
+        timezone="$TZ"
+    fi
+    local shell="/usr/bin/zsh"
+     ${nspawn} -D ${root} systemd-firstboot --force --delete-root-password --locale=$locale --timezone=$timezone --root-shell=$shell || die "Failed to set up locale and timezone in nspawn environment"
 }
 
 
@@ -213,7 +225,7 @@ install_base_system
 install_additional_packages
 gen_fstab
 install_bootloader
-setup_locale
+setup_environment
 
 [[ -d $root ]] || die "%s is not a directory" "$root"
 
