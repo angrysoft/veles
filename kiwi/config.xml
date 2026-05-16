@@ -118,6 +118,7 @@
         <package name="which" />
         <package name="man" />
         <package name="perl-base" />
+        <package name="grep" />
 
         <!-- temporary -->
         <package name="zypper" />
