@@ -43,6 +43,7 @@
 
     <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
     <packages type="image" patternType="onlyRequired">
+        <ignore name="busybox-coreutils" />
         <!-- Base system -->
         <package name="filesystem" />
         <package name="kernel-default" />
