@@ -1,3 +1,11 @@
+#
+# spec file for package veles-release
+#
+# Copyright (c) 2026 Angrysoft Sebastian Zwierzchowski <sebastian.zwierzchowski@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+#
+
 %define product Veles
 %define codename Rolling
 
@@ -7,7 +15,7 @@ Release:        1
 Summary:        Veles Linux
 License:        MIT
 Group:          System/Fhs
-
+BuildArch:      noarch
 # Zastępujemy openSUSE-release
 Provides:       distribution-release
 Provides:       openSUSE-release = %{version}-%{release}
