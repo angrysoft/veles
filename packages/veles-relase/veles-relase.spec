@@ -147,6 +147,8 @@ echo "Base flavor for Veles Linux." \
 %dir %{_sysconfdir}/products.d
 %{_sysconfdir}/products.d/veles.prod
 %{_sysconfdir}/products.d/baseproduct
+%dir %{_sysconfdir}/zypp
+%dir %{_sysconfdir}/zypp/vendors.d
 %config %{_sysconfdir}/zypp/vendors.d/00-veles.conf
 
 %changelog
