@@ -47,6 +47,7 @@
         <package name="sed" />
         <package name="bash" />
         <package name="util-linux" />
+        <package name="ca-certificates-mozilla" />
     </packages>
 
     <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
