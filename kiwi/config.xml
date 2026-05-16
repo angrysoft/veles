@@ -36,6 +36,8 @@
     <!-- KROK 1: Minimalny etap bootstrapu (narzędzia do postawienia bazy) -->
     <packages type="bootstrap">
         <ignore name="busybox-coreutils" />
+        <ignore name="busybox-util-linux" />
+        <ignore name="busybox-sed" />
         <package name="veles-release" />
         <package name="zypper" />
         <package name="glibc" />
