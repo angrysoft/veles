@@ -50,8 +50,6 @@
         <package name="aaa_base" />
         <package name="aaa_base-extras" />
         <package name="bash" />
-        <package name="busybox" />
-        <package name="busybox-static" />
         <package name="ca-certificates-mozilla" />
         <package name="chrony" />
         <package name="coreutils" />
@@ -140,7 +138,7 @@
         <package name="zsh" />
         <package name="grml-zsh-config" />
         <!-- Installer -->
-        <package name="calamares" />
-        <package name="calamares-lang" />
+        <!-- <package name="calamares" />
+        <package name="calamares-lang" /> -->
     </packages>
 </image>
