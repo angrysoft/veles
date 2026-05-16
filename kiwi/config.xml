@@ -65,7 +65,6 @@
         <package name="pam" />
         <package name="pam-config" />
         <package name="procps" />
-        <package name="purge-kernel-service" />
         <package name="rpm" />
         <package name="shadow" />
         <package name="file" />
