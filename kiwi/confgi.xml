@@ -9,9 +9,12 @@
     <preferences>
         <!-- Definiujemy typ obrazu (np. oem), system plików i nowoczesny bootloader -->
         <!-- <type image="oem" filesystem="btrfs" bootloader="systemd-boot" /> -->
-        <type image="iso" primary="true" flags="overlay" hybridpersistent_filesystem="ext4"
+        <type
+            image="iso"
+            primary="true"
+            flags="overlay"
             firmware="uefi"
-            bootloader="systemd-boot"
+            hybridpersistent_filesystem="ext4"
             hybridpersistent="true" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
@@ -39,7 +42,7 @@
     </packages>
 
     <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
-    <packages type="image" recommends="false">
+    <packages type="image" patternType="onlyRequired">
         <!-- Base system -->
         <package name="filesystem" />
         <package name="kernel-default" />
