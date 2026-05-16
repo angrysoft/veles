@@ -35,6 +35,7 @@
 
     <!-- KROK 1: Minimalny etap bootstrapu (narzędzia do postawienia bazy) -->
     <packages type="bootstrap">
+        <ignore name="busybox-coreutils" />
         <package name="veles-release" />
         <package name="zypper" />
         <package name="glibc" />
@@ -43,7 +44,6 @@
 
     <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
     <packages type="image" patternType="onlyRequired">
-        <ignore name="busybox-coreutils" />
         <!-- Base system -->
         <package name="filesystem" />
         <package name="kernel-default" />
