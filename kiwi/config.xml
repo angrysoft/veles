@@ -39,13 +39,21 @@
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
         <package name="veles-release" />
+
+        <package name="filesystem" />
         <package name="zypper" />
         <package name="glibc" />
-        <package name="filesystem" />
+        <package name="coreutils" />
+        <package name="sed" />
+        <package name="bash" />
+        <package name="util-linux" />
     </packages>
 
     <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
     <packages type="image" patternType="onlyRequired">
+        <ignore name="busybox-coreutils" />
+        <ignore name="busybox-util-linux" />
+        <ignore name="busybox-sed" />
         <!-- Base system -->
         <package name="filesystem" />
         <package name="kernel-default" />
