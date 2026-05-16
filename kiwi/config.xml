@@ -87,7 +87,6 @@
         <package name="terminfo-base" />
         <package name="terminfo-screen" />
         <package name="ncurses-utils" />
-        <package name="netcat-opensbsd" />
         <package name="ntfs-3g" />
         <package name="ntfsprogs" />
         <package name="pam-config" />
