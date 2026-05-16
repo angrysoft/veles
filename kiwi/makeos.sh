@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # z katalogu veles/
-sudo kiwi-ng system build \
+sudo --debug kiwi-ng system build \
   --description . \
-  --target-dir /tmp/veles-build
+  --target-dir /tmp/veles-build |tee log.txt
 
 
