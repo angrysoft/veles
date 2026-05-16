@@ -56,7 +56,7 @@
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
         <!-- Base system -->
-        
+
         <package name="filesystem" />
         <package name="kernel-default" />
         <package name="kernel-firmware-all" />
@@ -125,6 +125,8 @@
 
         <package name="dracut" />
         <package name="dracut-kiwi-live" />
+        <package name="cpio" />
+        <package name="squashfs" />
         <package name="fwupd" />
         <package name="fwupd-lang" />
         <package name="kexec-tools" />
