@@ -36,7 +36,7 @@ Source6:        stylesheet.qss
 Source7:        calamares-installer.service
 Source8:        weston.ini
 Source9:        veles-logo.png
-Source10:      welcome.png
+Source10:       welcome.png
 
 BuildArch:      noarch
 
@@ -50,22 +50,24 @@ Veles Linux — installer settings
 # No binaries to compile
 
 %install
-install -Dm 644 settings.conf %{buildroot}%{_sysconfdir}/calamares/settings.conf
+# Main configuration
+install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/calamares/settings.conf
 
-install -Dm 644 unpackfs.conf %{buildroot}%{_sysconfdir}/calamares/modules/unpackfs.conf
-install -m 644 bootloader.conf %{buildroot}%{_sysconfdir}/calamares/modules/bootloader.conf
-install -m 644 partitions.conf %{buildroot}%{_sysconfdir}/calamares/modules/partitions.conf
-install -m 644 users.conf %{buildroot}%{_sysconfdir}/calamares/modules/users.conf
+# Modules configuration
+install -Dm 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/calamares/modules/unpackfs.conf
+install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/calamares/modules/bootloader.conf
+install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/calamares/modules/partitions.conf
+install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.conf
 
-install -Dm 644 branding.desc %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
-install -m 644 stylesheet.qss %{buildroot}%{_sysconfdir}/calamares/branding/veles/stylesheet.qss
-install -m 644 veles-logo.png %{buildroot}%{_sysconfdir}/calamares/branding/veles/veles-logo.png
-install -m 644 welcome.png %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
+# Branding and styling
+install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
+install -m 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/calamares/branding/veles/stylesheet.qss
+install -m 644 %{SOURCE9} %{buildroot}%{_sysconfdir}/calamares/branding/veles/veles-logo.png
+install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
 
-install -Dm 644 calamares-installer.service %{buildroot}%{_libdir}/systemd/system/calamares-installer.service
-install -Dm 644 weston.ini %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
-
-
+# System services and environment (using %{_prefix}/lib for noarch compliance)
+install -Dm 644 %{SOURCE7} %{buildroot}%{_prefix}/lib/systemd/system/calamares-installer.service
+install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 
 %files
 %defattr(-,root,root,-)
@@ -75,8 +77,8 @@ install -Dm 644 weston.ini %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %dir %{_sysconfdir}/calamares/modules
 %dir %{_sysconfdir}/xdg
 %dir %{_sysconfdir}/xdg/weston
-%dir %{_libdir}/systemd
-%dir %{_libdir}/systemd/system
+%dir %{_prefix}/lib/systemd
+%dir %{_prefix}/lib/systemd/system
 
 %{_sysconfdir}/calamares/settings.conf
 %{_sysconfdir}/calamares/modules/unpackfs.conf
@@ -87,7 +89,7 @@ install -Dm 644 weston.ini %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %{_sysconfdir}/calamares/branding/veles/stylesheet.qss
 %{_sysconfdir}/calamares/branding/veles/veles-logo.png
 %{_sysconfdir}/calamares/branding/veles/welcome.png
-%{_libdir}/systemd/system/calamares-installer.service
+%{_prefix}/lib/systemd/system/calamares-installer.service
 %{_sysconfdir}/xdg/weston/weston.ini
 
 %changelog
