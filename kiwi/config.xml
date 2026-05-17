@@ -35,12 +35,8 @@
     </preferences>
 
     <profiles>
-        <profile name="Installer" description="Veles Linux Installer ISO">
-            <arch>x86_64</arch>
-        </profile>
-        <profile name="TargetRootfs" description="Veles Linux Target Root Filesystem">
-            <arch>x86_64</arch>
-        </profile>
+        <profile name="Installer" description="Veles Linux Installer ISO" />
+        <profile name="TargetRootfs" description="Veles Linux Target Root Filesystem" />
     </profiles>
 
     <repository type="rpm-md" alias="veles" priority="1">
