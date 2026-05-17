@@ -32,6 +32,7 @@ setup_target_rootfs() {
         if command -v zypper &> /dev/null; then
             zypper clean -a
         fi
+}
 
 
 echo "LOG: Uruchamianie skryptu konfiguracyjnego KIWI..."
