@@ -20,10 +20,7 @@
             image="oem"
             firmware="uefi"
             filesystem="btrfs">
-            <bootloader name="systemd_boot" timeout="5" />
-            <bootloader_config>
-                <kernelcmdline>quiet loglevel=3</kernelcmdline>
-            </bootloader_config>
+            <bootloader name="systemd_boot" timeout="5" kernelcmdline="quiet loglevel=3" />
         </type>
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
