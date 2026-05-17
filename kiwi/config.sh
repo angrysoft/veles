@@ -30,29 +30,45 @@ systemctl enable NetworkManager.service
 
 cat <<EOF > /etc/systemd/system/calamares-installer.service
 [Unit]
-Description=Calamares Live Installer
-After=systemd-user-sessions.service plymouth-quit-wait.service gettys.target
+Description=Calamares Installer Kiosk Mode (Weston)
+After=systemd-user-sessions.service plymouth-quit-wait.service systemd-udevd.service
+Before=getty@tty1.service
 Conflicts=getty@tty1.service
 
 [Service]
 Type=simple
 User=root
 WorkingDirectory=/root
+
+# Wymagane zmienne dla środowiska Wayland i Qt
 Environment=XDG_RUNTIME_DIR=/run/user/0
-Environment=QT_QPA_PLATFORM=wayland-egl
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=QT_QPA_PLATFORM=wayland
+
 ExecStartPre=/usr/bin/mkdir -p /run/user/0
-ExecStartPre=/usr/bin/chmod 700 /run/user/0
-ExecStart=/usr/bin/cage -- /usr/bin/calamares -d
-StandardOutput=tty
-StandardError=tty
-TTYPath=/dev/tty1
+ExecStartPre=/usr/bin/chmod 0700 /run/user/0
+
+ExecStart=/usr/bin/weston --tty=1 --config=/etc/xdg/weston/weston.ini
+
+Restart=on-failure
+StandardInput=tty-fail
+StandardOutput=journal
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target
+EOF
+
+cat <<EOF > /etc/xdg/weston/weston.ini
+[core]
+shell=kiosk-shell.so
+backend=drm-backend.so
+
+[autostart]
+path=/usr/bin/calamares
 EOF
 
 
 systemctl disable getty@tty1.service
 systemctl enable calamares-installer.service
-systemctl enable polkit.service
+# systemctl enable polkit.service
 exit 1
