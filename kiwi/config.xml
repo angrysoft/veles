@@ -34,6 +34,15 @@
         <timezone>Europe/Warsaw</timezone>
     </preferences>
 
+    <profiles>
+        <profile name="Installer" description="Veles Linux Installer ISO">
+            <arch>x86_64</arch>
+        </profile>
+        <profile name="TargetRootfs" description="Veles Linux Target Root Filesystem">
+            <arch>x86_64</arch>
+        </profile>
+    </profiles>
+
     <repository type="rpm-md" alias="veles" priority="1">
         <source
             path="https://download.opensuse.org/repositories/home:/angrysoft/openSUSE_Tumbleweed/" />
