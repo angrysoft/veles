@@ -7,21 +7,19 @@
     </description>
 
     <preferences>
-        <!-- Definiujemy typ obrazu (np. oem), system plików i nowoczesny bootloader -->
-        <!-- <type image="oem" filesystem="btrfs" bootloader="systemd-boot" /> -->
-        <!-- <type
+        <type
             image="iso"
             primary="true"
             flags="overlay"
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
-            hybridpersistent="true" /> -->
-        <type
+            hybridpersistent="true" />
+        <!-- <type
             image="oem"
             firmware="uefi"
             filesystem="btrfs">
             <bootloader name="systemd_boot" timeout="5" kernelcmdline="quiet loglevel=3" />
-        </type>
+        </type> -->
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
