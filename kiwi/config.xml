@@ -32,11 +32,15 @@
             path="https://download.opensuse.org/repositories/home:/angrysoft/openSUSE_Tumbleweed/" />
     </repository>
 
-    <repository type="rpm-md" alias="tumbleweed" priority="99">
+    <repository type="rpm-md" alias="tumbleweed-oss" priority="99">
         <source path="https://download.opensuse.org/tumbleweed/repo/oss/" />
     </repository>
 
-    <users group="users">
+    <repository type="rpm-md" alias="tumbleweed-non-oss" priority="99">
+        <source path="https://download.opensuse.org/tumbleweed/repo/non-oss/" />
+    </repository>
+
+    <users>
         <user
             password="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
             home="/home/live"
