@@ -127,8 +127,8 @@ EOF
 %files
 %dir %{_sysconfdir}/sudoers.d
 %{_sysconfdir}/sudoers.d/wheel
-%attr(0750, root,root) dir %{buildroot}%{_sysconfdir}/sudoers.d
-%attr(0440, root,root) %{buildroot}%{_sysconfdir}/sudoers.d/wheel
+%attr(0750, root,root) %dir %{_sysconfdir}/sudoers.d
+%attr(0440, root,root) %{_sysconfdir}/sudoers.d/wheel
 
 %changelog
 * Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>
