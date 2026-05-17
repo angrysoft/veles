@@ -20,9 +20,6 @@
         <locale>pl_PL</locale>
         <keytable>pl</keytable>
         <timezone>Europe/Warsaw</timezone>
-        <permissions>
-            <file path="/etc/sudoers.d/wheel" permissions="0440" owner="root" group="root" />
-        </permissions>
     </preferences>
 
     <repository type="rpm-md" alias="veles" priority="1">
