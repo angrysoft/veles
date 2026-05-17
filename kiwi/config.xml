@@ -20,7 +20,7 @@
             image="oem"
             firmware="uefi"
             filesystem="btrfs">
-            <bootloader name="systemd-boot" timeout="5" />
+            <bootloader name="systemd_boot" timeout="5" />
             <bootloader_config>
                 <kernelcmdline>quiet loglevel=3</kernelcmdline>
             </bootloader_config>
