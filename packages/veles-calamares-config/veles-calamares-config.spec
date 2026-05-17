@@ -46,7 +46,7 @@ Veles Linux — installer settings
 
 %install
 mkdir -p %{buildroot}%{_sysconfdir}/calamares/modules
-mkdir -p %{buildroot}%{_sysconfdir}/calamares/branding/default
+mkdir -p %{buildroot}%{_sysconfdir}/calamares/branding/veles
 
 install -m 644 settings.conf %{buildroot}%{_sysconfdir}/calamares/settings.conf
 
@@ -57,10 +57,10 @@ install -m 644 partitions.conf %{buildroot}%{_sysconfdir}/calamares/modules/part
 install -m 644 users.conf %{buildroot}%{_sysconfdir}/calamares/modules/users.conf
 
 # Instalacja plików brandingu (opisy i grafiki)
-install -m 644 branding.desc %{buildroot}%{_sysconfdir}/calamares/branding/default/branding.desc
-install -m 644 stylesheet.qss %{buildroot}%{_sysconfdir}/calamares/branding/default/stylesheet.qss
-install -m 644 logo.png %{buildroot}%{_sysconfdir}/calamares/branding/default/logo.png
-install -m 644 welcome.png %{buildroot}%{_sysconfdir}/calamares/branding/default/welcome.png
+install -m 644 branding.desc %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
+install -m 644 stylesheet.qss %{buildroot}%{_sysconfdir}/calamares/branding/veles/stylesheet.qss
+install -m 644 logo.png %{buildroot}%{_sysconfdir}/calamares/branding/veles/logo.png
+install -m 644 welcome.png %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
 
 
 
@@ -71,7 +71,8 @@ install -m 644 welcome.png %{buildroot}%{_sysconfdir}/calamares/branding/default
 %config(noreplace) %{_sysconfdir}/calamares/modules/bootloader.conf
 %config(noreplace) %{_sysconfdir}/calamares/modules/partitions.conf
 %config(noreplace) %{_sysconfdir}/calamares/modules/users.conf
-%config(noreplace) %{_sysconfdir}/calamares/modules/users.conf
+%config(noreplace) %{_sysconfdir}/calamares/modules/stylesheet.qss
+
 
 # Pliki brandingu
 %{_sysconfdir}/calamares/branding/default/

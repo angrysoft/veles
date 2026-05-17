@@ -58,6 +58,8 @@ StandardOutput=journal
 WantedBy=multi-user.target
 EOF
 
+
+mkdir -p /etc/xdg/weston
 cat <<EOF > /etc/xdg/weston/weston.ini
 [core]
 shell=kiosk-shell.so
