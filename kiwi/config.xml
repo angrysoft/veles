@@ -6,7 +6,7 @@
         <specification>Veles Linux</specification>
     </description>
 
-    <preferences profile="Installer">
+    <preferences profiles="Installer">
         <type
             image="iso"
             primary="true"
@@ -22,7 +22,7 @@
         <timezone>Europe/Warsaw</timezone>
     </preferences>
 
-    <preferences profile="TargetRootfs">
+    <preferences profiles="TargetRootfs">
         <type
             image="kis"
             filesystem="ext4"
@@ -65,7 +65,7 @@
         <package name="zypper" />
     </packages>
 
-    <packages type="image" profile="Installer" patternType="onlyRequired">
+    <packages type="image" profiles="Installer" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
@@ -82,7 +82,7 @@
         <package name="veles-calamares-config" />
     </packages>
 
-    <packages type="image" profile="TargetRootfs" patternType="onlyRequired">
+    <packages type="image" profiles="TargetRootfs" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
