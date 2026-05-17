@@ -69,7 +69,6 @@
         <!-- Installer -->
         <package name="cage" />
         <package name="calamares" />
-        <package name="calamares-settings-veles" />
         <package name="calamares-lang" />
 
 
