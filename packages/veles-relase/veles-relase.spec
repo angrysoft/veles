@@ -69,7 +69,6 @@ Base product flavor for Veles Linux.
 %install
 # /etc i /usr/lib
 mkdir -p %{buildroot}%{_sysconfdir}
-mkdir -p %{buildroot}%{_prefix}/lib/issue.d
 mkdir -p %{buildroot}%{_prefix}/lib/motd.d
 
 # os-release
@@ -88,12 +87,8 @@ EOF
 ln -s ..%{_prefix}/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
 # issue / motd
-echo -e 'Welcome to %{product} %{codename} %{version} - Kernel \r (\l).\n' \
-    > %{buildroot}%{_prefix}/lib/issue.d/10-veles.issue
-echo -e "\n" \
-    > %{buildroot}%{_prefix}/lib/issue.d/90-veles.issue
-echo 'Welcome to %{product} %{codename} %{version} - Kernel %%r (%%t).' \
-    > %{buildroot}%{_sysconfdir}/issue.net
+echo -e 'Veles Linux %{version} \\r (\\l)\n' \
+    > %{buildroot}%{_sysconfdir}/issue
 echo "Welcome to Veles Linux." \
     > %{buildroot}%{_prefix}/lib/motd.d/welcome
 
@@ -138,12 +133,10 @@ echo "Base flavor for Veles Linux." \
 %files
 %defattr(644,root,root,755)
 %{_sysconfdir}/os-release
+%{_sysconfdir}/issue
 %{_prefix}/lib/os-release
 %config(noreplace) %{_sysconfdir}/issue.net
 %{_prefix}/lib/motd.d/welcome
-%dir %{_prefix}/lib/issue.d
-%{_prefix}/lib/issue.d/10-veles.issue
-%{_prefix}/lib/issue.d/90-veles.issue
 %dir %{_sysconfdir}/products.d
 %{_sysconfdir}/products.d/veles.prod
 %{_sysconfdir}/products.d/baseproduct
