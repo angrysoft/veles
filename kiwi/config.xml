@@ -9,19 +9,27 @@
     <preferences>
         <!-- Definiujemy typ obrazu (np. oem), system plików i nowoczesny bootloader -->
         <!-- <type image="oem" filesystem="btrfs" bootloader="systemd-boot" /> -->
-        <type
+        <!-- <type
             image="iso"
             primary="true"
             flags="overlay"
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
-            hybridpersistent="true" />
+            hybridpersistent="true" /> -->
+        <type
+            image="oem"
+            firmware="uefi"
+            filesystem="btrfs">
+            <bootloader name="systemd-boot" timeout="5" />
+            <bootloader_config>
+                <kernelcmdline>quiet loglevel=3</kernelcmdline>
+            </bootloader_config>
+        </type>
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
         <keytable>pl</keytable>
         <timezone>Europe/Warsaw</timezone>
-        <bootloader bootoptions="quiet" />
     </preferences>
 
     <repository type="rpm-md" alias="veles" priority="1">
@@ -35,13 +43,12 @@
 
     <users group="users">
         <user
-            pwd="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
+            password="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
             home="/home/live"
             name="live"
             groups="users,wheel"
-             />
+        />
     </users>
-    <!-- KROK 1: Minimalny etap bootstrapu (narzędzia do postawienia bazy) -->
     <packages type="bootstrap">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
@@ -58,7 +65,6 @@
         <package name="ca-certificates-mozilla" />
     </packages>
 
-    <!-- KROK 2: Właściwy system operacyjny bez pakietów rekomendowanych -->
     <packages type="image" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
@@ -91,6 +97,7 @@
         <package name="system-user-nobody" />
         <package name="systemd" />
         <package name="systemd-lang" />
+        <package name="systemd-boot" />
         <package name="efibootmgr" />
         <package name="timezone" />
         <package name="util-linux" />
