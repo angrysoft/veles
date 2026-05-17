@@ -1,95 +1,238 @@
-/* /etc/calamares/branding/default/stylesheet.qss */
-
-/* Główne okno i podgląd etapów */
+/* ── Globalne okno ─────────────────────────────────────────── */
 QWidget {
-    background-color: #19120c; /* window_bg_color */
-    color: #ffffff;            /* window_fg_color */
-    font-size: 13px;
+    background-color:  #19120c;
+    color:             #ffffff;
+    font-family:       "Inter", "Noto Sans", sans-serif;
+    font-size:         13px;
 }
 
-/* Pasek boczny (Navigation Sidebar) */
+/* ── Sidebar / nawigacja ────────────────────────────────────── */
 #sidebarApp {
     background-color: #19120c;
-    border-right: 1px solid #372f28;
+    border-right:     1px solid #372f28;
 }
 
-/* Kontenery i widoki (np. drzewo partycji) */
-QTreeView, QListView, QTableView {
-    background-color: #19120c; /* view_bg_color */
-    color: #ffffff;            /* view_fg_color */
-    border: 1px solid #372f28;
-    selection-background-color: #feb877; /* accent_color */
-    selection-color: #000000;            /* accent_fg_color */
+#sidebarApp QLabel {
+    color:       #ffede0;
+    font-size:   13px;
+    padding:     6px 0;
 }
 
-/* Przyciski (Dół okna - Dalej, Wstecz, Anuluj) */
+/* Aktywny krok — podświetlony */
+#sidebarApp QLabel[focus="true"],
+#sidebarApp QListView::item:selected {
+    color:            #feb877;
+    font-weight:      600;
+    background-color: #372f28;
+    border-left:      3px solid #feb877;
+    padding-left:     13px;
+}
+
+/* Ukończony krok */
+#sidebarApp QListView::item[done="true"] {
+    color: #ffede0;
+    opacity: 0.6;
+}
+
+/* Przyszły krok */
+#sidebarApp QListView::item {
+    color:   #ffede0;
+    opacity: 0.4;
+    padding: 8px 16px;
+}
+
+/* ── Przyciski główne ───────────────────────────────────────── */
 QPushButton {
-    background-color: #372f28;     /* button_bg_color */
-    color: #ffede0;                /* button_fg_color */
-    border: 1px solid #ffede0;     /* button_border_color */
-    border-radius: 4px;
-    padding: 6px 12px;
-    min-width: 80px;
+    background-color: #372f28;
+    color:            #ffede0;
+    border:           1px solid #ffede0;
+    border-radius:    6px;
+    padding:          8px 20px;
+    font-size:        13px;
+    font-weight:      500;
 }
 
 QPushButton:hover {
-    background-color: #feb877;     /* Przejście w accent przy hoverze */
-    color: #000000;                /* Tekst staje się czarny */
-    border-color: #feb877;
+    background-color: #4a3d30;
+    color:            #ffffff;
 }
 
 QPushButton:pressed {
-    background-color: #d1965e;     /* Przyciemniony akcent */
-    color: #000000;
+    background-color: #2a211a;
 }
 
-QPushButton:disabled {
-    background-color: #19120c;
-    color: #555555;
-    border-color: #555555;
+/* Przycisk "Dalej" / "Instaluj" — akcent */
+QPushButton#next,
+QPushButton[role="primary"] {
+    background-color: #feb877;
+    color:            #000000;
+    border:           1px solid #feb877;
+    font-weight:      700;
 }
 
-/* Pola wyboru (ComboBox / Dropdown) */
+QPushButton#next:hover,
+QPushButton[role="primary"]:hover {
+    background-color: #ffc98a;
+    border-color:     #ffc98a;
+}
+
+QPushButton#next:pressed {
+    background-color: #e8a55f;
+}
+
+/* Przycisk "Wstecz" */
+QPushButton#back {
+    background-color: transparent;
+    color:            #ffede0;
+    border-color:     #4a3d30;
+    opacity:          0.7;
+}
+
+/* ── Pola tekstowe ──────────────────────────────────────────── */
+QLineEdit,
+QTextEdit,
+QPlainTextEdit {
+    background-color: #372f28;
+    color:            #ffffff;
+    border:           1px solid #4a3d30;
+    border-radius:    6px;
+    padding:          6px 10px;
+    selection-background-color: #feb877;
+    selection-color:            #000000;
+}
+
+QLineEdit:focus,
+QTextEdit:focus {
+    border-color: #feb877;
+}
+
+/* ── ComboBox ───────────────────────────────────────────────── */
 QComboBox {
     background-color: #372f28;
-    border: 1px solid #ffede0;
-    border-radius: 4px;
-    padding: 4px;
-    color: #ffffff;
+    color:            #ffffff;
+    border:           1px solid #4a3d30;
+    border-radius:    6px;
+    padding:          6px 10px;
 }
 
-QComboBox::drop-down {
-    border: none;
-}
+QComboBox:hover   { border-color: #feb877; }
+QComboBox::drop-down { border: none; width: 24px; }
 
-/* Paski postępu (ProgressBar podczas instalacji) */
-QProgressBar {
-    border: 1px solid #372f28;
-    border-radius: 4px;
-    text-align: center;
+QComboBox QAbstractItemView {
     background-color: #19120c;
-    color: #ffffff;
+    color:            #ffffff;
+    selection-background-color: #372f28;
+    selection-color:            #feb877;
+    border:           1px solid #4a3d30;
+}
+
+/* ── Listy i tabele ─────────────────────────────────────────── */
+QListView,
+QTreeView,
+QTableView {
+    background-color:           #19120c;
+    alternate-background-color: #1f1610;
+    color:                      #ffffff;
+    border:                     1px solid #372f28;
+    border-radius:              6px;
+}
+
+QListView::item:selected,
+QTreeView::item:selected,
+QTableView::item:selected {
+    background-color: #372f28;
+    color:            #feb877;
+}
+
+QHeaderView::section {
+    background-color: #19120c;
+    color:            #feb877;
+    border:           none;
+    border-bottom:    1px solid #372f28;
+    padding:          6px 8px;
+    font-weight:      600;
+    font-size:        12px;
+}
+
+/* ── Pasek postępu instalacji ───────────────────────────────── */
+QProgressBar {
+    background-color: #372f28;
+    border:           none;
+    border-radius:    4px;
+    height:           8px;
+    text-align:       center;
+    color:            transparent;
 }
 
 QProgressBar::chunk {
-    background-color: #feb877; /* Postęp w kolorze accent */
-    border-radius: 3px;
+    background-color: #feb877;
+    border-radius:    4px;
 }
 
-/* Pola tekstowe (np. nazwa użytkownika, host) */
-QLineEdit {
-    background-color: #19120c;
-    border: 1px solid #372f28;
+/* ── CheckBox / RadioButton ─────────────────────────────────── */
+QCheckBox,
+QRadioButton {
+    color:   #ffede0;
+    spacing: 8px;
+}
+
+QCheckBox::indicator,
+QRadioButton::indicator {
+    width:            16px;
+    height:           16px;
+    border:           1px solid #4a3d30;
+    border-radius:    3px;
+    background-color: #372f28;
+}
+
+QCheckBox::indicator:checked,
+QRadioButton::indicator:checked {
+    background-color: #feb877;
+    border-color:     #feb877;
+}
+
+/* ── ScrollBar ──────────────────────────────────────────────── */
+QScrollBar:vertical {
+    background:  #19120c;
+    width:       8px;
     border-radius: 4px;
-    padding: 6px;
-    color: #ffffff;
 }
 
-QLineEdit:focus {
-    border: 1px solid #feb877; /* Podświetlenie akcentem przy wpisywaniu */
+QScrollBar::handle:vertical {
+    background:    #4a3d30;
+    border-radius: 4px;
+    min-height:    24px;
 }
 
-/* Etykiety i nagłówki */
-QLabel {
-    color: #ffffff;
+QScrollBar::handle:vertical:hover {
+    background: #feb877;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical { height: 0; }
+
+/* ── Separator ──────────────────────────────────────────────── */
+QFrame[frameShape="4"],
+QFrame[frameShape="5"] {
+    color: #372f28;
+}
+
+/* ── Etykiety / nagłówki strony ─────────────────────────────── */
+QLabel#title {
+    color:     #feb877;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+QLabel#subtitle {
+    color:   #ffede0;
+    opacity: 0.6;
+    font-size: 13px;
+}
+
+/* ── Partycje – pasek graficzny ─────────────────────────────── */
+#partitionBarsView {
+    background: #1f1610;
+    border:     1px solid #372f28;
+    border-radius: 8px;
 }
