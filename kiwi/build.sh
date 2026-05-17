@@ -14,7 +14,7 @@ mkdir -p "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie profilu TargetRootfs (.img) ==="
 sudo kiwi-ng --profile=TargetRootfs system build \
-    --description "${PROJECT_DIR}" \
+    --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
 GENERATED_IMG=$(ls "${TARGET_BUILD_DIR}"/*.img | head -n 1)
@@ -28,7 +28,7 @@ sudo cp "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.img"
 
 echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
 sudo kiwi-ng --profile=LiveISO system build \
-    --description "${PROJECT_DIR}" \
+    --description "." \
     --target-dir "${LIVE_BUILD_DIR}"
 
 echo "================================================="
