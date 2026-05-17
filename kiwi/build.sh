@@ -27,7 +27,7 @@ echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.tar.xz"
 sudo cp "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.tar.xz"
 
 echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
-sudo kiwi-ng --profile=LiveISO system build \
+sudo kiwi-ng --profile=Installer system build \
     --description "." \
     --target-dir "${LIVE_BUILD_DIR}"
 
