@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+mkdir -p $(pwd)/root/usr/share/veles-images
+
 PROJECT_DIR="$(pwd)/tmp"
 TARGET_BUILD_DIR="${PROJECT_DIR}/build/target"
 LIVE_BUILD_DIR="${PROJECT_DIR}/build/live"
