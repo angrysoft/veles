@@ -23,10 +23,7 @@
     </preferences>
 
     <preferences profiles="TargetRootfs">
-        <type
-            image="kis"
-            filesystem="ext4"
-            kernelcmdline="quiet loglevel=3" />
+        <type image="tbz" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>

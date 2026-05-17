@@ -12,19 +12,19 @@ echo "=== KROK 1: Czyszczenie starych plików budowy ==="
 sudo rm -rf "${PROJECT_DIR}"
 mkdir -p "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
-echo "=== KROK 2: Budowanie profilu TargetRootfs (.img) ==="
+echo "=== KROK 2: Budowanie profilu TargetRootfs (.tar.xz) ==="
 sudo kiwi-ng --profile=TargetRootfs system build \
     --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
-GENERATED_IMG=$(ls "${TARGET_BUILD_DIR}"/*.img | head -n 1)
+GENERATED_IMG=$(ls "${TARGET_BUILD_DIR}"/*.tar.xz | head -n 1)
 
 echo "=== KROK 3: Kopiowanie obrazu do struktury overlay ==="
 echo "Kopiuję: ${GENERATED_IMG}"
-echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.img"
+echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.tar.xz"
 
 # Kopiujemy pod stałą nazwą, którą wcześniej wpisaliśmy do unpackfs.conf
-sudo cp "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.img"
+sudo cp "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.tar.xz"
 
 echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
 sudo kiwi-ng --profile=LiveISO system build \
