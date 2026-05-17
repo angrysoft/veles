@@ -21,6 +21,7 @@
         <locale>pl_PL</locale>
         <keytable>pl</keytable>
         <timezone>Europe/Warsaw</timezone>
+        <bootloader bootoptions="quiet" />
     </preferences>
 
     <repository type="rpm-md" alias="veles" priority="1">
@@ -32,7 +33,14 @@
         <source path="https://download.opensuse.org/tumbleweed/repo/oss/" />
     </repository>
 
-
+    <users group="users">
+        <user
+            pwd="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
+            home="/home/live"
+            name="live"
+            groups="users,wheel"
+             />
+    </users>
     <!-- KROK 1: Minimalny etap bootstrapu (narzędzia do postawienia bazy) -->
     <packages type="bootstrap">
         <ignore name="busybox-coreutils" />
