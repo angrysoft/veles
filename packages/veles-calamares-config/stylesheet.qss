@@ -1,0 +1,95 @@
+/* /etc/calamares/branding/default/stylesheet.qss */
+
+/* Główne okno i podgląd etapów */
+QWidget {
+    background-color: #19120c; /* window_bg_color */
+    color: #ffffff;            /* window_fg_color */
+    font-size: 13px;
+}
+
+/* Pasek boczny (Navigation Sidebar) */
+#sidebarApp {
+    background-color: #19120c;
+    border-right: 1px solid #372f28;
+}
+
+/* Kontenery i widoki (np. drzewo partycji) */
+QTreeView, QListView, QTableView {
+    background-color: #19120c; /* view_bg_color */
+    color: #ffffff;            /* view_fg_color */
+    border: 1px solid #372f28;
+    selection-background-color: #feb877; /* accent_color */
+    selection-color: #000000;            /* accent_fg_color */
+}
+
+/* Przyciski (Dół okna - Dalej, Wstecz, Anuluj) */
+QPushButton {
+    background-color: #372f28;     /* button_bg_color */
+    color: #ffede0;                /* button_fg_color */
+    border: 1px solid #ffede0;     /* button_border_color */
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-width: 80px;
+}
+
+QPushButton:hover {
+    background-color: #feb877;     /* Przejście w accent przy hoverze */
+    color: #000000;                /* Tekst staje się czarny */
+    border-color: #feb877;
+}
+
+QPushButton:pressed {
+    background-color: #d1965e;     /* Przyciemniony akcent */
+    color: #000000;
+}
+
+QPushButton:disabled {
+    background-color: #19120c;
+    color: #555555;
+    border-color: #555555;
+}
+
+/* Pola wyboru (ComboBox / Dropdown) */
+QComboBox {
+    background-color: #372f28;
+    border: 1px solid #ffede0;
+    border-radius: 4px;
+    padding: 4px;
+    color: #ffffff;
+}
+
+QComboBox::drop-down {
+    border: none;
+}
+
+/* Paski postępu (ProgressBar podczas instalacji) */
+QProgressBar {
+    border: 1px solid #372f28;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #19120c;
+    color: #ffffff;
+}
+
+QProgressBar::chunk {
+    background-color: #feb877; /* Postęp w kolorze accent */
+    border-radius: 3px;
+}
+
+/* Pola tekstowe (np. nazwa użytkownika, host) */
+QLineEdit {
+    background-color: #19120c;
+    border: 1px solid #372f28;
+    border-radius: 4px;
+    padding: 6px;
+    color: #ffffff;
+}
+
+QLineEdit:focus {
+    border: 1px solid #feb877; /* Podświetlenie akcentem przy wpisywaniu */
+}
+
+/* Etykiety i nagłówki */
+QLabel {
+    color: #ffffff;
+}

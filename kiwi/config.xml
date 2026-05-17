@@ -63,11 +63,15 @@
         <package name="cpio" />
         <package name="squashfs" />
         <package name="device-mapper" />
+        <package name="gparted" />
         <package name="grub2" />
         <package name="grub2-x86_64-efi" />
         <!-- Installer -->
-        <!-- <package name="calamares" />
-        <package name="calamares-lang" /> -->
+        <package name="cage" />
+        <package name="calamares" />
+        <package name="calamares-settings-veles" />
+        <package name="calamares-lang" />
+
 
     </packages>
 </image>
