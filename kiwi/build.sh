@@ -9,7 +9,7 @@ LIVE_BUILD_DIR="${PROJECT_DIR}/build/live"
 OVERLAY_IMG_DIR="${PROJECT_DIR}/root/usr/share/veles-images"
 
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
-sudo rm -rf "${PROJECT_DIR}/build"
+sudo rm -rf "${PROJECT_DIR}"
 mkdir -p "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie profilu TargetRootfs (.img) ==="
