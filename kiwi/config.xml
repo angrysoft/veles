@@ -13,7 +13,8 @@
             flags="overlay"
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
-            hybridpersistent="true" />
+            hybridpersistent="true"
+            kernelcmdline="quiet loglevel=3" />
         <!-- <type
             image="oem"
             firmware="uefi"
