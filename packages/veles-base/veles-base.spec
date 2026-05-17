@@ -122,7 +122,7 @@ cat > %{buildroot}%{_sysconfdir}/sudoers.d/wheel <<EOF
 %wheel ALL=(ALL:ALL) NOPASSWD: ALL
 EOF
 chown root:root %{buildroot}%{_sysconfdir}/sudoers.d/wheel
-chown 0440 %{buildroot}%{_sysconfdir}/sudoers.d/wheel
+chmod 0440 %{buildroot}%{_sysconfdir}/sudoers.d/wheel
 
 
 %files
