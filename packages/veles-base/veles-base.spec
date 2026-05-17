@@ -41,6 +41,7 @@ Requires: efibootmgr
 Requires: elfutils
 Requires: file
 Requires: filesystem
+Requires: findutils
 Requires: fwupd
 Requires: fwupd-lang
 Requires: glibc
@@ -68,6 +69,7 @@ Requires: openssh
 Requires: pam
 Requires: pam-config
 Requires: pam_pwquality
+Requires: parted
 Requires: pciutils
 Requires: perl-base
 Requires: procps
