@@ -1,6 +1,6 @@
 [Unit]
 Description=Calamares Installer Kiosk Mode (Weston)
-After=systemd-user-sessions.service plymouth-quit-wait.service systemd-udevd.service
+After=systemd-user-sessions.service plymouth-quit-wait.service systemd-udevd.service systemd-logind.service
 Before=getty@tty1.service
 Conflicts=getty@tty1.service
 
@@ -9,10 +9,15 @@ Type=simple
 User=root
 WorkingDirectory=/root
 
-# Wymagane zmienne dla środowiska Wayland i Qt
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+TTYPath=/dev/tty1
+UtmpIdentifier=tty1
+
 Environment=XDG_RUNTIME_DIR=/run/user/0
-Environment=WAYLAND_DISPLAY=wayland-0
 Environment=QT_QPA_PLATFORM=wayland
+Environment=XDG_SEAT=seat0
 
 ExecStartPre=/usr/bin/mkdir -p /run/user/0
 ExecStartPre=/usr/bin/chmod 0700 /run/user/0
@@ -20,8 +25,7 @@ ExecStartPre=/usr/bin/chmod 0700 /run/user/0
 ExecStart=/usr/bin/weston --tty=1 --config=/etc/xdg/weston/weston.ini
 
 Restart=on-failure
-StandardInput=tty-fail
-StandardOutput=journal
+RestartSec=2
 
 [Install]
 WantedBy=multi-user.target
