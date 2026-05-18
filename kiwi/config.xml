@@ -7,14 +7,21 @@
     </description>
 
     <preferences profiles="Installer">
-        <type
+        <!-- <type
             image="iso"
             primary="true"
             flags="overlay"
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
             hybridpersistent="true"
-            kernelcmdline="quiet loglevel=3" />
+            kernelcmdline="quiet loglevel=3" /> -->
+        <type
+            image="iso"
+            primary="true"
+            flags="overlay"
+            firmware="uefi"
+            hybridpersistent_filesystem="ext4"
+            hybridpersistent="true" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
