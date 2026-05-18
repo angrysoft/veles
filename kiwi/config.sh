@@ -1,8 +1,6 @@
 #!/bin/bash
-systemctl set-default multi-user.target
 
 # systemctl enable getty@tty1.service
-systemctl enable NetworkManager.service
 
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
@@ -14,8 +12,10 @@ setup_installer() {
     #         return polkit.Result.YES;
     #     }
     # });
-
-    systemctl disable getty@tty1.service
+    
+    systemctl set-default multi-user.target
+    systemctl enable NetworkManager.service
+    systemctl enable getty@tty1.service
     systemctl enable calamares-installer.service
     # systemctl enable polkit.service
 }
@@ -23,15 +23,15 @@ setup_installer() {
 
 setup_target_rootfs() {
     echo "LOG: Konfiguracja dla profilu TargetRootfs (docelowy system)"
-    # Wyłączenie usług, które nie powinny być aktywne domyślnie u użytkownika
-        # lub konfiguracja bazowych usług systemowych
-        systemctl enable NetworkManager.service
-        systemctl enable systemd-timesyncd.service
-        
-        # Czyszczenie cache menedżera pakietów, by odchudzić docelowy obraz .img
-        if command -v zypper &> /dev/null; then
-            zypper clean -a
-        fi
+    systemctl set-default graphical.target
+    systemctl enable NetworkManager.service
+    systemctl enable systemd-timesyncd.service
+    systemctl enable getty@tty1.service
+    
+    # Czyszczenie cache menedżera pakietów, by odchudzić docelowy obraz .img
+    if command -v zypper &> /dev/null; then
+        zypper clean -a
+    fi
 }
 
 
