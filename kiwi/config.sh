@@ -15,7 +15,7 @@ setup_installer() {
     
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
-    systemctl enable getty@tty1.service
+    #systemctl enable getty@tty1.service
     systemctl enable calamares-installer.service
     # systemctl enable polkit.service
 }
