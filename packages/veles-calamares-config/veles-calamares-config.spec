@@ -8,7 +8,7 @@
 
 Name:           veles-calamares-config
 Version:        0.1.0
-Release:        1
+Release:        2
 Summary:        Minimalistyczna konfiguracja i branding Calamares dla Veles Linux
 License:        GPL-3.0-or-later
 URL:            https://github.com/angrysoft/veles/packages/veles-calamares-config
@@ -16,6 +16,7 @@ Group:          System/Management
 
 Requires:       calamares
 Requires:       calamares-lang
+Requires:       libqt5-qtwayland
 Requires:       weston
 Requires:       polkit
 
