@@ -28,6 +28,7 @@ Requires: apparmor-utils
 Requires: audit
 Requires: bash
 Requires: btrfsprogs
+Requires: btrfsmaintenance
 Requires: bzip2
 Requires: ca-certificates-mozilla
 Requires: chrony

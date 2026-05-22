@@ -2,6 +2,44 @@
 
 # systemctl enable getty@tty1.service
 
+generate_repos_files() {
+    echo "LOG: Generowanie plików repozytoriów dla KIWI..."
+    # Przykładowa implementacja, dostosuj do swoich potrzeb
+    # Możesz użyć szablonów lub wygenerować pliki na podstawie zmiennych środowiskowych
+    cat <<EOF > /etc/zypp/repos.d/oss.repo
+[oss]
+name=Repozytorium OSS
+enabled=1
+autorefresh=1
+baseurl=http://download.opensuse.org/tumbleweed/repo/oss
+path=/
+type=rpm-md
+keeppackages=0
+EOF
+
+    cat <<EOF > /etc/zypp/repos.d/non-oss.repo
+[non-oss]
+name=Repozytorium Non-OSS
+enabled=1
+autorefresh=1
+baseurl=http://download.opensuse.org/tumbleweed/repo/non-oss
+path=/
+type=rpm-md
+keeppackages=0
+EOF
+
+    cat <<EOF > /etc/zypp/repos.d/update.repo
+[update]
+name=Repozytorium aktualizacji
+enabled=1
+autorefresh=1
+baseurl=http://download.opensuse.org/update/tumbleweed
+path=/
+type=rpm-md
+keeppackages=0
+EOF
+}
+
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
 
@@ -12,12 +50,13 @@ setup_installer() {
     #         return polkit.Result.YES;
     #     }
     # });
-    
+
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
     #systemctl enable getty@tty1.service
     systemctl enable calamares-installer.service
     # systemctl enable polkit.service
+    generate_repos_files
 }
 
 
@@ -27,7 +66,7 @@ setup_target_rootfs() {
     systemctl enable NetworkManager.service
     systemctl enable systemd-timesyncd.service
     systemctl enable getty@tty1.service
-    
+    generate_repos_files
     # Czyszczenie cache menedżera pakietów, by odchudzić docelowy obraz .img
     if command -v zypper &> /dev/null; then
         zypper clean -a
@@ -47,7 +86,7 @@ case " $kiwi_profiles " in
     *" TargetRootfs "*)
         setup_target_rootfs
         ;;
-        
+
     *)
         echo "WAR: Nie rozpoznano profilu lub budowany jest profil domyślny!"
         ;;

@@ -21,7 +21,8 @@
             flags="overlay"
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
-            hybridpersistent="true" />
+            hybridpersistent="true"
+            kernelcmdline="loglevel=3" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
@@ -61,7 +62,7 @@
             password="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
             home="/home/live"
             name="live"
-            groups="users,wheel"
+            groups="users,wheel,audio,video,input"
         />
     </users>
     <packages type="bootstrap">
