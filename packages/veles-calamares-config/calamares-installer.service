@@ -6,8 +6,8 @@ Conflicts=getty@tty1.service
 
 [Service]
 Type=simple
-User=root
-WorkingDirectory=/root
+User=live
+WorkingDirectory=/home/live
 
 StandardInput=tty
 StandardOutput=journal
@@ -15,12 +15,12 @@ StandardError=journal
 TTYPath=/dev/tty1
 UtmpIdentifier=tty1
 
-Environment=XDG_RUNTIME_DIR=/run/user/0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
 Environment=QT_QPA_PLATFORM=wayland
 Environment=XDG_SEAT=seat0
 
-ExecStartPre=/usr/bin/mkdir -p /run/user/0
-ExecStartPre=/usr/bin/chmod 0700 /run/user/0
+ExecStartPre=/usr/bin/mkdir -p /run/user/1000
+ExecStartPre=/usr/bin/chmod 0700 /run/user/1000
 
 ExecStart=/usr/bin/weston --tty=1 --config=/etc/xdg/weston/weston.ini
 

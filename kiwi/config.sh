@@ -53,6 +53,7 @@ type=rpm-md
 keeppackages=0
 priority=1
 EOF
+zypper --gpg-auto-import-keys refresh
 }
 
 setup_installer() {

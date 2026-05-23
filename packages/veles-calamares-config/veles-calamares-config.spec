@@ -17,6 +17,7 @@ Group:          System/Management
 Requires:       calamares
 Requires:       calamares-lang
 Requires:       libqt5-qtwayland
+Requires:       cantarell-fonts
 Requires:       weston
 Requires:       polkit
 
