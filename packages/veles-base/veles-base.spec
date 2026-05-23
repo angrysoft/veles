@@ -74,6 +74,8 @@ Requires: parted
 Requires: pciutils
 Requires: perl-base
 Requires: procps
+Requires: psmisc
+Requires: psmisc-lang
 Requires: rpm
 Requires: sed
 Requires: shadow

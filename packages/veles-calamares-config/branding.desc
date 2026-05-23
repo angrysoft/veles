@@ -20,6 +20,9 @@ images:
   productIcon:    "veles-logo.png"
   productWelcome: "welcome.png"
 
+slideshow:               "show.qml"
+slideshowAPI:            1
+
 
 style:
   sidebarBackground:    "#19120c"
