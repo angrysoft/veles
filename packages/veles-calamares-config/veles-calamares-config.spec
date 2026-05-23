@@ -62,6 +62,7 @@ install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.con
 
 # Branding and styling
 install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
+install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/show.qml
 install -m 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/calamares/branding/veles/stylesheet.qss
 install -m 644 %{SOURCE9} %{buildroot}%{_sysconfdir}/calamares/branding/veles/veles-logo.png
 install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
@@ -87,6 +88,7 @@ install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %{_sysconfdir}/calamares/modules/partitions.conf
 %{_sysconfdir}/calamares/modules/users.conf
 %{_sysconfdir}/calamares/branding/veles/branding.desc
+%{_sysconfdir}/calamares/branding/veles/show.qml
 %{_sysconfdir}/calamares/branding/veles/stylesheet.qss
 %{_sysconfdir}/calamares/branding/veles/veles-logo.png
 %{_sysconfdir}/calamares/branding/veles/welcome.png
