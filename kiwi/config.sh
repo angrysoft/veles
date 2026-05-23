@@ -53,6 +53,7 @@ type=rpm-md
 keeppackages=0
 priority=1
 EOF
+}
 
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
@@ -71,6 +72,7 @@ setup_installer() {
     systemctl enable calamares-installer.service
     # systemctl enable polkit.service
     generate_repos_files
+    zypper clean -a
 }
 
 
@@ -81,10 +83,7 @@ setup_target_rootfs() {
     systemctl enable systemd-timesyncd.service
     systemctl enable getty@tty1.service
     generate_repos_files
-    # Czyszczenie cache menedżera pakietów, by odchudzić docelowy obraz .img
-    if command -v zypper &> /dev/null; then
-        zypper clean -a
-    fi
+    zypper clean -a
 }
 
 
