@@ -1,9 +1,9 @@
 /* ── Globalne okno ─────────────────────────────────────────── */
 QWidget {
-    background-color:  #19120c;
-    color:             #ffffff;
-    font-family:       "Inter", "Noto Sans", sans-serif;
-    font-size:         13px;
+    background-color: #19120c;
+    color:            #ffffff;
+    font-family:      "Inter", "Noto Sans", sans-serif;
+    font-size:        13px;
 }
 
 /* ── Sidebar / nawigacja ────────────────────────────────────── */
@@ -13,9 +13,9 @@ QWidget {
 }
 
 #sidebarApp QLabel {
-    color:       #ffede0;
-    font-size:   13px;
-    padding:     6px 0;
+    color:     #ffede0;
+    font-size: 13px;
+    padding:   6px 0;
 }
 
 /* Aktywny krok — podświetlony */
@@ -28,16 +28,15 @@ QWidget {
     padding-left:     13px;
 }
 
-/* Ukończony krok */
+/* Ukończony krok — przyciemniony kolor zamiast opacity */
 #sidebarApp QListView::item[done="true"] {
-    color: #ffede0;
-    opacity: 0.6;
+    color: #a08878;
+    padding: 8px 16px;
 }
 
-/* Przyszły krok */
+/* Przyszły krok — mocniej przyciemniony kolor zamiast opacity */
 #sidebarApp QListView::item {
-    color:   #ffede0;
-    opacity: 0.4;
+    color:   #6b5548;
     padding: 8px 16px;
 }
 
@@ -83,20 +82,19 @@ QPushButton#next:pressed {
 /* Przycisk "Wstecz" */
 QPushButton#back {
     background-color: transparent;
-    color:            #ffede0;
+    color:            #b09080;
     border-color:     #4a3d30;
-    opacity:          0.7;
 }
 
 /* ── Pola tekstowe ──────────────────────────────────────────── */
 QLineEdit,
 QTextEdit,
 QPlainTextEdit {
-    background-color: #372f28;
-    color:            #ffffff;
-    border:           1px solid #4a3d30;
-    border-radius:    6px;
-    padding:          6px 10px;
+    background-color:           #372f28;
+    color:                      #ffffff;
+    border:                     1px solid #4a3d30;
+    border-radius:              6px;
+    padding:                    6px 10px;
     selection-background-color: #feb877;
     selection-color:            #000000;
 }
@@ -115,15 +113,15 @@ QComboBox {
     padding:          6px 10px;
 }
 
-QComboBox:hover   { border-color: #feb877; }
+QComboBox:hover    { border-color: #feb877; }
 QComboBox::drop-down { border: none; width: 24px; }
 
 QComboBox QAbstractItemView {
-    background-color: #19120c;
-    color:            #ffffff;
+    background-color:           #19120c;
+    color:                      #ffffff;
     selection-background-color: #372f28;
     selection-color:            #feb877;
-    border:           1px solid #4a3d30;
+    border:                     1px solid #4a3d30;
 }
 
 /* ── Listy i tabele ─────────────────────────────────────────── */
@@ -193,8 +191,8 @@ QRadioButton::indicator:checked {
 
 /* ── ScrollBar ──────────────────────────────────────────────── */
 QScrollBar:vertical {
-    background:  #19120c;
-    width:       8px;
+    background:    #19120c;
+    width:         8px;
     border-radius: 4px;
 }
 
@@ -219,20 +217,19 @@ QFrame[frameShape="5"] {
 
 /* ── Etykiety / nagłówki strony ─────────────────────────────── */
 QLabel#title {
-    color:     #feb877;
-    font-size: 20px;
+    color:       #feb877;
+    font-size:   20px;
     font-weight: 600;
 }
 
 QLabel#subtitle {
-    color:   #ffede0;
-    opacity: 0.6;
+    color:     #b09a84;
     font-size: 13px;
 }
 
 /* ── Partycje – pasek graficzny ─────────────────────────────── */
 #partitionBarsView {
-    background: #1f1610;
-    border:     1px solid #372f28;
+    background:    #1f1610;
+    border:        1px solid #372f28;
     border-radius: 8px;
 }
