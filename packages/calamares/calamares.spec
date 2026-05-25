@@ -27,7 +27,6 @@ Group:          System/Management
 URL:            https://calamares.io/
 Source0:        https://github.com/%{name}/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 Source1:        https://github.com/%{name}/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz.asc
-Source2:        calamares.keyring
 
 BuildRequires:  cmake >= 3.5
 BuildRequires:  desktop-file-utils
@@ -42,16 +41,18 @@ BuildRequires:  ki18n-devel
 BuildRequires:  kiconthemes-devel
 BuildRequires:  kio-devel
 BuildRequires:  kparts-devel
-BuildRequires:  kpmcore-devel >= 3.3
+BuildRequires:  kpmcore-devel
 BuildRequires:  kservice-devel
 BuildRequires:  libatasmart-devel
 BuildRequires:  libboost_python3-devel
 BuildRequires:  libpolkit-qt5-1-devel
-BuildRequires:  libqt6-qtbase-devel
-BuildRequires:  libqt6-qtdeclarative-devel
-BuildRequires:  libqt6-qtsvg-devel
-BuildRequires:  libqt6-qttools-devel
-BuildRequires:  libqt6-qtwebengine-devel
+BuildRequires:  qt6-base-devel
+BuildRequires:  qt6-declarative-devel
+BuildRequires:  qt6-svg-devel
+BuildRequires:  qt6-tools-devel
+BuildRequires:  qt6-webenginecore-devel
+#BuildRequires:  qt6-webenginecorequick-devel
+#BuildRequires:  qt6-webenginecorewidgets-devel
 BuildRequires:  parted-devel
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel >= 3.3
@@ -137,7 +138,7 @@ based custom appliances.
 
 %prep
 %autosetup -N
-cp -f %{SOURCE3} src/branding/default/
+#cp -f %{SOURCE3} src/branding/default/
 %autopatch -p1
 # fix shebang
 find . -wholename "./src/modules/*/main.py" -exec sed -re "1s/^#\!\/usr\/bin\/env python3/#\!\/usr\/bin\/python3/" -i {} \;
