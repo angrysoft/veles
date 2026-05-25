@@ -18,7 +18,7 @@ Requires:       calamares
 Requires:       calamares-lang
 Requires:       libqt5-qtwayland
 Requires:       cantarell-fonts
-Requires:       weston
+Requires:       sway
 Requires:       polkit
 
 Requires:       parted
@@ -31,7 +31,7 @@ Requires:       systemd-boot
 Source0:        settings.conf
 Source1:        unpackfs.conf
 Source2:        bootloader.conf
-Source3:        partitions.conf
+Source3:        partition.conf
 Source4:        users.conf
 Source5:        branding.desc
 Source6:        stylesheet.qss
@@ -58,7 +58,7 @@ install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/calamares/settings.conf
 # Modules configuration
 install -Dm 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/calamares/modules/unpackfs.conf
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/calamares/modules/bootloader.conf
-install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/calamares/modules/partitions.conf
+install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/calamares/modules/partition.conf
 install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.conf
 
 # Branding and styling
@@ -86,7 +86,7 @@ install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %{_sysconfdir}/calamares/settings.conf
 %{_sysconfdir}/calamares/modules/unpackfs.conf
 %{_sysconfdir}/calamares/modules/bootloader.conf
-%{_sysconfdir}/calamares/modules/partitions.conf
+%{_sysconfdir}/calamares/modules/partition.conf
 %{_sysconfdir}/calamares/modules/users.conf
 %{_sysconfdir}/calamares/branding/veles/branding.desc
 %{_sysconfdir}/calamares/branding/veles/show.qml

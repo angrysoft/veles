@@ -56,6 +56,44 @@ EOF
 zypper --gpg-auto-import-keys refresh
 }
 
+gen_sway_live_config() {
+    echo "LOG: Generowanie konfiguracji Sway dla profilu Installer (LiveCD)"
+    # Przykładowa implementacja, dostosuj do swoich potrzeb
+    mkdir -p /home/live/.config/sway
+    cat <<EOF > /home/live/.config/sway/config
+    # outputs
+output * enable bg #19120c solid_color
+
+# no decorations
+default_border none
+hide_edge_borders both
+
+# disable mouse focus
+focus_follows_mouse no
+
+# autostart
+exec calamares && swaymsg exit
+EOF
+    chown -R live:live /home/live/.config/sway
+}
+
+gen_run_installer() {
+    echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
+    # Przykładowa implementacja, dostosuj do swoich potrzeb
+    cat <<EOF > /usr/local/bin/run_installer.sh
+#!/bin/bash
+# Skrypt uruchamiający instalator Calamares
+calamares
+if [ $? -ne 0 ]; then
+    echo "Błąd: Nie można uruchomić instalatora Calamares!"
+    exit 1
+fi
+systemctl reboot
+EOF
+    chmod +x /usr/local/bin/run_installer.sh
+}
+ 
+
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
 
@@ -69,11 +107,24 @@ setup_installer() {
 
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
-    #systemctl enable getty@tty1.service
-    systemctl enable calamares-installer.service
-    # systemctl enable polkit.service
+    systemctl enable getty@tty1.service
+    #systemctl enable calamares-installer.service
     generate_repos_files
     zypper clean -a
+    cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
+polkit.addRule(function(action, subject) {
+    if (action.id === "org.freedesktop.calamares.run" &&
+        subject.isInGroup("live")) {
+        return polkit.Result.YES;
+        }
+});
+EOF
+cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
+EOF 
+    
 }
 
 
