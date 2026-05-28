@@ -111,14 +111,6 @@ setup_installer() {
     #systemctl enable calamares-installer.service
     generate_repos_files
     zypper clean -a
-    cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
-polkit.addRule(function(action, subject) {
-    if (action.id === "org.freedesktop.calamares.run" &&
-        subject.isInGroup("live")) {
-        return polkit.Result.YES;
-        }
-});
-EOF
 cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 ExecStart=
