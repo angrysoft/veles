@@ -1,0 +1,8 @@
+<services>
+  <service name="download_url">
+    <param name="url">https://codeberg.org/Calamares/calamares/releases/download/v3.4.2/calamares-3.4.2.tar.gz</param>
+  </service>
+  <service name="download_url">
+    <param name="url">https://codeberg.org/Calamares/calamares/releases/download/v3.4.2/calamares-3.4.2.tar.gz.asc</param>
+  </service>
+</services>
