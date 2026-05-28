@@ -111,12 +111,21 @@ setup_installer() {
     #systemctl enable calamares-installer.service
     generate_repos_files
     zypper clean -a
-cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
+# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+# [Service]
+# ExecStart=
+# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
+# EOF
+
+cat <<EOF > /etc/systemd/logind.conf.d/autologin.conf
+[Login]
+NAutoVTs=1
+ReserveVT=1
+KillUserProcesses=no
+AutomaticLogin=live
+AutomaticLoginShell=/bin/bash
 EOF
-    
+
 }
 
 
