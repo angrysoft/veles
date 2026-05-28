@@ -80,7 +80,7 @@ EOF
 gen_run_installer() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
-    cat <<EOF > /usr/local/bin/run_installer.sh
+cat <<EOF > /usr/local/bin/run_installer.sh
 #!/bin/bash
 # Skrypt uruchamiający instalator Calamares
 calamares
@@ -115,7 +115,7 @@ cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
-EOF 
+EOF
     
 }
 
