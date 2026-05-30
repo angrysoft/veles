@@ -15,7 +15,6 @@ baseurl=http://download.opensuse.org/tumbleweed/repo/oss
 path=/
 type=rpm-md
 keeppackages=0
-priority=10
 EOF
 
     cat <<EOF > /etc/zypp/repos.d/non-oss.repo
@@ -27,7 +26,6 @@ baseurl=http://download.opensuse.org/tumbleweed/repo/non-oss
 path=/
 type=rpm-md
 keeppackages=0
-priority=10
 EOF
 
     cat <<EOF > /etc/zypp/repos.d/update.repo
@@ -39,7 +37,6 @@ baseurl=http://download.opensuse.org/update/tumbleweed
 path=/
 type=rpm-md
 keeppackages=0
-priority=10
 EOF
 
     cat <<EOF > /etc/zypp/repos.d/veles.repo
@@ -53,7 +50,13 @@ type=rpm-md
 keeppackages=0
 priority=1
 EOF
-zypper --gpg-auto-import-keys refresh
+
+#add vendor
+    cat <<EOF > /etc/zypp/vendors.d/00-veles.repo
+[main]
+vendors=Veles,obs://build.opensuse.org/home:angrysoft,openSUSE
+EOF
+    zypper --gpg-auto-import-keys refresh
 }
 
 gen_sway_live_config() {
@@ -72,7 +75,7 @@ hide_edge_borders both
 focus_follows_mouse no
 
 # autostart
-exec calamares && swaymsg exit
+exec pkexec calamares && swaymsg exit
 EOF
     chown -R live:live /home/live/.config/sway
 }
@@ -84,6 +87,15 @@ cat <<EOF >> /etc/greetd/config.toml
 [initial_session]
 command = "sway"
 user = "live"
+EOF
+
+cat <<EOF > /usr/share/polkit-1/rules.d/49-calamares.rules
+polkit.addRule(function(action, subject) {
+    if (action.id === "org.freedesktop.policykit.exec" &&
+        action.lookup("program") === "/usr/bin/calamares") {
+        return polkit.Result.YES;
+    }
+});
 EOF
 
 # cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf

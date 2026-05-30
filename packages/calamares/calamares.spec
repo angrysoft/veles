@@ -87,7 +87,7 @@ Requires:       util-linux
 Requires:       xdg-utils
 Requires:       xkbutils
 Requires:       zypper
-Requires:       libqt6-qtwayland
+Requires:       qt6-wayland
 Requires:       cantarell-fonts
 Requires:       btrfsprogs
 Requires:       systemd-boot
