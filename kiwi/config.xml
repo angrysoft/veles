@@ -89,6 +89,7 @@
         <package name="grub2" />
         <package name="grub2-x86_64-efi" />
         <!-- Installer -->
+        <package name="greetd" />
         <package name="veles-calamares-config" />
     </packages>
 

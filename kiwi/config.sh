@@ -80,17 +80,17 @@ EOF
 gen_run_installer() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
-cat <<EOF > /usr/local/bin/run_installer.sh
-#!/bin/bash
-# Skrypt uruchamiający instalator Calamares
-calamares
-if [ $? -ne 0 ]; then
-    echo "Błąd: Nie można uruchomić instalatora Calamares!"
-    exit 1
-fi
-systemctl reboot
+cat <<EOF >> /etc/greetd/config.toml
+[initial_session]
+command = "sway"
+user = "live"
 EOF
-    chmod +x /usr/local/bin/run_installer.sh
+
+# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+# [Service]
+# ExecStart=
+# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
+# EOF
 }
  
 
@@ -108,24 +108,11 @@ setup_installer() {
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
     systemctl enable getty@tty1.service
-    #systemctl enable calamares-installer.service
+    systemctl enable greetd.service
     generate_repos_files
     zypper clean -a
-# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
-# [Service]
-# ExecStart=
-# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
-# EOF
-
-cat <<EOF > /etc/systemd/logind.conf.d/autologin.conf
-[Login]
-NAutoVTs=1
-ReserveVT=1
-KillUserProcesses=no
-AutomaticLogin=live
-AutomaticLoginShell=/bin/bash
-EOF
-
+    gen_run_installer
+    gen_sway_live_config
 }
 
 
