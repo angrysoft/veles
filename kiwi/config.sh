@@ -80,6 +80,7 @@ EOF
     chown -R live:live /home/live/.config/sway
 }
 
+
 gen_run_installer() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
@@ -89,10 +90,10 @@ command = "sway"
 user = "live"
 EOF
 
-cat <<EOF > /usr/share/polkit-1/rules.d/49-calamares.rules
+cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
 polkit.addRule(function(action, subject) {
     if (action.id === "org.freedesktop.policykit.exec" &&
-        action.lookup("program") === "/usr/bin/calamares") {
+        subject.user === "live") {
         return polkit.Result.YES;
     }
 });

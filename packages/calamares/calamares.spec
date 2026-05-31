@@ -104,7 +104,7 @@ Requires:       grub2-efi
 %description
 Calamares is a distribution-independent installer framework, designed to install
 from a live CD/DVD/USB environment to a hard disk. It includes a graphical
-installation program based on Qt 5. Calamares can replace YaST2 Live Installer.
+installation program based on Qt.
 
 
 %package branding-upstream
@@ -125,8 +125,6 @@ BuildArch:      noarch
 %description branding-upstream
 This package provides configuration files and "look and feel" for
 Calamares installer. "Look and feel" files are simplified upstream files.
-Meanwhile configuration files adopted to work with openSUSE and SUSE
-based custom appliances.
 
 %lang_package
 
