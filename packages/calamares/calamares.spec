@@ -20,7 +20,7 @@
 
 Name:           calamares
 Version:        3.4.2
-Release:        1
+Release:        2
 Summary:        Installer from a live CD/DVD/USB to disk
 License:        GPL-3.0-or-later
 Group:          System/Management
