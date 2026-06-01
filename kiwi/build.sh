@@ -11,7 +11,7 @@ OVERLAY_IMG_DIR="${SCRIPT_DIR}/root/usr/share/veles-images"
 
 run_root() {
     if command -v run0 >/dev/null 2>&1; then
-        run0 --working-directory="${SCRIPT_DIR}" "$@"
+        run0 -D "${SCRIPT_DIR}" "$@"
     else
         sudo "$@"
     fi
