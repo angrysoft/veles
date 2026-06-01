@@ -75,7 +75,7 @@ hide_edge_borders both
 focus_follows_mouse no
 
 # autostart
-exec pkexec calamares && swaymsg exit
+exec sudo -E calamares
 EOF
     chown -R live:live /home/live/.config/sway
 }
@@ -92,7 +92,7 @@ EOF
 
 cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
 polkit.addRule(function(action, subject) {
-    if (action.id === "org.freedesktop.policykit.exec" &&
+    if (action.id === "io.calamares.calamares.pkexec.run" &&
         subject.user === "live") {
         return polkit.Result.YES;
     }

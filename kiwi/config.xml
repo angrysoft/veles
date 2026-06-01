@@ -31,7 +31,7 @@
     </preferences>
 
     <preferences profiles="TargetRootfs">
-        <type image="tbz" />
+        <type image="squashfs" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
