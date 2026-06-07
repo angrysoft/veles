@@ -7,11 +7,13 @@ PROJECT_DIR="${SCRIPT_DIR}/tmp"
 TARGET_BUILD_DIR="${PROJECT_DIR}/build/target"
 LIVE_BUILD_DIR="${PROJECT_DIR}/build/live"
 OVERLAY_IMG_DIR="${SCRIPT_DIR}/root/usr/share/veles-images"
-
+RM="rm -vrf"
+MKDIR="mkdir -pv"
+CP="cp -v"
 
 run_root() {
     if command -v run0 >/dev/null 2>&1; then
-        run0 -D "${SCRIPT_DIR}" "$@"
+        run0 --via-shell -D "${SCRIPT_DIR}" "$@"
     else
         sudo "$@"
     fi
@@ -35,9 +37,9 @@ run_root cp "${SCRIPT_DIR}/49-run0-cache.rules" /etc/polkit-1/rules.d/
 gen_polkit_helper
 
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
-run_root rm -rf "${PROJECT_DIR}"
-run_root rm -rf "${SCRIPT_DIR}/root"
-run_root mkdir -p "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
+run_root $RM "${PROJECT_DIR}"
+run_root $RM "${SCRIPT_DIR}/root"
+run_root $MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie profilu TargetRootfs (.squashfs) ==="
 run_root kiwi-ng --profile=TargetRootfs system build \
@@ -51,7 +53,7 @@ echo "Kopiuję: ${GENERATED_IMG}"
 echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 
 # Kopiujemy pod stałą nazwą, którą wcześniej wpisaliśmy do unpackfs.conf
-run_root cp "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
+run_root $CP "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 
 echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
 run_root kiwi-ng --profile=Installer system build \
