@@ -85,6 +85,7 @@ Requires: smartmontools
 Requires: system-group-wheel
 Requires: run0-policy-wheel-auth-self
 Requires: run0-wrappers
+Requires: polkit-default-privs
 Requires: system-user-bin
 Requires: system-user-daemon
 Requires: system-user-nobody

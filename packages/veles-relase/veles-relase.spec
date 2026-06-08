@@ -70,6 +70,7 @@ Base product flavor for Veles Linux.
 # /etc i /usr/lib
 mkdir -p %{buildroot}%{_sysconfdir}
 mkdir -p %{buildroot}%{_prefix}/lib/motd.d
+mkdir -p %{buildroot}%{_prefix}/lib/issue.d
 
 # os-release
 cat > %{buildroot}%{_prefix}/lib/os-release <<EOF
@@ -88,7 +89,7 @@ ln -s ..%{_prefix}/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
 # issue / motd
 echo -e 'Veles Linux %{version} \\r (\\l)\n' \
-    > %{buildroot}%{_sysconfdir}/issue
+    > %{buildroot}%{_prefix}/lib/issue.d/90-veles
 echo "Welcome to Veles Linux." \
     > %{buildroot}%{_prefix}/lib/motd.d/welcome
 
@@ -118,7 +119,7 @@ EOF
 # baseproduct symlink (wymagany przez zypp)
 ln -s veles.prod %{buildroot}%{_sysconfdir}/products.d/baseproduct
 
-# vendor config dla zypp (żeby akceptował pakiety z twojego OBS)
+# vendor config
 mkdir -p %{buildroot}%{_sysconfdir}/zypp/vendors.d
 cat > %{buildroot}%{_sysconfdir}/zypp/vendors.d/00-veles.conf <<EOF
 [main]
@@ -136,6 +137,7 @@ echo "Base flavor for Veles Linux." \
 %{_sysconfdir}/issue
 %{_prefix}/lib/os-release
 %config(noreplace) %{_sysconfdir}/issue.net
+%{_prefix}/lib/issue.d/90-veles
 %{_prefix}/lib/motd.d/welcome
 %dir %{_sysconfdir}/products.d
 %{_sysconfdir}/products.d/veles.prod
