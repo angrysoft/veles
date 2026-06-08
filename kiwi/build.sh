@@ -11,11 +11,18 @@ RM="rm -vrf"
 MKDIR="mkdir -pv"
 CP="cp -v"
 
-run_root() {
-    if command -v run0 >/dev/null 2>&1; then
-        run0 --via-shell -D "${SCRIPT_DIR}" "$@"
-    else
-        sudo "$@"
+# run_root() {
+#     if command -v run0 >/dev/null 2>&1; then
+#         run0 --via-shell -D "${SCRIPT_DIR}" "$@"
+#     else
+#         sudo "$@"
+#     fi
+# }
+
+check_root() {
+    if [ "$(id -u)" -ne 0 ]; then
+        echo "Ten skrypt musi być uruchomiony jako root lub za pomocą run0."
+        exit 1
     fi
 }
 
@@ -31,18 +38,20 @@ polkit.addRule(function(action, subject) {
        }
    });
 EOF
-run_root cp "${SCRIPT_DIR}/49-run0-cache.rules" /etc/polkit-1/rules.d/
+cp "${SCRIPT_DIR}/49-run0-cache.rules" /etc/polkit-1/rules.d/
 }
 
 # gen_polkit_helper
 
+check_root
+
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
-run_root $RM "${PROJECT_DIR}"
-run_root $RM "${SCRIPT_DIR}/root"
-run_root $MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
+$RM "${PROJECT_DIR}"
+$RM "${SCRIPT_DIR}/root"
+$MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie profilu TargetRootfs (.squashfs) ==="
-run_root kiwi-ng --profile=TargetRootfs system build \
+kiwi-ng --profile=TargetRootfs system build \
     --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
@@ -53,10 +62,10 @@ echo "Kopiuję: ${GENERATED_IMG}"
 echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 
 # Kopiujemy pod stałą nazwą, którą wcześniej wpisaliśmy do unpackfs.conf
-run_root $CP "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
+$CP "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 
 echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
-run_root kiwi-ng --profile=Installer system build \
+kiwi-ng --profile=Installer system build \
     --description "." \
     --target-dir "${LIVE_BUILD_DIR}"
 
