@@ -34,7 +34,7 @@ EOF
 run_root cp "${SCRIPT_DIR}/49-run0-cache.rules" /etc/polkit-1/rules.d/
 }
 
-gen_polkit_helper
+# gen_polkit_helper
 
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
 run_root $RM "${PROJECT_DIR}"
