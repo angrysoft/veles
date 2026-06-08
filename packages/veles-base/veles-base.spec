@@ -63,6 +63,7 @@ Requires: libnss_usrfiles2
 Requires: man
 Requires: ncurses-utils
 Requires: neovim
+Requires: luajit-lpeg
 Requires: NetworkManager
 Requires: ntfs-3g
 Requires: ntfsprogs
@@ -80,8 +81,10 @@ Requires: rpm
 Requires: sed
 Requires: shadow
 Requires: smartmontools
-Requires: sudo
+#Requires: sudo
 Requires: system-group-wheel
+Requires: run0-policy-wheel-auth-self
+Requires: run0-wrappers
 Requires: system-user-bin
 Requires: system-user-daemon
 Requires: system-user-nobody
@@ -110,6 +113,7 @@ Requires: wtmpdb
 Requires: xz
 Requires: zip
 Requires: zsh
+Requires: grml-zsh-config
 
 %description
 Veles Linux — base configs

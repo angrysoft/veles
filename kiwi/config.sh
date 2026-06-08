@@ -75,7 +75,7 @@ hide_edge_borders both
 focus_follows_mouse no
 
 # autostart
-exec sudo -E calamares
+exec pkexec calamares
 EOF
     chown -R live:live /home/live/.config/sway
 }
