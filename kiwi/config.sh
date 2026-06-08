@@ -90,14 +90,14 @@ command = "sway"
 user = "live"
 EOF
 
-# cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
-# polkit.addRule(function(action, subject) {
-#     if (action.id === "io.calamares.calamares.pkexec.run" &&
-#         subject.user === "live") {
-#         return polkit.Result.YES;
-#     }
-# });
-# EOF
+cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
+polkit.addRule(function(action, subject) {
+    if (action.id === "io.calamares.calamares.pkexec.run" &&
+        subject.user === "live") {
+        return polkit.Result.YES;
+    }
+});
+EOF
 
 # cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
 # [Service]
