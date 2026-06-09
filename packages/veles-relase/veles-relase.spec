@@ -136,7 +136,7 @@ echo "Base flavor for Veles Linux." \
 %{_sysconfdir}/os-release
 %{_sysconfdir}/issue
 %{_prefix}/lib/os-release
-%config(noreplace) %{_sysconfdir}/issue.net
+# %config(noreplace) %{_sysconfdir}/issue.net
 %{_prefix}/lib/issue.d/90-veles
 %{_prefix}/lib/motd.d/welcome
 %dir %{_sysconfdir}/products.d
