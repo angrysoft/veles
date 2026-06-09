@@ -59,7 +59,7 @@ EOF
     zypper --gpg-auto-import-keys refresh
 }
 
-gen_sway_live_config() {
+create_sway_live_config() {
     echo "LOG: Generowanie konfiguracji Sway dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
     mkdir -p /home/live/.config/sway
@@ -81,7 +81,7 @@ EOF
 }
 
 
-gen_run_installer() {
+set_autologin() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
 cat <<EOF >> /etc/greetd/config.toml
@@ -89,6 +89,18 @@ cat <<EOF >> /etc/greetd/config.toml
 command = "sway"
 user = "live"
 EOF
+    systemctl enable greetd.service
+
+# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+# [Service]
+# ExecStart=
+# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
+# EOF
+}
+
+
+installer_polkit() {
+    echo "LOG: Konfiguracja Polkit dla profilu Installer (LiveCD)"
 
 cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
 polkit.addRule(function(action, subject) {
@@ -98,34 +110,20 @@ polkit.addRule(function(action, subject) {
     }
 });
 EOF
-
-# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
-# [Service]
-# ExecStart=
-# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
-# EOF
 }
  
 
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
 
-    # /usr/share/polkit-1/rules.d/49-calamares.rules
-    # polkit.addRule(function(action, subject) {
-    #     if (action.id === "org.freedesktop.calamares.run" &&
-    #         subject.isInGroup("live")) {
-    #         return polkit.Result.YES;
-    #     }
-    # });
-
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
-    systemctl enable getty@tty1.service
-    systemctl enable greetd.service
+    #systemctl enable getty@tty1.service
     generate_repos_files
     zypper clean -a
-    gen_run_installer
-    gen_sway_live_config
+    set_autologin
+    installer_polkit
+    create_sway_live_config
 }
 
 
