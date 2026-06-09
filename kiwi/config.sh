@@ -84,18 +84,26 @@ EOF
 set_autologin() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
-cat <<EOF >> /etc/greetd/config.toml
-[initial_session]
-command = "sway"
-user = "live"
-EOF
-    systemctl enable greetd.service
+#cat <<EOF >> /etc/greetd/config.toml
+#[initial_session]
+#command = "sway"
+#user = "live"
+#EOF
 
-# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
-# [Service]
-# ExecStart=
-# ExecStart=-/sbin/agetty --autologin live --noclear %I $TERM
-# EOF
+cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --noreset --noclear --autologin live - ${TERM}
+EOF
+
+cat <<EOF > /home/live/.bash_profile
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    exec sway
+    # press any to reboot
+        read -n 1 -s -r -p "Press any key to reboot..."
+        systemctl reboot
+fi
+EOF
 }
 
 
@@ -118,7 +126,7 @@ setup_installer() {
 
     systemctl set-default multi-user.target
     systemctl enable NetworkManager.service
-    #systemctl enable getty@tty1.service
+    systemctl enable getty@tty1.service
     generate_repos_files
     zypper clean -a
     set_autologin

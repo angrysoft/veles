@@ -114,7 +114,6 @@ Requires: wtmpdb
 Requires: xz
 Requires: zip
 Requires: zsh
-Requires: grml-zsh-config
 
 %description
 Veles Linux — base configs

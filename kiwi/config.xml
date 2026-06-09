@@ -62,6 +62,7 @@
             password="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
             home="/home/live"
             name="live"
+            shell="/bin/zsh"
             groups="users,wheel,audio,video,input"
         />
     </users>
@@ -89,7 +90,7 @@
         <package name="grub2" />
         <package name="grub2-x86_64-efi" />
         <!-- Installer -->
-        <package name="greetd" />
+        <!-- <package name="greetd" /> -->
         <package name="veles-calamares-config" />
     </packages>
 

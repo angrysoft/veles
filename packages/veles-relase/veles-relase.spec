@@ -45,7 +45,6 @@ Conflicts:      distribution-release
 %description
 Veles Linux — a RPM-based rolling distribution.
 
-# ---- flavor: base (odpowiednik ftp/dvd w openSUSE) ----
 %package -n veles-release-base
 License:        MIT
 Group:          System/Fhs
@@ -88,8 +87,8 @@ EOF
 ln -s ..%{_prefix}/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
 # issue / motd
-echo -e 'Veles Linux %{version} \\r (\\l)\n' \
-    > %{buildroot}%{_prefix}/lib/issue.d/90-veles
+echo -e 'Veles Linux \\r (\\l)\n' \
+    > %{buildroot}%{_prefix}/lib/issue.d/90-veles.issue
 echo "Welcome to Veles Linux." \
     > %{buildroot}%{_prefix}/lib/motd.d/welcome
 
@@ -138,7 +137,7 @@ echo "Base flavor for Veles Linux." \
 %dir %{_prefix}/lib
 %dir %{_prefix}/lib/issue.d
 %dir %{_prefix}/lib/motd.d
-%{_prefix}/lib/issue.d/90-veles
+%{_prefix}/lib/issue.d/90-veles.issue
 %{_prefix}/lib/motd.d/welcome
 %dir %{_sysconfdir}/products.d
 %{_sysconfdir}/products.d/veles.prod
