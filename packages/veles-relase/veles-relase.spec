@@ -123,7 +123,7 @@ ln -s veles.prod %{buildroot}%{_sysconfdir}/products.d/baseproduct
 mkdir -p %{buildroot}%{_sysconfdir}/zypp/vendors.d
 cat > %{buildroot}%{_sysconfdir}/zypp/vendors.d/00-veles.conf <<EOF
 [main]
-vendors=Veles,obs://build.opensuse.org/home:youruser:veles,openSUSE,SUSE
+vendors=Veles,obs://build.opensuse.org/home:angrysoft:veles,openSUSE,SUSE
 EOF
 
 # flavor doc
@@ -134,9 +134,10 @@ echo "Base flavor for Veles Linux." \
 %files
 %defattr(644,root,root,755)
 %{_sysconfdir}/os-release
-%{_sysconfdir}/issue
 %{_prefix}/lib/os-release
-# %config(noreplace) %{_sysconfdir}/issue.net
+%dir %{_prefix}/lib
+%dir %{_prefix}/lib/issue.d
+%dir %{_prefix}/lib/motd.d
 %{_prefix}/lib/issue.d/90-veles
 %{_prefix}/lib/motd.d/welcome
 %dir %{_sysconfdir}/products.d

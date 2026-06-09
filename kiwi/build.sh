@@ -11,13 +11,6 @@ RM="rm -vrf"
 MKDIR="mkdir -pv"
 CP="cp -v"
 
-# run_root() {
-#     if command -v run0 >/dev/null 2>&1; then
-#         run0 --via-shell -D "${SCRIPT_DIR}" "$@"
-#     else
-#         sudo "$@"
-#     fi
-# }
 
 check_root() {
     if [ "$(id -u)" -ne 0 ]; then
