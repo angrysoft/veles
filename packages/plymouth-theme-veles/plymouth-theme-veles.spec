@@ -8,8 +8,8 @@ License:        MIT
 URL:            https://github.com/angrysoft/veles
 BuildArch:      noarch
 
-Source0:        %{name}.plymouth
-Source1:        %{name}.script
+Source0:        veles.plymouth
+Source1:        veles.script
 Source2:        logo.png
 
 Requires:       plymouth
