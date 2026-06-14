@@ -15,9 +15,7 @@ Requires:       plymouth-plugin-script
 BuildRequires:  findutils
 
 %description
-Motyw splash screenu Plymouth dla Veles Linux.
-Ciemne tło (#19120c) z animowanym spinnerem i paskiem postępu
-w kolorze bursztynowym (#fab473).
+Plymouth theme for Veles linux
 
 %prep
 %autosetup
