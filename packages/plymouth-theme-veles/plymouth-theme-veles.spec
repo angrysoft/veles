@@ -34,15 +34,6 @@ install -m 0644 veles.script \
 install -m 0644 images/logo.png \
     %{buildroot}%{_datadir}/plymouth/themes/veles/images/logo.png
 
-%post
-if [ $1 -eq 1 ] || [ $1 -eq 2 ]; then
-    plymouth-set-default-theme veles 2>/dev/null || true
-fi
-
-%postun
-if [ $1 -eq 0 ]; then
-    plymouth-set-default-theme text 2>/dev/null || true
-fi
 
 %post
 if [ -x /usr/sbin/plymouth-set-default-theme ]; then
