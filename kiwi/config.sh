@@ -89,7 +89,7 @@ set_autologin() {
 #command = "sway"
 #user = "live"
 #EOF
-
+mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 ExecStart=

@@ -1,0 +1,108 @@
+# load grml-zsh-config
+source /etc/zsh/zshrc
+
+
+export CASE_SENSITIVE="true"
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_histfile
+HISTSIZE=1000
+SAVEHIST=1000
+# The "Magic" options for OMZ-like behavior:
+setopt SHARE_HISTORY          # Share history between all open sessions
+setopt EXTENDED_HISTORY       # Write the history file in the ":start:elapsed;command" format
+setopt INC_APPEND_HISTORY     # Write to the history file immediately, not when the shell exits
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history
+setopt HIST_IGNORE_DUPS       # Don't record an entry if it's just like the previous one
+setopt HIST_IGNORE_SPACE      # Don't record lines starting with a space
+setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks from history items
+
+
+autoload -Uz compinit
+compinit
+
+# Exports
+
+export PATH=$PATH:~/.local/bin
+export EDITOR="nvim"
+export SAL_USE_VCLPLUGIN=gtk4
+export JAVA_HOME=/usr/lib64/jvm/default
+export DOCKER_BUILDKIT=1
+export XDG_CURRENT_DESKTOP=sway.
+export XDG_SESSION_DESKTOP="${XDG_SESSION_DESKTOP:-sway}".
+export XDG_SESSION_TYPE=wayland.
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export GDK_BACKEND=wayland
+export QT_QPA_PLATFORM=wayland
+export MOZ_ENABLE_WAYLAND=1
+export OZONE_PLATFORM=wayland
+export GTK_THEME="Adwaita:dark"
+export WALLPAPER="~/Obrazy/Wallpapers/futuristic-home.jpg"
+export SSH_AUTH_SOCK="/run/user/$(id -u)/gcr/ssh"
+
+# Aliases
+
+alias rm='rm -I'
+alias rmv='rm -Iv'
+alias lla='la -alh'
+alias vim='nvim'
+alias svim='run0 /usr/bin/nvim'
+alias log='journalctl -n 50 -f -u'
+alias saferm='shred -vz'
+
+# systemctl aliases
+alias sc='run0 /usr/bin/systemctl'
+alias scu='systemctl --user'
+alias jc='journalctl -e'
+alias jcu='journalctl --user -e'
+
+# Git aliases
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log'
+alias gpl='git pull'
+alias gdf='git diff'
+alias gst='git status'
+alias gco='git checkout'
+alias gb='git branch'
+
+# Colors
+
+local on_containter='#ffede0'
+local on_tertiary='#000000'
+local primary='#fab473'
+local secondary='#debca1'
+local tertiary='#ebf5bf'
+local error='#ffece9'
+
+
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr "%F{$error} ●%f"
+zstyle ':vcs_info:*' stagedstr "%F{$primary} ✚%f"
+
+local git_reset='%f%k'
+zstyle ':vcs_info:*' formats " %F{${tertiary}}[  %b %c%u %F{${tertiary}}]${git_reset} "
+zstyle ':vcs_info:*' actionformats " %F{${tertiary}}[  %b %F{${error}}(%a) %F{${tertiary}}]${git_reset} "
+
+local symbol="%(?.%F{$primary}%f.%F{$error}%f)"
+
+zstyle ':prompt:grml:left:items:user' pre "%F{$primary}"
+zstyle ':prompt:grml:left:items:at' pre "%F{$secondary}"
+zstyle ':prompt:grml:left:items:at' post "%f"
+zstyle ':prompt:grml:left:items:host' pre "%F{$tertiary}"
+zstyle ':prompt:grml:left:items:path' pre "%F{$primary}[%f"
+zstyle ':prompt:grml:left:items:path' post "%F{$primary}]%f"
+
+zstyle ':prompt:grml:left:setup' items user at host path vcs
+zstyle ':prompt:grml:left:items:vcs' post " $symbol "
+
+zstyle ':prompt:grml:left:items:percent' v_clear true
+
+
+
+for f in ~/.shell.d/*.sh(N); do
+  source "$f"
+done
+
+test -s /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh && . /usr/share/zsh/plugins/zsh-syntax-highlighting.zsh

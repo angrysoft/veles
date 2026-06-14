@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Veles
+Description=Veles Linux boot splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/veles/images
+ScriptFile=/usr/share/plymouth/themes/veles/veles.script
