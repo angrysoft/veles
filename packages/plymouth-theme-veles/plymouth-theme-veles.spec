@@ -8,7 +8,9 @@ License:        MIT
 URL:            https://github.com/angrysoft/veles
 BuildArch:      noarch
 
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{name}.plymouth
+Source1:        %{name}.script
+Source2:        logo.png
 
 Requires:       plymouth
 Requires:       plymouth-plugin-script
@@ -31,7 +33,7 @@ install -m 0644 veles.plymouth \
 install -m 0644 veles.script \
     %{buildroot}%{_datadir}/plymouth/themes/veles/veles.script
 
-install -m 0644 images/logo.png \
+install -m 0644 logo.png \
     %{buildroot}%{_datadir}/plymouth/themes/veles/images/logo.png
 
 
@@ -50,7 +52,6 @@ fi
 %%{?regenerate_initrd_postun}
 
 %posttrans
-# Faktyczne uruchomienie przebudowania na samym końcu transakcji RPM
 %%{?regenerate_initrd_posttrans}
 
 %files
@@ -62,5 +63,5 @@ fi
 %{_datadir}/plymouth/themes/veles/images/logo.png
 
 %changelog
-* nie cze 14 2026 Sebastian Angrysoft <angrysoft@example.com> - 0.1.0-1
+* Sun Jun 14 2026 Sebastian Angrysoft <angrysoft@example.com> - 0.1.0-1
 - Pierwsza wersja motywu Veles
