@@ -1,5 +1,3 @@
-%{?dracut_modules_prereq}
-
 Name:           plymouth-theme-veles
 Version:        0.1.0
 Release:        1%{?dist}
@@ -12,50 +10,53 @@ Source0:        veles.plymouth
 Source1:        veles.script
 Source2:        logo.png
 
+BuildRequires:  dracut
+BuildRequires:  plymouth
+BuildRequires:  plymouth-plugin-script
+%{?dracut_modules_prereq}
+
 Requires:       plymouth
 Requires:       plymouth-plugin-script
-BuildRequires:  findutils
 
 %description
 Plymouth theme for Veles linux
 
 %prep
-%autosetup
 
 %build
 
 %install
 install -d %{buildroot}%{_datadir}/plymouth/themes/veles/images
 
-install -m 0644 veles.plymouth \
-    %{buildroot}%{_datadir}/plymouth/themes/veles/veles.plymouth
-
-install -m 0644 veles.script \
-    %{buildroot}%{_datadir}/plymouth/themes/veles/veles.script
-
-install -m 0644 logo.png \
-    %{buildroot}%{_datadir}/plymouth/themes/veles/images/logo.png
+install -m 0644 %{SOURCE0} %{buildroot}%{_datadir}/plymouth/themes/veles/veles.plymouth
+install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/plymouth/themes/veles/veles.script
+install -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/plymouth/themes/veles/images/logo.png
 
 
 %post
-if [ -x /usr/sbin/plymouth-set-default-theme ]; then
-    /usr/sbin/plymouth-set-default-theme veles || true
+if [ -d /run/systemd/system ] || [ ! -f /.buildenv ]; then
+    if [ -x /usr/sbin/plymouth-set-default-theme ]; then
+        /usr/sbin/plymouth-set-default-theme veles >/dev/null 2>&1 || true
+    fi
+    %{?regenerate_initrd_post}
 fi
-%%{?regenerate_initrd_post}
 
 %postun
 if [ $1 -eq 0 ]; then
-    if [ -x /usr/sbin/plymouth-set-default-theme ]; then
-        /usr/sbin/plymouth-set-default-theme script || true
+    if [ -d /run/systemd/system ] || [ ! -f /.buildenv ]; then
+        if [ -x /usr/sbin/plymouth-set-default-theme ]; then
+            /usr/sbin/plymouth-set-default-theme text >/dev/null 2>&1 || true
+        fi
+        %{?regenerate_initrd_postun}
     fi
 fi
-%%{?regenerate_initrd_postun}
 
 %posttrans
-%%{?regenerate_initrd_posttrans}
+if [ -d /run/systemd/system ] || [ ! -f /.buildenv ]; then
+    %{?regenerate_initrd_posttrans}
+fi
 
 %files
-%license LICENSE
 %dir %{_datadir}/plymouth/themes/veles/
 %dir %{_datadir}/plymouth/themes/veles/images/
 %{_datadir}/plymouth/themes/veles/veles.plymouth
