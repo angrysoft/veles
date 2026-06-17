@@ -35,10 +35,8 @@ Source3:        partition.conf
 Source4:        users.conf
 Source5:        branding.desc
 Source6:        stylesheet.qss
-Source7:        calamares-installer.service
-Source8:        weston.ini
-Source9:        veles-logo.png
-Source10:       welcome.png
+Source7:        veles-logo.png
+Source8:        welcome.png
 
 BuildArch:      noarch
 
@@ -65,12 +63,9 @@ install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.con
 install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
 install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/show.qml
 install -m 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/calamares/branding/veles/stylesheet.qss
-install -m 644 %{SOURCE9} %{buildroot}%{_sysconfdir}/calamares/branding/veles/veles-logo.png
-install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
+install -m 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/calamares/branding/veles/veles-logo.png
+install -m 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/calamares/branding/veles/welcome.png
 
-# System services and environment (using %{_prefix}/lib for noarch compliance)
-install -Dm 644 %{SOURCE7} %{buildroot}%{_prefix}/lib/systemd/system/calamares-installer.service
-install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 
 %files
 %defattr(-,root,root,-)
@@ -78,10 +73,6 @@ install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %dir %{_sysconfdir}/calamares/branding
 %dir %{_sysconfdir}/calamares/branding/veles
 %dir %{_sysconfdir}/calamares/modules
-%dir %{_sysconfdir}/xdg
-%dir %{_sysconfdir}/xdg/weston
-%dir %{_prefix}/lib/systemd
-%dir %{_prefix}/lib/systemd/system
 
 %{_sysconfdir}/calamares/settings.conf
 %{_sysconfdir}/calamares/modules/unpackfs.conf
@@ -93,8 +84,7 @@ install -Dm 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/xdg/weston/weston.ini
 %{_sysconfdir}/calamares/branding/veles/stylesheet.qss
 %{_sysconfdir}/calamares/branding/veles/veles-logo.png
 %{_sysconfdir}/calamares/branding/veles/welcome.png
-%{_prefix}/lib/systemd/system/calamares-installer.service
-%{_sysconfdir}/xdg/weston/weston.ini
+
 
 %changelog
 * Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>

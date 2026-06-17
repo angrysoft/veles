@@ -75,7 +75,7 @@ hide_edge_borders both
 focus_follows_mouse no
 
 # autostart
-exec pkexec env DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR calamares
+exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR calamares
 EOF
     chown -R live:users /home/live/.config/sway
 }

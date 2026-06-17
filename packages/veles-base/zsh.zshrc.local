@@ -74,7 +74,7 @@ local on_tertiary='#000000'
 local primary='#fab473'
 local secondary='#debca1'
 local tertiary='#ebf5bf'
-local error='#ffece9'
+local error='#f42505'
 
 
 zstyle ':vcs_info:*' check-for-changes true
@@ -85,7 +85,7 @@ local git_reset='%f%k'
 zstyle ':vcs_info:*' formats " %F{${tertiary}}[  %b %c%u %F{${tertiary}}]${git_reset} "
 zstyle ':vcs_info:*' actionformats " %F{${tertiary}}[  %b %F{${error}}(%a) %F{${tertiary}}]${git_reset} "
 
-local symbol="%(?.%F{$primary}%f.%F{$error}%f)"
+local symbol="%(?.%F{$primary}>%f.%F{$error}>%f)"
 
 zstyle ':prompt:grml:left:items:user' pre "%F{$primary}"
 zstyle ':prompt:grml:left:items:at' pre "%F{$secondary}"
