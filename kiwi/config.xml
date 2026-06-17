@@ -22,7 +22,7 @@
             firmware="uefi"
             hybridpersistent_filesystem="ext4"
             hybridpersistent="true"
-            kernelcmdline="loglevel=3 quiet splash plymouth.enable=1"/>
+            kernelcmdline="loglevel=3 quiet splash plymouth.enable=1" />
         <version>1.0.0</version>
         <packagemanager>zypper</packagemanager>
         <locale>pl_PL</locale>
@@ -90,8 +90,8 @@
         <package name="grub2" />
         <package name="grub2-x86_64-efi" />
         <!-- Installer -->
-        <!-- <package name="greetd" /> -->
-         <package name="plymouth" />
+        <package name="greetd" />
+        <package name="plymouth" />
         <package name="plymouth-theme-bgrt" />
         <package name="veles-calamares-config" />
     </packages>
