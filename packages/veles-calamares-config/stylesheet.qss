@@ -30,13 +30,13 @@ QWidget {
 
 /* Ukończony krok — przyciemniony kolor zamiast opacity */
 #sidebarApp QListView::item[done="true"] {
-    color: #a08878;
+    color: #c4a882;
     padding: 8px 16px;
 }
 
 /* Przyszły krok — mocniej przyciemniony kolor zamiast opacity */
 #sidebarApp QListView::item {
-    color:   #6b5548;
+    color:   #ffede0;
     padding: 8px 16px;
 }
 
