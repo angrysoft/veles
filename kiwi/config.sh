@@ -89,21 +89,21 @@ cat <<EOF >> /etc/greetd/config.toml
 command = "sway"
 user = "live"
 EOF
-# mkdir -p /etc/systemd/system/getty@tty1.service.d
-# cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
-# [Service]
-# ExecStart=
-# ExecStart=-/usr/bin/agetty --noreset --noclear --autologin live - ${TERM}
-# EOF
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+cat <<EOF > /etc/systemd/system/getty@tty1.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=-/usr/sbin/agetty --autologin live --noclear %I linux
+EOF
 
-# cat <<EOF > /home/live/.bash_profile
-# if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-#     exec sway
-#     # press any to reboot
-#         read -n 1 -s -r -p "Press any key to reboot..."
-#         systemctl reboot
-# fi
-# EOF
+cat <<EOF > /home/live/.bash_profile
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    exec sway
+    # press any to reboot
+        read -n 1 -s -r -p "Press any key to reboot..."
+        systemctl reboot
+fi
+EOF
 }
 
 
