@@ -65,18 +65,18 @@ create_sway_live_config() {
     mkdir -p /home/live/.config/sway
     cat <<EOF > /home/live/.config/sway/config
     # outputs
-output * enable bg #19120c solid_color
-
-# no decorations
-default_border none
-hide_edge_borders both
-
-# disable mouse focus
-focus_follows_mouse no
-
-# autostart
-exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR calamares
+    output * enable bg #19120c solid_color
+    
+    # no decorations
+    default_border none
+    hide_edge_borders both
+    
+    # disable mouse focus
+    focus_follows_mouse no
+    # autostart
+    exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR calamares
 EOF
+    
     chown -R live:users /home/live/.config/sway
 }
 
