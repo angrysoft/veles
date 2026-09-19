@@ -135,7 +135,6 @@ setup_installer() {
     systemctl disable snapper-timeline.timer || true
     systemctl disable snapper-cleanup.timer || true
     systemctl disable snapper-boot.service || true
-
     # Czyszczenie domyślnych konfiguracji Snappera z obrazu live
     rm -rf /etc/snapper/configs/*
     # ----------------------------------------------------
