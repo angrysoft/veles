@@ -124,12 +124,22 @@ EOF
 setup_installer() {
     echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
 
-    # systemctl set-default multi-user.target
     systemctl set-default graphical.target
     systemctl enable NetworkManager.service
-    # systemctl enable getty@tty1.service
+    systemctl enable getty@tty1.service
     systemctl enable systemd-timesyncd.service
-    systemctl enable greetd.service
+    # systemctl enable greetd.service
+
+    # --- BEZPIECZNE WYŁĄCZENIE SNAPPERA DLA LIVE ISO ---
+    echo "LOG: Wyłączanie usług Snappera dla środowiska Live"
+    systemctl disable snapper-timeline.timer || true
+    systemctl disable snapper-cleanup.timer || true
+    systemctl disable snapper-boot.service || true
+
+    # Czyszczenie domyślnych konfiguracji Snappera z obrazu live
+    rm -rf /etc/snapper/configs/*
+    # ----------------------------------------------------
+
     generate_repos_files
     zypper clean -a
     set_autologin

@@ -53,6 +53,7 @@ Requires:   grml-zsh-config
 Requires:   gzip
 Requires:   hostname
 Requires:   iproute2
+Requires:   iputils
 Requires:   kexec-tools
 Requires:   kernel-default
 Requires:   kernel-firmware-all
