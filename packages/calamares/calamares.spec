@@ -19,7 +19,7 @@
 %global __requires_exclude qmlimport\\(calamares\\.slideshow.*
 
 Name:           calamares
-Version:        3.4.2
+Version:        3.4.3
 Release:        2
 Summary:        Installer from a live CD/DVD/USB to disk
 License:        GPL-3.0-or-later
