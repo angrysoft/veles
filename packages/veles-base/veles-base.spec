@@ -19,107 +19,127 @@ BuildArch:      noarch
 Provides:       distribution-base
 Provides:       product-update() = dup
 
+# Base system
 Requires:   aaa_base
 Requires:   aaa_base-extras
-Requires:   apparmor-abstractions
-Requires:   apparmor-parser
-Requires:   apparmor-profiles
-Requires:   apparmor-utils
-Requires:   audit
 Requires:   bash
-Requires:   btrfsprogs
-Requires:   btrfsmaintenance
 Requires:   bzip2
-Requires:   ca-certificates-mozilla
-Requires:   chrony
 Requires:   coreutils
 Requires:   coreutils-systemd
-Requires:   curl
-Requires:   dosfstools
-Requires:   dracut
-Requires:   e2fsprogs
-Requires:   efibootmgr
-Requires:   elfutils
 Requires:   file
 Requires:   filesystem
 Requires:   findutils
-Requires:   fwupd
-Requires:   fwupd-lang
 Requires:   glibc
 Requires:   glibc-locale
 Requires:   glibc-locale-base
 Requires:   grep
-Requires:   grml-zsh-config
 Requires:   gzip
 Requires:   hostname
-Requires:   iproute2
-Requires:   iputils
-Requires:   kexec-tools
-Requires:   kernel-default
-Requires:   kernel-firmware-all
-Requires:   lastlog2
 Requires:   less
-Requires:   libblockdev
-Requires:   libnss_usrfiles2
 Requires:   man
 Requires:   ncurses-utils
-Requires:   neovim
-Requires:   luajit-lpeg
-Requires:   NetworkManager
-Requires:   ntfs-3g
-Requires:   ntfsprogs
-Requires:   openssh
-Requires:   pam
-Requires:   pam-config
-Requires:   pam_pwquality
-Requires:   parted
-Requires:   pciutils
 Requires:   perl-base
-Requires:   procps
-Requires:   psmisc
-Requires:   psmisc-lang
 Requires:   rpm
 Requires:   sed
-Requires:   shadow
-Requires:   smartmontools
-#Requires:  sudo
-Requires:   system-group-wheel
-Requires:   run0-policy-wheel-auth-self
-Requires:   run0-wrappers
-Requires:   polkit-default-privs
-Requires:   system-user-bin
-Requires:   system-user-daemon
-Requires:   system-user-nobody
-Requires:   systemd
-Requires:   systemd-boot
-Requires:   systemd-lang
 Requires:   tar
 Requires:   terminfo
 Requires:   terminfo-base
 Requires:   terminfo-screen
 Requires:   time
 Requires:   timezone
-Requires:   tuned
-Requires:   udisks2
-Requires:   udisks2-lang
-Requires:   udisks2-zsh-completion
-Requires:   udev
 Requires:   unzip
-Requires:   usbutils
 Requires:   util-linux
 Requires:   util-linux-lang
 Requires:   util-linux-systemd
-Requires:   wget
 Requires:   which
-Requires:   wtmpdb
 Requires:   xz
 Requires:   zip
-Requires:   zsh
-Requires:   zsh-syntax-highlighting
+
+# Boot, kernel and firmware
+Requires:   dracut
+Requires:   efibootmgr
+Requires:   fwupd
+Requires:   fwupd-lang
+Requires:   kexec-tools
+Requires:   kernel-default
+Requires:   kernel-firmware-all
 Requires:   plymouth
 Requires:   plymouth-theme-veles
+Requires:   systemd-boot
 
-Source0:    zsh.zshrc.local
+# Filesystem and storage
+Requires:   btrfsprogs
+Requires:   btrfsmaintenance
+Requires:   dosfstools
+Requires:   e2fsprogs
+Requires:   fstrim
+Requires:   libblockdev
+Requires:   ntfs-3g
+Requires:   ntfsprogs
+Requires:   parted
+Requires:   smartmontools
+Requires:   udev
+Requires:   udisks2
+Requires:   udisks2-lang
+Requires:   udisks2-zsh-completion
+Requires:   lastlog2
+Requires:   lsof
+Requires:   strace
+Requires:   wtmpdb
+Requires:   eza
+
+# Security, auth and policy
+Requires:   apparmor-abstractions
+Requires:   apparmor-parser
+Requires:   apparmor-profiles
+Requires:   apparmor-utils
+Requires:   audit
+Requires:   pam
+Requires:   pam-config
+Requires:   pam_pwquality
+Requires:   polkit
+Requires:   polkit-default-privs
+Requires:   run0-policy-wheel-auth-self
+Requires:   run0-wrappers
+Requires:   shadow
+Requires:   system-group-wheel
+Requires:   system-user-bin
+Requires:   system-user-daemon
+Requires:   system-user-nobody
+
+# Networking and services
+Requires:   bind-utils
+Requires:   ca-certificates-mozilla
+Requires:   chrony
+Requires:   curl
+Requires:   iproute2
+Requires:   iputils
+Requires:   NetworkManager
+Requires:   openssh
+Requires:   pciutils
+Requires:   systemd
+Requires:   systemd-lang
+Requires:   tuned
+Requires:   usbutils
+Requires:   wget
+
+# Shell, editor and user tools
+Requires:   luajit-lpeg
+Requires:   neovim
+Requires:   ripgrep
+Requires:   zsh
+Requires:   zsh-syntax-highlighting
+Requires:   veles-zsh-config
+
+
+# Monitoring and system tools
+Requires:   elfutils
+Requires:   libnss_usrfiles2
+Requires:   procps
+Requires:   psmisc
+Requires:   psmisc-lang
+
+Source0:    polkit.run0-wheel.rules
 
 %description
 Veles Linux — base configs
@@ -129,21 +149,11 @@ Veles Linux — base configs
 %build
 
 %install
-mkdir -p %{buildroot}%{_sysconfdir}/sudoers.d
-install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/zsh.zshrc.local
-
-cat > %{buildroot}%{_sysconfdir}/sudoers.d/wheel <<EOF
-%wheel ALL=(ALL:ALL) NOPASSWD: ALL
-EOF
-
-
+install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
 
 %files
-%dir %{_sysconfdir}/sudoers.d
-%{_sysconfdir}/sudoers.d/wheel
-%{_sysconfdir}/zsh.zshrc.local
-%attr(0750, root,root) %dir %{_sysconfdir}/sudoers.d
-%attr(0440, root,root) %{_sysconfdir}/sudoers.d/wheel
+%attr(0755, root,root) %dir %{_sysconfdir}/polkit-1/rules.d
+%attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
 
 %changelog
 * Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>

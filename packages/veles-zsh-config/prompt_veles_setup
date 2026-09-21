@@ -1,0 +1,42 @@
+# /usr/share/zsh/site-functions/prompt_veles_setup
+
+prompt_veles_help() {
+  cat <<'EOF'
+This theme supports color customization using the following variables:
+  PROMPT_COLOR_PRIMARY   (default: #fab473)
+  PROMPT_COLOR_SECONDARY (default: #debca1)
+  PROMPT_COLOR_TERTIARY  (default: #ebf5bf)
+  PROMPT_COLOR_ERROR     (default: #ffece9)
+EOF
+}
+
+prompt_veles_precmd() {
+  vcs_info
+  local symbol="%(?.%F{${PROMPT_COLOR_PRIMARY}} >%f.%F{${PROMPT_COLOR_ERROR}} >%f)"
+  PROMPT="%F{${PROMPT_COLOR_PRIMARY}}%n%F{${PROMPT_COLOR_SECONDARY}}@%F{${PROMPT_COLOR_TERTIARY}}%m %F{${PROMPT_COLOR_PRIMARY}}[%~]%f${vcs_info_msg_0_} ${symbol} "
+}
+
+prompt_veles_setup() {
+  autoload -Uz vcs_info
+  autoload -Uz add-zsh-hook
+  setopt PROMPT_SUBST
+
+  # Default color values
+  : ${PROMPT_COLOR_PRIMARY:="#fab473"}
+  : ${PROMPT_COLOR_SECONDARY:="#debca1"}
+  : ${PROMPT_COLOR_TERTIARY:="#ebf5bf"}
+  : ${PROMPT_COLOR_ERROR:="#ffece9"}
+
+  
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' unstagedstr "%F{${PROMPT_COLOR_ERROR}} ●%f"
+  zstyle ':vcs_info:*' stagedstr "%F{${PROMPT_COLOR_PRIMARY}} ✚%f"
+
+  zstyle ':vcs_info:git:*' formats " %F{${PROMPT_COLOR_TERTIARY}}[  %b%c%u %F{${PROMPT_COLOR_TERTIARY}}]%f%k"
+  zstyle ':vcs_info:git:*' actionformats " %F{${PROMPT_COLOR_TERTIARY}}[  %b %F{${PROMPT_COLOR_ERROR}}(%a)%c%u %F{${PROMPT_COLOR_TERTIARY}}]%f%k"
+
+  add-zsh-hook precmd prompt_veles_precmd
+}
+
+prompt_veles_setup "$@"

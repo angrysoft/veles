@@ -1,0 +1,89 @@
+export CASE_SENSITIVE="true"
+
+# History configuration
+HISTFILE=~/.zsh_histfile
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt SHARE_HISTORY          # Share history across all sessions
+setopt EXTENDED_HISTORY       # Record timestamp (start:elapsed;command)
+setopt INC_APPEND_HISTORY     # Append to history file immediately after executing a command
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when history is full
+setopt HIST_IGNORE_DUPS       # Ignore command if it is the same as the previous one
+setopt HIST_IGNORE_SPACE      # Do not record commands starting with a space
+setopt HIST_REDUCE_BLANKS     # Remove unnecessary spaces from commands
+
+setopt CORRECT                # Enable command correction
+
+
+# Filtering history with arrow keys
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+
+# Autocompletion
+autoload -Uz compinit
+compinit
+
+
+
+# Aliases
+## Files
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias cd..='cd ..'
+
+alias rm='rm -I'
+alias rmr='rm -Ir'
+alias rmv='rm -Iv'
+alias grep='grep --color'
+alias saferm='shred -vz'
+
+#alias ls='ls --color=auto'
+#alias l='ls'
+#alias ll='ls -lh'
+#alias la='ls -a'
+#alias lla='la -alh'
+alias l='eza --icons auto'
+alias sl='eza --icons auto'
+alias ls='eza --icons auto'
+alias ll='eza -lh --icons auto'
+alias la='eza -a --icons auto'
+alias lla='eza -alh --icons auto'
+
+#systemctl aliases
+alias sc='sudo systemctl'
+alias scs='sudo systemctl status'
+alias scr='sudo systemctl restart'
+alias scu='systemctl --user'
+alias jc='journalctl -e'
+alias jcu='journalctl --user -e'
+alias log='journalctl -n 50 -f -u'
+
+#Git aliases
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log'
+alias gpl='git pull'
+alias gdf='git diff'
+alias gst='git status'
+alias gco='git checkout'
+alias gb='git branch'
+
+# Setup custom prompt with Veles theme
+fpath=(/usr/share/zsh/site-functions $fpath)
+autoload -Uz add-zsh-hook
+autoload -Uz promptinit
+promptinit
+prompt veles
+
+test -s /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh && . /usr/share/zsh/plugins/zsh-syntax-highlighting.zsh
