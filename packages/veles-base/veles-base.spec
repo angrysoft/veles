@@ -14,6 +14,7 @@ Version:        0.1.0
 Release:        1
 Summary:        Veles Linux
 License:        MIT
+URL:            https://github.com/angrysoft/veles
 Group:          System/Fhs
 BuildArch:      noarch
 Provides:       distribution-base
@@ -154,7 +155,7 @@ install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/run0-whee
 %files
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1/rules.d
-%attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
+%config(noreplace) %attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
 
 %changelog
 * Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>
