@@ -152,6 +152,7 @@ Veles Linux — base configs
 install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
 
 %files
+%attr(0755, root,root) %dir %{_sysconfdir}/polkit-1
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1/rules.d
 %attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/run0-wheel.rules
 
