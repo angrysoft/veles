@@ -41,7 +41,8 @@ install:
 	mkdir -p $(DESTDIR)/usr/share/plymouth/
 	cp Veles/plymouth/plymouthd.defaults $(DESTDIR)/usr/share/plymouth
 	# Brand file
-	cp -r Veles-brand $(DESTDIR)/etc/
+	mkdir -p $(DESTDIR)/etc
+	cp Veles-brand $(DESTDIR)/etc/
 
 clean: ${CLEAN_DEPS}
 	rmdir Veles
