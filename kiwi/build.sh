@@ -44,7 +44,7 @@ $RM "${SCRIPT_DIR}/root"
 $MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie profilu TargetRootfs (.squashfs) ==="
-kiwi-ng --profile=TargetRootfs system build \
+kiwi-ng --debug--profile=TargetRootfs system build \
     --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
