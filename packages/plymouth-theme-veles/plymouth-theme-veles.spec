@@ -18,8 +18,16 @@ BuildRequires:  plymouth-plugin-script
 Requires:       plymouth
 Requires:       plymouth-plugin-script
 
+Provides:       plymouth-theme-veles = %{version}
+Obsoletes:      plymouth-theme-veles < %{version}
+
+Provides:       plymouth-branding-veles = %{version}
+Supplements:    (plymouth and branding-veles)
+Conflicts:      plymouth-branding-veles
+
+
 %description
-Plymouth theme for Veles linux
+Plymouth boot splash theme for Veles Linux - provides a visually appealing boot experience.
 
 %prep
 
@@ -31,7 +39,6 @@ install -d %{buildroot}%{_datadir}/plymouth/themes/veles/images
 install -m 0644 %{SOURCE0} %{buildroot}%{_datadir}/plymouth/themes/veles/veles.plymouth
 install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/plymouth/themes/veles/veles.script
 install -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/plymouth/themes/veles/images/logo.png
-
 
 %post
 if [ -d /run/systemd/system ] || [ ! -f /.buildenv ]; then
@@ -56,13 +63,11 @@ if [ -d /run/systemd/system ] || [ ! -f /.buildenv ]; then
     %{?regenerate_initrd_posttrans}
 fi
 
+%check
+
 %files
-%dir %{_datadir}/plymouth/themes/veles/
-%dir %{_datadir}/plymouth/themes/veles/images/
-%{_datadir}/plymouth/themes/veles/veles.plymouth
-%{_datadir}/plymouth/themes/veles/veles.script
-%{_datadir}/plymouth/themes/veles/images/logo.png
+%{_datadir}/plymouth/themes/veles/
 
 %changelog
 * Sun Jun 14 2026 Sebastian Angrysoft <angrysoft@example.com> - 0.1.0-1
-- Pierwsza wersja motywu Veles
+- Pierwsza wersja motywu Veles Linux

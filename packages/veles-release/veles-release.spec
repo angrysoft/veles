@@ -14,6 +14,7 @@ Version:        0.1.0
 Release:        1
 Summary:        Veles Linux
 License:        MIT
+URL:            https://github.com/angrysoft/veles
 Group:          System/Fhs
 BuildArch:      noarch
 # Zastępujemy openSUSE-release
@@ -130,17 +131,18 @@ mkdir -p %{buildroot}%{_defaultdocdir}/veles-release-base
 echo "Base flavor for Veles Linux." \
     > %{buildroot}%{_defaultdocdir}/veles-release-base/README
 
+%check
+
 %files
 %defattr(644,root,root,755)
 %{_sysconfdir}/os-release
 %{_prefix}/lib/os-release
-%dir %{_prefix}/lib
 %dir %{_prefix}/lib/issue.d
 %dir %{_prefix}/lib/motd.d
 %{_prefix}/lib/issue.d/90-veles.issue
 %{_prefix}/lib/motd.d/welcome
 %dir %{_sysconfdir}/products.d
-%{_sysconfdir}/products.d/veles.prod
+%config %{_sysconfdir}/products.d/veles.prod
 %{_sysconfdir}/products.d/baseproduct
 %dir %{_sysconfdir}/zypp
 %dir %{_sysconfdir}/zypp/vendors.d
