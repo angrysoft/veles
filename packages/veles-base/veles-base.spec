@@ -140,6 +140,9 @@ Requires:   procps
 Requires:   psmisc
 Requires:   psmisc-lang
 
+# Themes
+Requires:   branding-veles
+
 Source0:    polkit.run0-wheel.rules
 
 %description

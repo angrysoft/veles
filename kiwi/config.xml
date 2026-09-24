@@ -83,7 +83,7 @@
         <package name="grub2-x86_64-efi" />
         <!-- Installer -->
         <package name="plymouth" />
-        <package name="plymouth-theme-bgrt" />
+        <package name="plymouth-theme-veles" />
         <package name="veles-calamares-config" />
     </packages>
 

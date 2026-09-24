@@ -37,7 +37,7 @@ BuildRequires:  rsvg-view
 %endif
 BuildRequires:  suse-module-tools
 BuildRequires:  unzip
-Conflicts:      branding
+Conflicts:      branding-openSUSE
 Provides:       branding
 %if 0%{?suse_version} > 1320
 BuildRequires:  update-bootloader-rpm-macros
@@ -60,6 +60,7 @@ License:        CC-BY-SA-3.0
 Requires:       (grub2 or grub2-common)
 Supplements:    ((grub2 or grub2-common) and branding-%{theme_name})
 Conflicts:      grub2-branding
+Conflicts:      grub2-branding-openSUSE
 Provides:       grub2-branding = %{version}
 BuildArch:      noarch
 %if 0%{?update_bootloader_requires:1}
@@ -78,6 +79,7 @@ Requires:       plymouth-scripts
 Requires:       plymouth-theme-veles
 Supplements:    (plymouth and branding-%{theme_name})
 Conflicts:      plymouth-branding
+Conflicts:      plymouth-branding-openSUSE
 Provides:       plymouth-branding = %{version}
 BuildArch:      noarch
 
@@ -123,7 +125,7 @@ fi
 %endif
 
 %files
-%license LICENSE
+# %license LICENSE
 %if 0%{?suse_version} >= 1550
 %{_distconfdir}/Veles-brand
 %else
