@@ -141,7 +141,7 @@ Requires:   psmisc
 Requires:   psmisc-lang
 
 # Themes
-Requires:   branding-veles
+Requires:   branding-Veles
 
 Source0:    polkit.run0-wheel.rules
 
