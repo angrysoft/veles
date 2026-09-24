@@ -73,7 +73,7 @@ Requires:   btrfsprogs
 Requires:   btrfsmaintenance
 Requires:   dosfstools
 Requires:   e2fsprogs
-Requires:   fstrim
+# Requires:   fstrim
 Requires:   libblockdev
 Requires:   ntfs-3g
 Requires:   ntfsprogs
