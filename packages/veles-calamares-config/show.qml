@@ -68,41 +68,6 @@ Item {
         anchors.fill: parent
         color: root.bg
 
-        // Warm glow — top left
-        Rectangle {
-            width: 480; height: 480
-            x: -160; y: -160
-            radius: 240
-            color: "transparent"
-            gradient: RadialGradient {
-                centerX: 240; centerY: 240
-                focalX: 240; focalY: 240
-                radius: 240
-                GradientStop { position: 0.0; color: "#2a1a08" }
-                GradientStop { position: 1.0; color: "transparent" }
-            }
-            opacity: 0.8
-        }
-
-        // Warm glow — bottom right
-        Rectangle {
-            width: 360; height: 360
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.rightMargin: -80
-            anchors.bottomMargin: -80
-            radius: 180
-            color: "transparent"
-            gradient: RadialGradient {
-                centerX: 180; centerY: 180
-                focalX: 180; focalY: 180
-                radius: 180
-                GradientStop { position: 0.0; color: "#1e1005" }
-                GradientStop { position: 1.0; color: "transparent" }
-            }
-            opacity: 0.7
-        }
-
         // Top accent line
         Rectangle {
             width: parent.width; height: 2

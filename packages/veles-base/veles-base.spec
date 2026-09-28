@@ -55,6 +55,7 @@ Requires:   util-linux-systemd
 Requires:   which
 Requires:   xz
 Requires:   zip
+Requires:   liblz4-1
 
 # Boot, kernel and firmware
 Requires:   dracut

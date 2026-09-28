@@ -12,8 +12,8 @@ strings:
   shortVersionedName:  "Veles 1.0"
   bootloaderEntryName: "Veles Linux"
   productUrl:          "https://veles.angrysoft.ovh"
-  supportUrl:          "https://veles.angrysoft"
-  releaseNotesUrl:     "https://veles.linux/release-notes"
+  supportUrl:          "https://veles.angrysoft.ovh"
+  releaseNotesUrl:     "https://veles.angrysoft.ovh/release-notes"
 
 images:
   productLogo:    "veles-logo.png"
