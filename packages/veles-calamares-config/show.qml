@@ -49,9 +49,9 @@ Item {
         },
         {
             icon:    "🛠",
-            heading: "Narzędzia dla zaawansowanych",
-            subhead: "Pełna kontrola nad systemem",
-            body:    "Oparty na Arch Linux — rolling release, dostęp do AUR, najnowsze oprogramowanie zawsze w zasięgu ręki. pacman, pełna automatyzacja i skrypty bez żadnych przeszkód."
+            heading: "Gotowy na Twój następny projekt",
+            subhead: "Swoboda dla developerów",
+            body:    "Łatwo zainstalujesz ulubione IDE, kompilatory i narzędzia programistyczne."
         },
         {
             icon:    "🌐",
