@@ -1,0 +1,8 @@
+# No check section required
+addFilter("no-%check-section")
+# This is just how it's called
+addFilter("name-repeated-in-summary veles-desktop")
+# Ignore error that causes other errors such as bsc#1205950
+addFilter("branding-requires-unversioned adwaita-icon-theme")
+# The whole point of openSUSEway is to aggregate specific branding requires
+addFilter("branding-requires-specific-flavor")

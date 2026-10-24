@@ -1,0 +1,184 @@
+set $mod Mod4
+set $term foot
+set $browser chromium.desktop
+set $primary HDMI-A-1
+set $secondary eDP-1
+output $primary scale 1.0
+output $secondary scale 1.5
+
+# Input devices
+input "type:keyboard" {
+    xkb_layout pl
+    xkb_numlock enabled
+}
+
+input "type:touchpad" {
+    tap disabled
+    natural_scroll enabled
+    dwt enabled
+    tap_button_map lrm
+    click_method clickfinger
+    scroll_method two_finger
+}
+
+focus_follows_mouse no
+
+
+#  Windows 
+default_border pixel 2
+default_floating_border normal 2
+# miedzy oknami
+gaps inner 4
+# miedzy krawędzią ekranu a oknamie
+gaps outer 2
+# ukrywa gdy jedno okno
+#smart_gaps on
+focus_wrapping no
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+bindsym $mod+h splith
+bindsym $mod+v splitv
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen toggle
+bindsym $mod+t layout tabbed
+bindsym $mod+s layout stacking
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+equal scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+
+    bindsym Right resize shrink width 10px
+    bindsym Up resize grow height 10px
+    bindsym Down resize shrink height 10px
+    bindsym Left resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Keyboard shortcuts
+bindsym $mod+q kill
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Wyjść ze Sway?' -B 'Tak' 'swaymsg exit'
+
+# App Launchers
+bindsym $mod+Shift+c exec code
+bindsym $mod+Shift+b exec gtk-launch chromium.desktop
+bindsym $mod+Shift+Return exec gtk-launch chromium.desktop
+bindsym $mod+Shift+n exec nautilus
+bindsym $mod+Return exec foot
+bindsym $mod+space exec /usr/bin/vlsmsg launcher
+
+bindsym Ctrl+Alt+Delete exec $term -e btop
+
+# Zarządzanie energią/TLP
+bindsym $mod+p exec tlpctl performance
+bindsym $mod+o exec tlpctl balanced
+
+# Multimedia (Audio/Jasność)
+bindsym XF86AudioRaiseVolume exec /usr/bin/vlsmsg volume raise
+#bindsym XF86AudioLowerVolume exec  swayosd-client --output-volume lower
+bindsym XF86AudioLowerVolume exec /usr/bin/vlsmsg volume lower
+#bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+bindsym XF86AudioMute exec /usr/bin/vlsmsg volume muteToggle
+bindsym XF86AudioMicMute exec /usr/bin/vlsmsg volume inputMuteToggle
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86Calculator exec /usr/bin/vlsmsg app launch calculator
+bindsym $mod+l exec loginctl lock-session
+bindsym $mod+Shift+Escape exec swaymsg "output * power on"
+
+
+# Workspace (Pulpity)
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+
+workspace $ws1 output $primary
+workspace $ws2 output $primary
+workspace $ws3 output $primary
+workspace $ws4 output $primary
+workspace $ws5 output $secendary
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+
+
+bindsym $mod+Ctrl+1 move container to workspace number $ws1
+bindsym $mod+Ctrl+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+5 move container to workspace number $ws5
+
+bindsym $mod+Ctrl+Up workspace prev
+bindsym $mod+Ctrl+Down workspace next
+bindgesture swipe:up workspace prev
+bindgesture swipe:down workspace next
+
+bindsym $mod+Control+Shift+Down move container to workspace next; workspace next
+bindsym $mod+Control+Shift+Up move container to workspace prev; workspace prev
+bindsym $mod+Control+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Control+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Control+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Control+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Control+Shift+5 move container to workspace $ws5; workspace $ws5
+
+# Rules
+
+### Window Rules (Zasady okien)
+for_window [app_id="firefox" title="^Picture-in-Picture$"] floating enable
+for_window [app_id="org.gnome.Calculator"] floating enable, resize set 400 600
+for_window [app_id="org.quickshell" title="Calculator"] floating enable, resize set 400 600
+# Gooogle Messages
+for_window [app_id="chrome-hpfldicfbfomlpcikngkocigghgafkph-Default"] floating enable, resize set 900 900
+# Whatsapp
+# Gooogle Messages
+for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, resize set 900 900
+# Google Music
+#for_window [app_id="chrome-cinhimbnkkaeohfgghhklpknlkffjgod-Default"] {
+#  floating enable
+#  resize set 1400 900
+#  move scratchpad
+#}
+for_window [title="YouTube Music"] floating enable, resize set 1400 900
+
+for_window [app_id="blueman-manager"] floating enable, resize set 900 900
+
+
+for_window [floating] max_size 80ppt 80ppt, move position center
+# Automatyczne środkowanie i wyznaczanie rozmiaru dla okien wyboru plików
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable, move position center, resize set 30ppt 30ppt
+
+# Środkowanie wszystkich okien otwieranych jako dialogowe względem rodzica
+#for_window [window_role="dialog"] move position center
+#for_window [window_type="dialog"] move position center
+
+include /etc/sway/config.d/*
+include ~/.config/sway/config.d/*
+
+exec /usr/bin/autotiling-rs
+exec /usr/bin/sway-session.sh

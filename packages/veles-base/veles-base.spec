@@ -56,6 +56,9 @@ Requires:   which
 Requires:   xz
 Requires:   zip
 Requires:   liblz4-1
+Requires:   jq
+Requires:   git
+
 
 # Boot, kernel and firmware
 Requires:   dracut
@@ -154,12 +157,12 @@ Veles Linux — base configs
 %build
 
 %install
-install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/10-run0-wheel.rules
+install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/99-run0-wheel.rules
 
 %files
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1/rules.d
-%config(noreplace) %attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/10-run0-wheel.rules
+%config(noreplace) %attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/99-run0-wheel.rules
 
 %changelog
 * Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>

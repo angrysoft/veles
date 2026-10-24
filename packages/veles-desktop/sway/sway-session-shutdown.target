@@ -1,0 +1,5 @@
+[Unit]
+Description=Shutdown Sway session
+DefaultDependencies=no
+Conflicts=sway-session.target xdg-desktop-autostart.target
+StopUnitRequirements=yes
