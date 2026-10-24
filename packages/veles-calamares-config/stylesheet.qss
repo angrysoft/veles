@@ -6,40 +6,6 @@ QWidget {
     font-size:        13px;
 }
 
-/* ── Sidebar / nawigacja ────────────────────────────────────── */
-#sidebarApp {
-    background-color: #19120c;
-    border-right:     1px solid #372f28;
-}
-
-#sidebarApp QLabel {
-    color:     #ffede0;
-    font-size: 13px;
-    padding:   6px 0;
-}
-
-/* Aktywny krok — podświetlony */
-#sidebarApp QLabel[focus="true"],
-#sidebarApp QListView::item:selected {
-    color:            #feb877;
-    font-weight:      600;
-    background-color: #372f28;
-    border-left:      3px solid #feb877;
-    padding-left:     13px;
-}
-
-/* Ukończony krok — przyciemniony kolor zamiast opacity */
-#sidebarApp QListView::item[done="true"] {
-    color: #c4a882;
-    padding: 8px 16px;
-}
-
-/* Przyszły krok — mocniej przyciemniony kolor zamiast opacity */
-#sidebarApp QListView::item {
-    color:   #ffede0;
-    padding: 8px 16px;
-}
-
 /* ── Przyciski główne ───────────────────────────────────────── */
 QPushButton {
     background-color: #372f28;
