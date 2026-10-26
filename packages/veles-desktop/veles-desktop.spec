@@ -119,7 +119,7 @@ This package provides the Veles look and feel for greetd.
 
 ## greetd
 install -D -p -m 644 greetd/config.toml     %{buildroot}%{_sysconfdir}/greetd/config.toml
-install -D -p -m 644 greetd/regreet.toml       %{buildroot}%{_sysconfdir}/greetd/regreet.toml
+install -D -p -m 644 greetd/regreet.toml       %{buildroot}%{_sysconfdir}/greetd/veles-regreet.toml
 install -D -p -m 644 greetd/sway-config     %{buildroot}%{_sysconfdir}/greetd/sway-config
 
 ## Sway
@@ -137,27 +137,27 @@ install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.i
 install -D -p -m 644 config/foot/foot-colors.ini %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
 
 %pre -n veles-desktop
-%service_add_pre vls-session.target sway.service vls-shell.service
+%service_add_pre sway.service vls-shell.service
 
 %post -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop && \
     mv -n %{_datadir}/wayland-sessions/vls-shell.desktop %{_datadir}/wayland-sessions/vls-shell.desktop.orig || true
 cp %{_datadir}/wayland-sessions/vls-shell.desktop.brand %{_datadir}/wayland-sessions/vls-shell.desktop
-%service_add_post vls-session.target sway.service vls-shell.service
+%service_add_post sway.service vls-shell.service
 
 %preun -n veles-desktop
-%service_del_preun vls-session.target sway.service vls-shell.service
+%service_del_preun sway.service vls-shell.service
 
 %postun -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
     mv %{_datadir}/wayland-sessions/vls-shell.desktop.orig %{_datadir}/wayland-sessions/vls-shell.desktop || true
-%service_del_postun vls-session.target sway.service vls-shell.service
+%service_del_postun sway.service vls-shell.service
 
 %files -n greetd-branding-Veles
 %dir %{_sysconfdir}/greetd/
 %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/config.toml
 %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/sway-config
-%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/regreet.toml
+%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/veles-regreet.toml
 
     
 %files -n sway-branding-Veles
