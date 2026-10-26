@@ -67,12 +67,12 @@
         <!-- temporary -->
         <package name="zypper" />
     </packages>
-
+    
     <packages type="image" profiles="Installer" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
-
+        
         <!-- Live system -->
         <package name="dracut-kiwi-live" />
         <package name="cpio" />
@@ -86,11 +86,12 @@
         <package name="plymouth-theme-veles" />
         <package name="veles-calamares-config" />
     </packages>
-
+    
     <packages type="image" profiles="TargetRootfs" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
+        <ignore name="sway-branding-upstream" />
 
         <package name="veles-release" />
         <package name="veles-base" />
