@@ -94,6 +94,7 @@
 
         <package name="veles-release" />
         <package name="veles-base" />
+        <package name="sway-branding-Veles" />
         <package name="veles-desktop" />
         <package name="zypper" />
 
