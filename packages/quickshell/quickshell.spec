@@ -13,52 +13,36 @@ URL:            https://git.outfoxxed.me/quickshell/quickshell
 Source0:        v%{version}.tar.gz
 
 BuildRequires:  cmake
+BuildRequires:  ninja
+BuildRequires:  gcc-c++
+BuildRequires:  git
 BuildRequires:  cmake(Qt6Core)
 BuildRequires:  cmake(Qt6Qml)
 BuildRequires:  cmake(Qt6ShaderTools)
 BuildRequires:  cmake(Qt6WaylandClient)
-BuildRequires:  cmake(Qt6Svg)
-BuildRequires:  ninja
-BuildRequires:  pkg-config
-BuildRequires:  gcc-c++
-BuildRequires:  qt6-base-devel
 BuildRequires:  qt6-base-private-devel
-BuildRequires:  qt6-declarative-devel
 BuildRequires:  qt6-declarative-private-devel
 BuildRequires:  qt6-waylandclient-private-devel
-BuildRequires:  qt6-shadertools-devel
-BuildRequires:  qt6-wayland-devel
-BuildRequires:  qt6-svg-devel
-BuildRequires:  spirv-tools-devel
-BuildRequires:  libdrm-devel
-BuildRequires:  wayland-devel
-BuildRequires:  wayland-protocols-devel
-BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  cli11-devel
 BuildRequires:  cpptrace-devel
 BuildRequires:  libdwarf-devel
 BuildRequires:  libzstd-devel
-BuildRequires:  Mesa-libGLESv3-devel
-BuildRequires:  jemalloc-devel
-BuildRequires:  pipewire-devel
+BuildRequires:  wayland-protocols-devel
+BuildRequires:  wayland-devel
+BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pam-devel
+BuildRequires:  pipewire-devel
 BuildRequires:  libdrm-devel
 BuildRequires:  libgbm-devel
 BuildRequires:  Mesa-libEGL-devel
 BuildRequires:  Mesa-libGLESv3-devel
 BuildRequires:  polkit-devel
-BuildRequires:  glib2-devel
+BuildRequires:  jemalloc-devel
 BuildRequires:  fdupes
 
-Requires:       qt6-base
-Requires:       qt6-declarative
-Requires:       qt6-wayland
-Requires:       qt6-svg
 Requires:       jemalloc
-Requires:       wayland
-Requires:       pipewire
-Requires:       pam
-Requires:       polkit
+Requires:       qt6-wayland
+
 
 %description
 Quickshell is a modern toolkit built with C++ for creating desktop interface
