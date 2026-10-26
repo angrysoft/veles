@@ -132,8 +132,7 @@ install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/use
 install -D -p -m 644 session/vls-shell.service %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
 install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
 install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
-echo "enable vls-shell.service" > %{buildroot}%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
-echo "enable sway.service" > %{buildroot}%{_prefix}/lib/systemd/user-preset/50-sway.preset
+install -D -p -m 644 session/50-vls-shell.preset %{buildroot}%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
 
 ### foot
 install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.ini
@@ -176,7 +175,6 @@ test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
 %{_datadir}/wayland-sessions/vls-shell.desktop.brand
 %{_bindir}/vls-run.sh
 %{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
-%{_prefix}/lib/systemd/user-preset/50-sway.preset
 
 %dir %{_sysconfdir}/foot
 %config(noreplace) %{_sysconfdir}/foot/foot.ini

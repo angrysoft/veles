@@ -1,0 +1,2 @@
+enable vls-shell.service
+enable sway.service
