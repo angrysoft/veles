@@ -129,6 +129,7 @@ install -D -p -m 644 config/sway/env %{buildroot}%{_sysconfdir}/sway/env
 install -D -p -m 644 session/vls-session.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session.target
 install -D -p -m 644 session/vls-session-shutdown.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session-shutdown.target
 install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
+install -D -p -m 644 session/vls-shell.service %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
 install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
 install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
 
@@ -169,6 +170,7 @@ test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
 %{_prefix}/lib/systemd/user/vls-session.target
 %{_prefix}/lib/systemd/user/vls-session-shutdown.target
 %{_prefix}/lib/systemd/user/sway.service
+%{_prefix}/lib/systemd/user/vls-shell.service
 %{_datadir}/wayland-sessions/vls-shell.desktop.brand
 %{_bindir}/vls-run.sh
 

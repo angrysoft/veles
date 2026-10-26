@@ -91,14 +91,14 @@
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
-        <!-- <ignore name="sway-branding-upstream" /> -->
+        <ignore name="sway-branding-upstream" />
 
         <package name="veles-release" />
         <package name="veles-base" />
         <package name="plymouth" />
         <package name="plymouth-theme-veles" />
-        <!-- <package name="sway-branding-Veles" /> -->
-        <!-- <package name="veles-desktop" /> -->
+        <package name="sway-branding-Veles" />
+        <package name="veles-desktop" />
         <package name="zypper" />
 
     </packages>
