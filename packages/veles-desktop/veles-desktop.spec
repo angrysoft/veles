@@ -132,27 +132,29 @@ install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/use
 install -D -p -m 644 session/vls-shell.service %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
 install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
 install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
+echo "enable vls-shell.service" > %{buildroot}%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
+echo "enable sway.service" > %{buildroot}%{_prefix}/lib/systemd/user-preset/50-sway.preset
 
 ### foot
 install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.ini
 install -D -p -m 644 config/foot/foot-colors.ini %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
 
-%pre -n veles-desktop
-%service_add_pre sway.service vls-shell.service
+# %pre -n veles-desktop
+# %service_add_pre sway.service vls-shell.service
 
 %post -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop && \
     mv -n %{_datadir}/wayland-sessions/vls-shell.desktop %{_datadir}/wayland-sessions/vls-shell.desktop.orig || true
 cp %{_datadir}/wayland-sessions/vls-shell.desktop.brand %{_datadir}/wayland-sessions/vls-shell.desktop
-%service_add_post sway.service vls-shell.service
+# %service_add_post sway.service vls-shell.service
 
-%preun -n veles-desktop
-%service_del_preun sway.service vls-shell.service
+# %preun -n veles-desktop
+# %service_del_preun sway.service vls-shell.service
 
 %postun -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
     mv %{_datadir}/wayland-sessions/vls-shell.desktop.orig %{_datadir}/wayland-sessions/vls-shell.desktop || true
-%service_del_postun sway.service vls-shell.service
+# %service_del_postun sway.service vls-shell.service
 
 %files -n greetd-branding-Veles
 %dir %{_sysconfdir}/greetd/
@@ -173,6 +175,8 @@ test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
 %{_prefix}/lib/systemd/user/vls-shell.service
 %{_datadir}/wayland-sessions/vls-shell.desktop.brand
 %{_bindir}/vls-run.sh
+%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
+%{_prefix}/lib/systemd/user-preset/50-sway.preset
 
 %dir %{_sysconfdir}/foot
 %config(noreplace) %{_sysconfdir}/foot/foot.ini
