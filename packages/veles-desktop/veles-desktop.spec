@@ -20,7 +20,7 @@ Requires:       command-not-found
 
 # basic DE
 Requires:       vls-shell
-Requires:       regreet
+Requires:       tuigreet
 Requires:       pipewire
 Requires:       wireplumber
 Requires:       foot
