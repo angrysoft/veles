@@ -14,9 +14,12 @@ set +a
 # Set dependencies to run with proprietary drivers
 if grep -qE "nvidia|fglrx" /proc/modules; then
 	export WLR_NO_HARDWARE_CURSORS=1
+	unsupported_gpu="--unsupported-gpu"
+else
+	unsupported_gpu=""
 fi
 
 # Start the Sway session
-systemctl --user start --wait vls-session.target
+systemctl --user start vls-session.target
 
-# systemd-cat --identifier=sway sway $unsupported_gpu $@
+systemd-cat --identifier=sway sway $unsupported_gpu $@

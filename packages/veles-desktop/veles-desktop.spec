@@ -128,7 +128,7 @@ install -D -p -m 644 config/sway/env %{buildroot}%{_sysconfdir}/sway/env
 
 install -D -p -m 644 session/vls-session.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session.target
 install -D -p -m 644 session/vls-session-shutdown.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session-shutdown.target
-install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
+# install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
 install -D -p -m 644 session/vls-shell.service %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
 install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
 install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
@@ -138,22 +138,14 @@ install -D -p -m 644 session/50-vls-shell.preset %{buildroot}%{_prefix}/lib/syst
 install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.ini
 install -D -p -m 644 config/foot/foot-colors.ini %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
 
-# %pre -n veles-desktop
-# %service_add_pre sway.service vls-shell.service
-
 %post -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop && \
     mv -n %{_datadir}/wayland-sessions/vls-shell.desktop %{_datadir}/wayland-sessions/vls-shell.desktop.orig || true
 cp %{_datadir}/wayland-sessions/vls-shell.desktop.brand %{_datadir}/wayland-sessions/vls-shell.desktop
-# %service_add_post sway.service vls-shell.service
-
-# %preun -n veles-desktop
-# %service_del_preun sway.service vls-shell.service
 
 %postun -n veles-desktop
 test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
     mv %{_datadir}/wayland-sessions/vls-shell.desktop.orig %{_datadir}/wayland-sessions/vls-shell.desktop || true
-# %service_del_postun sway.service vls-shell.service
 
 %files -n greetd-branding-Veles
 %dir %{_sysconfdir}/greetd/
@@ -170,7 +162,7 @@ test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
 %files -n veles-desktop
 %{_prefix}/lib/systemd/user/vls-session.target
 %{_prefix}/lib/systemd/user/vls-session-shutdown.target
-%{_prefix}/lib/systemd/user/sway.service
+# %{_prefix}/lib/systemd/user/sway.service
 %{_prefix}/lib/systemd/user/vls-shell.service
 %{_datadir}/wayland-sessions/vls-shell.desktop.brand
 %{_bindir}/vls-run.sh

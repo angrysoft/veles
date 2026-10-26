@@ -2,8 +2,8 @@
 Description=VLS Shell (Wayland Desktop Shell)
 BindsTo=vls-session.target
 PartOf=vls-session.target
-After=sway.service
-Requires=sway.service
+After=graphical-session.target
+Requisite=graphical-session.target
 
 [Service]
 Type=simple
