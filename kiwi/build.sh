@@ -7,7 +7,7 @@ PROJECT_DIR="${SCRIPT_DIR}/tmp"
 TARGET_BUILD_DIR="${PROJECT_DIR}/build/target"
 LIVE_BUILD_DIR="${PROJECT_DIR}/build/live"
 OVERLAY_IMG_DIR="${SCRIPT_DIR}/root/usr/share/veles-images"
-RM="rm -vrf"
+RM="rm -rf"
 MKDIR="mkdir -pv"
 CP="cp -v"
 
