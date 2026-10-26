@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Veles Shell
+Comment=Veles Wayland shell
+Exec=vls-run.sh
+Type=Application
+DesktopNames=sway;wlroots

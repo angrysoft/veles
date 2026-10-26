@@ -1,0 +1,5 @@
+[Unit]
+Description=Shutdown Veles session
+DefaultDependencies=no
+Conflicts=vls-session.target xdg-desktop-autostart.target
+StopWhenUnneeded=yes

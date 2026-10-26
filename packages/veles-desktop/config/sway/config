@@ -7,10 +7,14 @@ output $primary scale 1.0
 output $secondary scale 1.5
 
 # Input devices
-input "type:keyboard" {
-    xkb_layout pl
-    xkb_numlock enabled
-}
+input type:keyboard xkb_numlock enabled
+
+#input "type:keyboard" {
+#    xkb_layout pl
+#    xkb_numlock enabled
+#}
+# Set keyboard layout and variant using environment variables
+# XKB_DEFAULT_LAYOUT, XKB_DEFAULT_VARIANT
 
 input "type:touchpad" {
     tap disabled
@@ -23,17 +27,27 @@ input "type:touchpad" {
 
 focus_follows_mouse no
 
+# Tearing - Disable vsync to make output more smooth - e.q. video games
+#output $primary allow_tearing yes
+#output $secondary allow_tearing yes
+#output * max_render_time off
 
-#  Windows 
+
+#  Windows
+
 default_border pixel 2
 default_floating_border normal 2
-# miedzy oknami
 gaps inner 4
-# miedzy krawędzią ekranu a oknamie
 gaps outer 2
-# ukrywa gdy jedno okno
 #smart_gaps on
 focus_wrapping no
+#Windows                  border    background text      indicator child_border
+client.focused           #fab473  #fab473  #000000 #fab473 #fab473 
+client.unfocused         #000000  #19120c  #ffffff #ffede0 #000000
+client.focused_inactive  #261e18  #261e18  #ffffff #ffede0 #261e18
+client.placeholder       #000000  #000000  #efe0d5
+client.urgent            #ebf5bf  #bec895  #000000
+# client.background       #19120c
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -53,9 +67,10 @@ bindsym $mod+s layout stacking
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+equal scratchpad show
-#
+
+
 # Resizing containers:
-#
+
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -73,11 +88,13 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
 # Keyboard shortcuts
+
 bindsym $mod+q kill
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Wyjść ze Sway?' -B 'Tak' 'swaymsg exit'
 
 # App Launchers
+
 bindsym $mod+Shift+c exec code
 bindsym $mod+Shift+b exec gtk-launch chromium.desktop
 bindsym $mod+Shift+Return exec gtk-launch chromium.desktop
@@ -87,52 +104,72 @@ bindsym $mod+space exec /usr/bin/vlsmsg launcher
 
 bindsym Ctrl+Alt+Delete exec $term -e btop
 
-# Zarządzanie energią/TLP
+# Power Management (TLP)
+
 bindsym $mod+p exec tlpctl performance
 bindsym $mod+o exec tlpctl balanced
 
-# Multimedia (Audio/Jasność)
+# Media and Input Controls
+
 bindsym XF86AudioRaiseVolume exec /usr/bin/vlsmsg volume raise
-#bindsym XF86AudioLowerVolume exec  swayosd-client --output-volume lower
 bindsym XF86AudioLowerVolume exec /usr/bin/vlsmsg volume lower
-#bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
 bindsym XF86AudioMute exec /usr/bin/vlsmsg volume muteToggle
 bindsym XF86AudioMicMute exec /usr/bin/vlsmsg volume inputMuteToggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec /usr/bin/vlsmsg player play-pause
+bindsym XF86AudioNext exec /usr/bin/vlsmsg player next
+bindsym XF86AudioPrev exec /usr/bin/vlsmsg player previous
 bindsym XF86Calculator exec /usr/bin/vlsmsg app launch calculator
 bindsym $mod+l exec loginctl lock-session
 bindsym $mod+Shift+Escape exec swaymsg "output * power on"
 
 
-# Workspace (Pulpity)
+# Workspaces
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 workspace $ws1 output $primary
 workspace $ws2 output $primary
 workspace $ws3 output $primary
 workspace $ws4 output $primary
 workspace $ws5 output $secendary
+workspace $ws6 output $primary
+workspace $ws7 output $primary
+workspace $ws8 output $primary
+workspace $ws9 output $primary
+workspace $ws10 output $primary
 
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
 bindsym $mod+4 workspace number $ws4
 bindsym $mod+5 workspace number $ws5
-
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
 
 bindsym $mod+Ctrl+1 move container to workspace number $ws1
 bindsym $mod+Ctrl+2 move container to workspace number $ws2
 bindsym $mod+Ctrl+3 move container to workspace number $ws3
 bindsym $mod+Ctrl+4 move container to workspace number $ws4
 bindsym $mod+Ctrl+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+0 move container to workspace number $ws10
 
 bindsym $mod+Ctrl+Up workspace prev
 bindsym $mod+Ctrl+Down workspace next
@@ -146,39 +183,52 @@ bindsym $mod+Control+Shift+2 move container to workspace $ws2; workspace $ws2
 bindsym $mod+Control+Shift+3 move container to workspace $ws3; workspace $ws3
 bindsym $mod+Control+Shift+4 move container to workspace $ws4; workspace $ws4
 bindsym $mod+Control+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Control+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Control+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Control+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Control+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Control+Shift+0 move container to workspace $ws10; workspace $ws10
 
 # Rules
 
-### Window Rules (Zasady okien)
+
+# Wayland default floats
+for_window [app_id="(Calendar|Calculator|Power-statistics|Control-center)"] floating enable
+for_window [app_id="org.gnome.(Nautilus|Weather|Calculator)"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="(pavucontrol|psensor)"] floating enable
+for_window [app_id="evolution-alarm-notify"] floating enable
+for_window [app_id="nemo"] floating enable
+for_window [app_id="evolution" title="Compose Message"] floating enable
+for_window [app_id="evolution" title="Re(.*)"] floating enable
+for_window [app_id="evolution" title="Fwd(.*)"] floating enable
+for_window [app_id="mpv"] floating enable
+for_window [app_id="mpv"] resize set 960 540
+for_window [app_id="mpv"] border pixel 0
+for_window [app_id="firefox" title="Pushbullet"] floating enable
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
+for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
+for_window [app_id="firefox" title="Pushbullet – Mozilla Firefox"] floating enable
+for_window [app_id="firefox" title="About Mozilla Firefox"] floating enable
+
+# Brave, chrome, chromium
 for_window [app_id="firefox" title="^Picture-in-Picture$"] floating enable
+for_window [title="Picture-in-picture"] floating enable
+#for_window [title="YouTube Music|Spotify"] floating enable, resize set 40ppt 40ppt
+
 for_window [app_id="org.gnome.Calculator"] floating enable, resize set 400 600
-for_window [app_id="org.quickshell" title="Calculator"] floating enable, resize set 400 600
-# Gooogle Messages
-for_window [app_id="chrome-hpfldicfbfomlpcikngkocigghgafkph-Default"] floating enable, resize set 900 900
-# Whatsapp
-# Gooogle Messages
-for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, resize set 900 900
-# Google Music
-#for_window [app_id="chrome-cinhimbnkkaeohfgghhklpknlkffjgod-Default"] {
-#  floating enable
-#  resize set 1400 900
-#  move scratchpad
-#}
-for_window [title="YouTube Music"] floating enable, resize set 1400 900
-
-for_window [app_id="blueman-manager"] floating enable, resize set 900 900
-
+for_window [app_id="org.quickshell" title="Calculator"] floating enable, resize set 10ppt 25ppt
+for_window [app_id="blueman-manager"] floating enable, resize set 25ppt 30ppt
 
 for_window [floating] max_size 80ppt 80ppt, move position center
-# Automatyczne środkowanie i wyznaczanie rozmiaru dla okien wyboru plików
+# Automatic centering and sizing for file chooser windows
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable, move position center, resize set 30ppt 30ppt
 
-# Środkowanie wszystkich okien otwieranych jako dialogowe względem rodzica
 #for_window [window_role="dialog"] move position center
 #for_window [window_type="dialog"] move position center
 
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*
 
+exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec /usr/bin/autotiling-rs
-exec /usr/bin/sway-session.sh

@@ -8,7 +8,7 @@ Summary:        The Veles desktop environment meta package
 License:        MIT
 Group:          Metapackages
 URL:            https://github.com/angrysoft/veles
-Source0:        https://github.com/angrysoft/veles/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{name}.tar.gz
 Source1:        veles-desktop.rpmlintrc
 
 BuildArch:      noarch
@@ -19,21 +19,25 @@ Requires:       veles-base
 Requires:       command-not-found
 
 # basic DE
-Requires:       (gtkgreet or wlgreet)
+Requires:       vls-shell
+Requires:       regreet
 Requires:       pipewire
 Requires:       wireplumber
 Requires:       foot
 Requires:       foot-extra-terminfo
+Requires:       blueman
+Requires:       blueman-lang
+Requires:       udiskie
+Requires:       udiskie-lang
 Recommends:     grim
 Recommends:     slurp
 Recommends:     chromium
-Recommends:     bluetuith
 Suggests:       mpv
 Suggests:       imv
 
 # branding
 Requires:       sway-branding-Veles
-# Requires:       greetd-branding-openSUSE
+Requires:       greetd-branding-Veles
 %ifarch x86_64 %{ix86}
 Requires:       gfxboot-branding-Veles
 %endif
@@ -79,11 +83,9 @@ BuildRequires:  sway
 Requires:       brightnessctl
 Requires:       fontawesome-fonts
 Requires:       jq
-Requires:       patterns-sway-sway
 Requires:       polkit-gnome
 Requires:       polkit-default-privs
 Requires:       sway
-Requires:       wallpaper-branding-Veles
 Provides:       sway-branding = %{version}
 Conflicts:      sway-branding
 Supplements:    (sway and branding-Veles)
@@ -94,42 +96,81 @@ Supplements:    (sway and branding-Veles)
 %description -n sway-branding-Veles
 This package provides the Veles look and feel for sway.
 
+%package -n     greetd-branding-Veles
+Summary:        Veles branding of greetd
+Group:          System/Management
+BuildRequires:  greetd
+Provides:       greetd-branding = %{version}
+Conflicts:      greetd-branding
+Supplements:    (greetd and branding-Veles)
+
+#BRAND: /etc/greetd/config, /etc/greetd/sway-config,
+#BRAND: and /etc/greetd/regreet.toml contain Veles config and branding
+
+%description -n greetd-branding-Veles
+This package provides the Veles look and feel for greetd.
+
+%prep
+%setup -q -c -n %{name}
+
+%build
+
+%install
+
+## greetd
+install -D -p -m 644 greetd/config.toml     %{buildroot}%{_sysconfdir}/greetd/config.toml
+install -D -p -m 644 greetd/regreet.toml       %{buildroot}%{_sysconfdir}/greetd/regreet.toml
+install -D -p -m 644 greetd/sway-config     %{buildroot}%{_sysconfdir}/greetd/sway-config
+
 ## Sway
 install -D -p -m 644 config/sway/config %{buildroot}%{_sysconfdir}/sway/config
 install -D -p -m 644 config/sway/env %{buildroot}%{_sysconfdir}/sway/env
-# install -D -p -m 644 config/sway/config.d/50-openSUSE.conf %{buildroot}%{_sysconfdir}/sway/config.d/50-openSUSE.conf
-# install -D -p -m 644 config/sway/config.d/55-openSUSE-windows.conf %{buildroot}%{_sysconfdir}/sway/config.d/55-openSUSE-windows.conf
 
-install -D -p -m 644 sway/sway-session.target %{buildroot}%{_prefix}/lib/systemd/user/sway-session.target
-install -D -p -m 644 sway/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
-install -D -p -m 644 sway/sway.desktop %{buildroot}%{_datadir}/wayland-sessions/sway.desktop.brand
-install -D -p -m 755 sway/sway-session.sh %{buildroot}%{_bindir}/sway-session.sh
+install -D -p -m 644 session/vls-session.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session.target
+install -D -p -m 644 session/vls-session-shutdown.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session-shutdown.target
+install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
+install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
+install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
 
 ### foot
-# so far doesn't have special branding package and it doesn't support system wide config
 install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.ini
 install -D -p -m 644 config/foot/foot-colors.ini %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
 
+%pre -n veles-desktop
+%service_add_pre vls-session.target sway.service vls-shell.service
 
-# %files -n greetd-branding-openSUSE
-# %dir %{_sysconfdir}/greetd/
-# %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/config.toml
-# %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/sway-config
-# %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/environments
-# %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/style.css
+%post -n veles-desktop
+test -e %{_datadir}/wayland-sessions/vls-shell.desktop && \
+    mv -n %{_datadir}/wayland-sessions/vls-shell.desktop %{_datadir}/wayland-sessions/vls-shell.desktop.orig || true
+cp %{_datadir}/wayland-sessions/vls-shell.desktop.brand %{_datadir}/wayland-sessions/vls-shell.desktop
+%service_add_post vls-session.target sway.service vls-shell.service
+
+%preun -n veles-desktop
+%service_del_preun vls-session.target sway.service vls-shell.service
+
+%postun -n veles-desktop
+test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
+    mv %{_datadir}/wayland-sessions/vls-shell.desktop.orig %{_datadir}/wayland-sessions/vls-shell.desktop || true
+%service_del_postun vls-session.target sway.service vls-shell.service
+
+%files -n greetd-branding-Veles
+%dir %{_sysconfdir}/greetd/
+%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/config.toml
+%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/sway-config
+%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/regreet.toml
 
     
 %files -n sway-branding-Veles
 %dir %{_sysconfdir}/sway
 %config %{_sysconfdir}/sway/config
 %config %{_sysconfdir}/sway/env
-%dir %{_sysconfdir}/sway/config.d
-%config %{_sysconfdir}/sway/config.d/50-openSUSE.conf
-%config %{_sysconfdir}/sway/config.d/55-openSUSE-windows.conf
-%{_prefix}/lib/systemd/user/sway-session.target
+
+%files -n veles-desktop
+%{_prefix}/lib/systemd/user/vls-session.target
+%{_prefix}/lib/systemd/user/vls-session-shutdown.target
 %{_prefix}/lib/systemd/user/sway.service
-%{_datadir}/wayland-sessions/sway.desktop.brand
-%{_bindir}/sway-session.sh
+%{_datadir}/wayland-sessions/vls-shell.desktop.brand
+%{_bindir}/vls-run.sh
 
 %dir %{_sysconfdir}/foot
 %config(noreplace) %{_sysconfdir}/foot/foot.ini

@@ -6,7 +6,7 @@
 %define theme_name Veles
 %define theme_version rolling
 %define theme_version_clean Rolling
-%define date 20260923
+%define date 20261025
 
 %ifarch x86_64 %{ix86}
 %define gfxboot 1

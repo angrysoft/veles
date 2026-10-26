@@ -1,0 +1,17 @@
+[Unit]
+Description=Sway Window Manager (VLS Session)
+Documentation=man:sway(5)
+BindsTo=vls-session.target
+PartOf=vls-session.target
+Before=vls-session.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sway/env
+ExecStart=sway
+Restart=on-failure
+RestartSec=1
+TimeoutStopSec=10
+
+[Install]
+WantedBy=vls-session.target

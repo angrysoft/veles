@@ -94,6 +94,7 @@
 
         <package name="veles-release" />
         <package name="veles-base" />
+        <package name="veles-desktop" />
         <package name="zypper" />
 
     </packages>

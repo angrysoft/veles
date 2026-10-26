@@ -1,16 +1,12 @@
-# recomended enviroment variables for sway based desktop
-# openSUSEway installs/imports this to/from:
-# /usr/lib/environment.d/50-openSUSE.conf
-# /etc/profile.d/openSUSEway.sh
 MOZ_ENABLE_WAYLAND=1
-QT_QPA_PLATFORM=wayland-egl
 CLUTTER_BACKEND=wayland
-ECORE_EVAS_ENGINE=wayland-egl
-ELM_ENGINE=wayland_egl
+ECORE_EVAS_ENGINE=wayland
+ELM_ENGINE=wayland
 SDL_VIDEODRIVER=wayland
 _JAVA_AWT_WM_NONREPARENTING=1
 NO_AT_BRIDGE=1
-
+ELECTRON_OZONE_PLATFORM_HINT=wayland
+GDK_BACKEND=wayland
 QT_QPA_PLATFORM=wayland
 QT_QPA_PLATFORMTHEME=gtk3
 QT_QUICK_CONTROLS_STYLE=Basic
