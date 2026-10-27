@@ -1,0 +1,6 @@
+
+<services>
+  <service name="download_url">
+    <param name="url">https://secure.chamsys.co.uk/downloads/v1_9_8_3/magicq_ubuntu_v1_9_8_3.deb</param>
+  </service>
+</services>

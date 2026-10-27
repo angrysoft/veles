@@ -1,0 +1,7 @@
+[Unit]
+Description=Veles Wayland Session
+Documentation=man:systemd.special(7)
+BindsTo=graphical-session.target
+Wants=sway.service vls-shell.service xdg-desktop-autostart.target
+After=vls-shell.service
+Before=xdg-desktop-autostart.target

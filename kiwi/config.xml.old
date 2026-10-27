@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<image schemaversion="8.0" name="veles">
+    <description type="system">
+        <author>AngrySoft [Sebastian Zwierzchowski]</author>
+        <contact>sebastian.zwierzchowski@gmail.com</contact>
+        <specification>Veles Linux</specification>
+    </description>
+
+    <preferences profiles="Installer">
+        <type
+            image="iso"
+            primary="true"
+            flags="overlay"
+            firmware="uefi"
+            hybridpersistent_filesystem="ext4"
+            hybridpersistent="true"
+            kernelcmdline="loglevel=3 quiet splash plymouth.enable=1" />
+        <version>1.0.0</version>
+        <packagemanager>zypper</packagemanager>
+        <locale>pl_PL</locale>
+        <keytable>pl</keytable>
+        <timezone>Europe/Warsaw</timezone>
+    </preferences>
+
+    <preferences profiles="TargetRootfs">
+        <type image="squashfs" />
+        <version>1.0.0</version>
+        <packagemanager>zypper</packagemanager>
+        <locale>pl_PL</locale>
+        <keytable>pl</keytable>
+        <timezone>Europe/Warsaw</timezone>
+    </preferences>
+
+    <profiles>
+        <profile name="Installer" description="Veles Linux Installer ISO" />
+        <profile name="TargetRootfs" description="Veles Linux Target Root Filesystem" />
+    </profiles>
+
+    <repository type="rpm-md" alias="veles" priority="1">
+        <source
+            path="https://download.opensuse.org/repositories/home:/angrysoft/openSUSE_Tumbleweed/" />
+    </repository>
+
+    <repository type="rpm-md" alias="tumbleweed-oss" priority="99">
+        <source path="https://download.opensuse.org/tumbleweed/repo/oss/" />
+    </repository>
+
+    <repository type="rpm-md" alias="tumbleweed-non-oss" priority="99">
+        <source path="https://download.opensuse.org/tumbleweed/repo/non-oss/" />
+    </repository>
+
+    <users>
+        <user
+            password="$1$veles$E2PFFt8cIbGUTtjGYMVPi."
+            home="/home/live"
+            name="live"
+            shell="/bin/zsh"
+            groups="users,wheel,audio,video,input"
+        />
+    </users>
+    <packages type="bootstrap">
+        <ignore name="busybox-coreutils" />
+        <ignore name="busybox-util-linux" />
+        <ignore name="busybox-sed" />
+        <package name="veles-release" />
+        <package name="veles-base" />
+        <!-- temporary -->
+        <package name="zypper" />
+    </packages>
+    
+    <packages type="image" profiles="Installer" patternType="onlyRequired">
+        <ignore name="busybox-coreutils" />
+        <ignore name="busybox-util-linux" />
+        <ignore name="busybox-sed" />
+        
+        <!-- Live system -->
+        <package name="dracut-kiwi-live" />
+        <package name="cpio" />
+        <package name="squashfs" />
+        <package name="device-mapper" />
+        <package name="gparted" />
+        <package name="grub2" />
+        <package name="grub2-x86_64-efi" />
+        <!-- Installer -->
+        <package name="plymouth" />
+        <package name="plymouth-theme-veles" />
+        <package name="veles-calamares-config" />
+    </packages>
+    
+    <packages type="image" profiles="TargetRootfs" patternType="onlyRequired">
+        <ignore name="busybox-coreutils" />
+        <ignore name="busybox-util-linux" />
+        <ignore name="busybox-sed" />
+        <!-- <ignore name="sway-branding-upstream" /> -->
+
+        <package name="veles-release" />
+        <package name="veles-base" />
+        <package name="plymouth" />
+        <package name="plymouth-theme-veles" />
+        <!-- <package name="sway-branding-Veles" /> -->
+        <!-- <package name="veles-desktop" /> -->
+        <package name="zypper" />
+
+    </packages>
+</image>

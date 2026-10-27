@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Veles Shell
 Comment=Veles Wayland shell
-Exec=vls-run.sh
+Exec=systemctl --user start --wait vls-session.target
 Type=Application
 DesktopNames=sway;wlroots

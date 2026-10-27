@@ -1,8 +1,0 @@
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-
-input "type:touchpad" {
-  tap enabled
-}
-
-exec "regreet -c /etc/greetd/veles-regreet.toml"
-#exec /usr/libexec/polkit-gnome-authentication-agent-1

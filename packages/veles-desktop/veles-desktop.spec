@@ -2,14 +2,26 @@
 
 
 Name:           veles-desktop
-Version:        0.1.0
+Version:        0.2.0
 Release:        0
 Summary:        The Veles desktop environment meta package
 License:        MIT
 Group:          Metapackages
 URL:            https://github.com/angrysoft/veles
-Source0:        %{name}.tar.gz
-Source1:        veles-desktop.rpmlintrc
+Source0:        veles-desktop.rpmlintrc
+Source1:        foot.ini
+Source2:        foot-colors.ini
+Source3:        sway-config
+Source4:        sway-env
+Source5:        greetd.preset
+Source6:        greetd.config.toml
+Source7:        greetd.greetd.pam
+Source8:        greetd.tuigreet.toml
+Source9:        sway.service
+Source10:       vls-session.target
+Source11:       vls-session-shutdown.target
+Source12:       vls-shell.service
+Source13:       vls-shell.desktop
 
 BuildArch:      noarch
 BuildRequires:  pkgconfig(systemd)
@@ -20,6 +32,7 @@ Requires:       command-not-found
 
 # basic DE
 Requires:       vls-shell
+Requires:       greetd
 Requires:       tuigreet
 Requires:       pipewire
 Requires:       wireplumber
@@ -29,6 +42,10 @@ Requires:       blueman
 Requires:       blueman-lang
 Requires:       udiskie
 Requires:       udiskie-lang
+Requires:       NetworkManager-applet
+Requires:       gnome-keyring
+Requires:       wl-clipboard
+Requires:       cliphist
 Recommends:     grim
 Recommends:     slurp
 Recommends:     chromium
@@ -46,6 +63,7 @@ Requires:       gfxboot-branding-Veles
 Requires:       xdg-desktop-portal
 Requires:       xdg-desktop-portal-wlr
 Requires:       xdg-desktop-portal-gtk
+Requires:       xdg-user-dirs
 Requires:       xdg-utils
 
 # Appearance
@@ -104,54 +122,54 @@ Provides:       greetd-branding = %{version}
 Conflicts:      greetd-branding
 Supplements:    (greetd and branding-Veles)
 
-#BRAND: /etc/greetd/config, /etc/greetd/sway-config,
-#BRAND: and /etc/greetd/regreet.toml contain Veles config and branding
+#BRAND: /etc/greetd/config.toml, /etc/greetd/tuigreet.toml
+#BRAND: contain Veles config and branding
 
 %description -n greetd-branding-Veles
 This package provides the Veles look and feel for greetd.
 
 %prep
-%setup -q -c -n %{name}
+
 
 %build
 
 %install
-
 ## greetd
-install -D -p -m 644 greetd/config.toml     %{buildroot}%{_sysconfdir}/greetd/config.toml
-install -D -p -m 644 greetd/regreet.toml       %{buildroot}%{_sysconfdir}/greetd/veles-regreet.toml
-install -D -p -m 644 greetd/sway-config     %{buildroot}%{_sysconfdir}/greetd/sway-config
+install -D -p -m 644 %{SOURCE5} %{buildroot}%{_libdir}/systemd/system-preset/50-greetd.preset
+install -D -p -m 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/greetd/config.toml
+install -D -p -m 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/pam.d/greetd
+install -D -p -m 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/greetd/tuigreet.toml
 
 ## Sway
-install -D -p -m 644 config/sway/config %{buildroot}%{_sysconfdir}/sway/config
-install -D -p -m 644 config/sway/env %{buildroot}%{_sysconfdir}/sway/env
+install -D -p -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sway/config
+install -D -p -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/sway/env
 
-install -D -p -m 644 session/vls-session.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session.target
-install -D -p -m 644 session/vls-session-shutdown.target %{buildroot}%{_prefix}/lib/systemd/user/vls-session-shutdown.target
-# install -D -p -m 644 session/sway.service %{buildroot}%{_prefix}/lib/systemd/user/sway.service
-install -D -p -m 644 session/vls-shell.service %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
-install -D -p -m 644 session/vls-shell.desktop %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop.brand
-install -D -p -m 755 session/vls-run.sh %{buildroot}%{_bindir}/vls-run.sh
-install -D -p -m 644 session/50-vls-shell.preset %{buildroot}%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
+install -D -p -m 644 %{SOURCE9} %{buildroot}%{_prefix}/lib/systemd/user/sway.service
+install -D -p -m 644 %{SOURCE10} %{buildroot}%{_prefix}/lib/systemd/user/vls-session.target
+install -D -p -m 644 %{SOURCE11} %{buildroot}%{_prefix}/lib/systemd/user/vls-session-shutdown.target
+install -D -p -m 644 %{SOURCE12} %{buildroot}%{_prefix}/lib/systemd/user/vls-shell.service
+install -D -p -m 644 %{SOURCE13} %{buildroot}%{_datadir}/wayland-sessions/vls-shell.desktop
 
 ### foot
-install -D -p -m 644 config/foot/foot.ini %{buildroot}%{_sysconfdir}/foot/foot.ini
-install -D -p -m 644 config/foot/foot-colors.ini %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
+install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/foot/foot.ini
+install -D -p -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/foot/foot-colors.ini
 
-%post -n veles-desktop
-test -e %{_datadir}/wayland-sessions/vls-shell.desktop && \
-    mv -n %{_datadir}/wayland-sessions/vls-shell.desktop %{_datadir}/wayland-sessions/vls-shell.desktop.orig || true
-cp %{_datadir}/wayland-sessions/vls-shell.desktop.brand %{_datadir}/wayland-sessions/vls-shell.desktop
+%pre -n greetd-branding-Veles
+%service_add_pre greetd.service
 
-%postun -n veles-desktop
-test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
-    mv %{_datadir}/wayland-sessions/vls-shell.desktop.orig %{_datadir}/wayland-sessions/vls-shell.desktop || true
+%post -n greetd-branding-Veles
+%service_add_post greetd.service
+
+%preun -n greetd-branding-Veles
+%service_del_preun greetd.service
+
+%postun -n greetd-branding-Veles
+%service_del_postun greetd.service
 
 %files -n greetd-branding-Veles
 %dir %{_sysconfdir}/greetd/
 %attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/config.toml
-%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/sway-config
-%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/veles-regreet.toml
+%attr(644,greeter,greeter) %config(noreplace) %{_sysconfdir}/greetd/tuigreet.toml
 
     
 %files -n sway-branding-Veles
@@ -162,15 +180,15 @@ test -e %{_datadir}/wayland-sessions/vls-shell.desktop.orig && \
 %files -n veles-desktop
 %{_prefix}/lib/systemd/user/vls-session.target
 %{_prefix}/lib/systemd/user/vls-session-shutdown.target
-# %{_prefix}/lib/systemd/user/sway.service
+%{_prefix}/lib/systemd/user/sway.service
 %{_prefix}/lib/systemd/user/vls-shell.service
-%{_datadir}/wayland-sessions/vls-shell.desktop.brand
-%{_bindir}/vls-run.sh
-%{_prefix}/lib/systemd/user-preset/50-vls-shell.preset
+%{_datadir}/wayland-sessions/vls-shell.desktop
+%{_sysconfdir}/pam.d/greetd
+%{_libdir}/systemd/system-preset/50-greetd.preset
 
 %dir %{_sysconfdir}/foot
-%config(noreplace) %{_sysconfdir}/foot/foot.ini
-%config(noreplace) %{_sysconfdir}/foot/foot-colors.ini
+%config %{_sysconfdir}/foot/foot.ini
+%config %{_sysconfdir}/foot/foot-colors.ini
 
 
 %changelog

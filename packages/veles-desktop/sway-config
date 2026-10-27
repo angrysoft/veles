@@ -1,10 +1,9 @@
 set $mod Mod4
-set $term foot
-set $browser chromium.desktop
-set $primary HDMI-A-1
-set $secondary eDP-1
-output $primary scale 1.0
-output $secondary scale 1.5
+#set $browser chromium.desktop
+#set $primary HDMI-A-1
+#set $secondary eDP-1
+#output $primary scale 1.0
+#output $secondary scale 1.5
 
 # Input devices
 input type:keyboard xkb_numlock enabled
@@ -96,13 +95,12 @@ bindsym $mod+q kill
 # App Launchers
 
 bindsym $mod+Shift+c exec code
-bindsym $mod+Shift+b exec gtk-launch chromium.desktop
-bindsym $mod+Shift+Return exec gtk-launch chromium.desktop
-bindsym $mod+Shift+n exec nautilus
+bindsym $mod+Shift+Return exec gio launch /usr/share/applications/chromium-browser.desktop
+bindsym $mod+Shift+b exec nautilus
 bindsym $mod+Return exec foot
 bindsym $mod+space exec /usr/bin/vlsmsg launcher
 
-bindsym Ctrl+Alt+Delete exec $term -e btop
+bindsym Ctrl+Alt+Delete exec foot -e btop
 
 # Power Management (TLP)
 
@@ -138,16 +136,16 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-workspace $ws1 output $primary
-workspace $ws2 output $primary
-workspace $ws3 output $primary
-workspace $ws4 output $primary
-workspace $ws5 output $secendary
-workspace $ws6 output $primary
-workspace $ws7 output $primary
-workspace $ws8 output $primary
-workspace $ws9 output $primary
-workspace $ws10 output $primary
+#workspace $ws1 output $primary
+#workspace $ws2 output $primary
+#workspace $ws3 output $primary
+#workspace $ws4 output $primary
+#workspace $ws5 output $secendary
+#workspace $ws6 output $primary
+#workspace $ws7 output $primary
+#workspace $ws8 output $primary
+#workspace $ws9 output $primary
+#workspace $ws10 output $primary
 
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -231,4 +229,4 @@ include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*
 
 exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec /usr/bin/autotiling-rs
+exec wl-paste --watch cliphist store
