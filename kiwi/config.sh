@@ -153,6 +153,7 @@ setup_target_rootfs() {
     systemctl enable NetworkManager.service
     systemctl enable systemd-timesyncd.service
     systemctl enable getty@tty1.service
+    systemctl enable greetd.service
     generate_repos_files
     zypper clean -a
 }
