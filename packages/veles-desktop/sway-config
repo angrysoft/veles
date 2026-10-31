@@ -115,7 +115,7 @@ bindsym XF86AudioMute exec /usr/bin/vlsmsg volume muteToggle
 bindsym XF86AudioMicMute exec /usr/bin/vlsmsg volume inputMuteToggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86AudioPlay exec /usr/bin/vlsmsg player play-pause
+bindsym XF86AudioPlay exec /usr/bin/vlsmsg player playPause
 bindsym XF86AudioNext exec /usr/bin/vlsmsg player next
 bindsym XF86AudioPrev exec /usr/bin/vlsmsg player previous
 bindsym XF86Calculator exec /usr/bin/vlsmsg app launch calculator
