@@ -10,8 +10,8 @@
 %define codename Rolling
 
 Name:           veles-base
-Version:        0.1.0
-Release:        1
+Version:        0.2.0
+Release:        0
 Summary:        Veles Linux
 License:        MIT
 URL:            https://github.com/angrysoft/veles
@@ -148,6 +148,7 @@ Requires:   psmisc-lang
 Requires:   branding-Veles
 
 Source0:    polkit.run0-wheel.rules
+Source1:    onlyRequires.conf
 
 %description
 Veles Linux — base configs
@@ -158,12 +159,16 @@ Veles Linux — base configs
 
 %install
 install -Dm 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/99-run0-wheel.rules
+install -Dm 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/zypp/zypp.conf.d/onlyRequires.conf
 
 %files
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1
 %attr(0755, root,root) %dir %{_sysconfdir}/polkit-1/rules.d
+%attr(0755, root,root) %dir %{_sysconfdir}/zypp
+%attr(0755, root,root) %dir %{_sysconfdir}/zypp/zypp.conf.d
 %config(noreplace) %attr(0644, root,root) %{_sysconfdir}/polkit-1/rules.d/99-run0-wheel.rules
+%config(noreplace) %attr(0644, root,root) %{_sysconfdir}/zypp/zypp.conf.d/onlyRequires.conf
 
 %changelog
-* Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@gmail.com>
+* Sat May 16 2026 AngrySoft <sebastian.zwierzchowski@ik.me>
 - Initial veles-release package
