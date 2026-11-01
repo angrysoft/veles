@@ -32,14 +32,13 @@ Requires:       zlib
 Lighting control software from ChamSys for professional stage and event production.
 
 %prep
-ar x %{SOURCE0}
 
 %build
 # 
 
 %install
-install -D -m 755 magicq-installer.sh %{buildroot}%{_bindir}/magicq-installer.sh
-install -D -m 755 magicq-uninstaller.sh %{buildroot}%{_bindir}/magicq-uninstaller.sh
+install -D -m 755 %{SOURCE0} %{buildroot}%{_bindir}/magicq-installer.sh
+install -D -m 755 %{SOURCE1} %{buildroot}%{_bindir}/magicq-uninstaller.sh
 
 %post -p %{_bindir}/magicq-installer.sh
 

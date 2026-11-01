@@ -26,7 +26,7 @@ $RM "${SCRIPT_DIR}/root"
 $MKDIR "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie obrazu systemu docelowego ==="
-kiwi-ng --type iso system build \
+kiwi-ng system build \
     --description "." \
     --target-dir "${LIVE_BUILD_DIR}"
 
