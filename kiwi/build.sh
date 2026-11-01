@@ -4,7 +4,6 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 PROJECT_DIR="${SCRIPT_DIR}/tmp"
-TARGET_BUILD_DIR="${PROJECT_DIR}/build/target"
 LIVE_BUILD_DIR="${PROJECT_DIR}/build/live"
 OVERLAY_IMG_DIR="${SCRIPT_DIR}/root/usr/share/veles-images"
 RM="rm -rf"
@@ -24,14 +23,13 @@ check_root
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
 $RM "${PROJECT_DIR}"
 $RM "${SCRIPT_DIR}/root"
-$MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
+$MKDIR "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
 echo "=== KROK 2: Budowanie obrazu systemu docelowego ==="
 kiwi-ng --type ise system build \
     --description "." \
-    --target-dir "${TARGET_BUILD_DIR}"
+    --target-dir "${LIVE_BUILD_DIR}"
 
-GENERATED_IMG=$(ls "${TARGET_BUILD_DIR}"/*.squashfs | head -n 1)
 
 echo "================================================="
 echo "SUKCES! Twój instalacyjny obraz ISO znajduje się w:"
