@@ -27,6 +27,7 @@ Requires:   bash
 Requires:   bzip2
 Requires:   coreutils
 Requires:   coreutils-systemd
+Requires:   console-setup
 Requires:   file
 Requires:   filesystem
 Requires:   findutils
@@ -127,6 +128,7 @@ Requires:   systemd-lang
 Requires:   tuned
 Requires:   usbutils
 Requires:   wget
+Requires:   rsync
 
 # Shell, editor and user tools
 Requires:   luajit-lpeg

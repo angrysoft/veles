@@ -82,7 +82,7 @@ EOF
 
 cat <<EOF >> /home/live/.zshrc
 
-if [ "$(tty)" = "/dev/tty1" ]; then
+if [ "\$(tty)" = "/dev/tty1" ]; then
     systemctl --user start --wait vls-session.target
     # press any to reboot
         read "?Press any key to reboot..."
