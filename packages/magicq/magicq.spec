@@ -6,17 +6,16 @@
 
 Name:           magicq
 Version:        1.9.8.3
-Release:        0
+Release:        14
 Summary:        Lighting control software from ChamSys
 License:        custom
 URL:            https://chamsyslighting.com/products/magicq
 Source0:        magicq-installer.sh
 Source1:        magicq-uninstaller.sh
 
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 BuildRequires:  tar
 BuildRequires:  binutils
-BuildRequires:  fdupes
 Requires:       alsa
 Requires:       libjack0
 Requires:       gstreamer-plugins-base
@@ -24,10 +23,10 @@ Requires:       gstreamer-plugins-good
 # Requires:       libarchive13
 # Requires:       cups-libs
 Requires:       Mesa-libGL1
-# Requires:       libX11-6
-# Requires:       libxcb1
+Requires:       libX11
+Requires:       libxcb
 Requires:       systemd-udev
-# Requires:       zlib
+Requires:       zlib
 
 %description
 Lighting control software from ChamSys for professional stage and event production.
@@ -39,39 +38,13 @@ ar x %{SOURCE0}
 # 
 
 %install
-%{__mkdir_p} %{buildroot}/opt/magicq
-%{__mkdir_p} %{buildroot}%{_bindir}
-%{__mkdir_p} %{buildroot}%{_datadir}/licenses/%{name}
+install -D -m 755 magicq-installer.sh %{buildroot}%{_bindir}/magicq-installer.sh
+install -D -m 755 magicq-uninstaller.sh %{buildroot}%{_bindir}/magicq-uninstaller.sh
 
-tar -xf data.tar.xz -C %{buildroot}
+%post -p %{_bindir}/magicq-installer.sh
 
-# Usuwamy biblioteki systemowe dostarczane z paczką na rzecz bibliotek z openSUSE:
-# https://secure.chamsys.co.uk/help/documentation/magicq/troubleshooting.html#_linux_magicq_fails_to_start_libgl_error
-rm -rf %{buildroot}/opt/magicq/lib/libstdc++.so.6
-rm -rf %{buildroot}/opt/magicq/lib/libjack.so.0
-
-# for dir in log show web thumbs backuparchive convert audio; do
-#     %{__mkdir_p} %{buildroot}/opt/magicq/$dir
-# done
-
-ln -s /opt/magicq/License_Conditions.txt %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
-
-ln -s /opt/magicq/runmagicq.sh %{buildroot}%{_bindir}/magicq
-ln -s /opt/magicq/runmagichd.sh %{buildroot}%{_bindir}/magichd
-ln -s /opt/magicq/runmagicvis.sh %{buildroot}%{_bindir}/magicvis
-
-find %{buildroot}/usr %{buildroot}/etc -type f -exec chmod 644 {} + , -type d -exec chmod 755 {} +
-%fdupes %{buildroot}%{_prefix}
-
+%postun -p %{_bindir}/magicq-uninstaller.sh
 
 %files
-%{_bindir}/magicq
-%{_bindir}/magichd
-%{_bindir}/magicvis
-%{_datadir}/licenses/%{name}
-%{_datadir}/applications
-%{_datadir}/mime/packages/magicq.xml
-%{_datadir}/pixmaps
-/etc/udev
-/etc/udev/rules.d
-/opt/magicq
+%{_bindir}/magicq-installer.sh
+%{_bindir}/magicq-uninstaller.sh

@@ -83,6 +83,8 @@ install -m 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/calamares/branding/veles/we
 %dir %{_sysconfdir}/calamares/branding
 %dir %{_sysconfdir}/calamares/branding/veles
 %dir %{_sysconfdir}/calamares/modules
+%dir %{_sysconfdir}/polkit-1
+%dir %{_sysconfdir}/polkit-1/rules.d
 
 %{_sysconfdir}/calamares/settings.conf
 %{_sysconfdir}/calamares/modules/unpackfs.conf
