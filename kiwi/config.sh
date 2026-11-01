@@ -81,6 +81,7 @@ ExecStart=-/usr/sbin/agetty --autologin live --noclear %I linux
 EOF
 
 cat <<EOF >> /home/live/.zshrc
+
 if [ "$(tty)" = "/dev/tty1" ]; then
     systemctl --user start --wait vls-session.target
     # press any to reboot

@@ -38,7 +38,7 @@ Source7:        veles-logo.png
 Source8:        welcome.png
 Source9:        keyboard.conf
 Source10:       show.qml
-Source11:       calamares.rulesa
+Source11:       calamares.rules
 Source12:       removeuser.conf
 Source13:       packages.conf
 Source14:       shellprocess.conf
