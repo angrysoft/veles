@@ -43,8 +43,15 @@ $RM "${PROJECT_DIR}"
 $RM "${SCRIPT_DIR}/root"
 $MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
-echo "=== KROK 2: Budowanie profilu TargetRootfs (.squashfs) ==="
-kiwi-ng --profile=TargetRootfs system build \
+ROOTFS_CONFIG="${PROJECT_DIR}/config-rootfs.xml"
+sed '0,/image="iso"/s//image="squashfs"/' "${SCRIPT_DIR}/config.xml" > "${ROOTFS_CONFIG}"
+if ! grep -q 'image="squashfs"' "${ROOTFS_CONFIG}"; then
+    echo "Nie udało się przygotować konfiguracji KIWI dla systemu docelowego."
+    exit 1
+fi
+
+echo "=== KROK 2: Budowanie obrazu systemu docelowego (.squashfs) ==="
+kiwi-ng --kiwi-file "${ROOTFS_CONFIG}" --profile=Installer system build \
     --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
@@ -57,7 +64,7 @@ echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 # Kopiujemy pod stałą nazwą, którą wcześniej wpisaliśmy do unpackfs.conf
 $CP "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
 
-echo "=== KROK 4: Budowanie profilu LiveISO (.iso) ==="
+echo "=== KROK 4: Budowanie profilu Installer (LiveISO) ==="
 kiwi-ng --profile=Installer system build \
     --description "." \
     --target-dir "${LIVE_BUILD_DIR}"
@@ -66,4 +73,3 @@ echo "================================================="
 echo "SUKCES! Twój instalacyjny obraz ISO znajduje się w:"
 echo "${LIVE_BUILD_DIR}/"
 echo "================================================="
-

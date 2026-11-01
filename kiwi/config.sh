@@ -79,16 +79,21 @@ EOF
     
     chown -R live:users /home/live/.config/sway
 }
+create_sway_calamares_autostart() {
+    echo "LOG: Generowanie konfiguracji Sway dla uruchamiania Calamares"
+    # Przykładowa implementacja, dostosuj do swoich potrzeb
+    mkdir -p /home/live/.config/sway/config.d
+    cat <<EOF > /home/live/.config/sway/config.d/calamares
+    # autostart
+    exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR calamares
+EOF
+    
+    chown -R live:users /home/live/.config/sway
+}
 
 
 set_autologin() {
     echo "LOG: Generowanie skryptu uruchamiającego instalator Calamares dla profilu Installer (LiveCD)"
-    # Przykładowa implementacja, dostosuj do swoich potrzeb
-cat <<EOF >> /etc/greetd/config.toml
-[initial_session]
-command = "sway"
-user = "live"
-EOF
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat <<EOF > /etc/systemd/system/getty@tty1.service.d/override.conf
 [Service]
@@ -96,7 +101,7 @@ ExecStart=
 ExecStart=-/usr/sbin/agetty --autologin live --noclear %I linux
 EOF
 
-cat <<EOF > /home/live/.bash_profile
+cat <<EOF >> /home/live/.zshrc
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     exec sway
     # press any to reboot
@@ -143,33 +148,19 @@ setup_installer() {
     zypper clean -a
     set_autologin
     installer_polkit
-    create_sway_live_config
-}
-
-
-setup_target_rootfs() {
-    echo "LOG: Konfiguracja dla profilu TargetRootfs (docelowy system)"
-    systemctl set-default graphical.target
-    systemctl enable NetworkManager.service
-    systemctl enable systemd-timesyncd.service
-    systemctl enable getty@tty1.service
-    systemctl enable greetd.service
-    generate_repos_files
-    zypper clean -a
+    # create_sway_live_config
+    create_sway_calamares_autostart
+    
 }
 
 
 echo "LOG: Uruchamianie skryptu konfiguracyjnego KIWI..."
 echo "LOG: Aktywne profile: $kiwi_profiles"
 
-# Sprawdzamy profil główny (w dopasowaniu używamy * na wypadek wielu profili)
+# Sprawdzamy aktywny profil.
 case " $kiwi_profiles " in
     *" Installer "*)
         setup_installer
-        ;;
-
-    *" TargetRootfs "*)
-        setup_target_rootfs
         ;;
 
     *)
