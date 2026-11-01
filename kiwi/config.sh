@@ -81,10 +81,10 @@ ExecStart=-/usr/sbin/agetty --autologin live --noclear %I linux
 EOF
 
 cat <<EOF >> /home/live/.zshrc
-if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    exec sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+    systemctl --user start --wait vls-session.target
     # press any to reboot
-        read -n 1 -s -r -p "Press any key to reboot..."
+        read "?Press any key to reboot..."
         systemctl reboot
 fi
 EOF
