@@ -6,7 +6,7 @@
         <specification>Veles Linux</specification>
     </description>
 
-    <preferences profiles="Installer">
+    <preferences profiles="Live">
         <type
             image="iso"
             primary="true"
@@ -23,7 +23,7 @@
     </preferences>
 
     <profiles>
-        <profile name="Installer" description="Veles Linux Installer ISO" />
+        <profile name="Live" description="Veles Linux Installer ISO" />
     </profiles>
 
     <repository type="rpm-md" alias="veles" priority="1">
@@ -58,10 +58,15 @@
         <package name="zypper" />
     </packages>
     
-    <packages type="image" profiles="Installer" patternType="onlyRequired">
+    <packages type="image" profiles="Live" patternType="onlyRequired">
         <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
         <ignore name="busybox-sed" />
+        
+        <!-- base -->
+        <package name="veles-release" />
+        <package name="veles-base" />
+        <package name="zypper" />
         
         <!-- Live system -->
         <package name="dracut-kiwi-live" />
@@ -71,12 +76,10 @@
         <package name="gparted" />
         <package name="grub2" />
         <package name="grub2-x86_64-efi" />
-        <!-- Installer -->
-        <package name="veles-release" />
-        <package name="veles-base" />
+        <!-- Desktop -->
         <package name="plymouth" />
         <package name="plymouth-theme-veles" />
         <package name="veles-calamares-config" />
-        <package name="zypper" />
+        <package name="veles-desktop" />
     </packages>
 </image>

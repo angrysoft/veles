@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# systemctl enable getty@tty1.service
 
 generate_repos_files() {
     echo "LOG: Generowanie plików repozytoriów dla KIWI..."
@@ -59,26 +58,6 @@ EOF
     zypper --gpg-auto-import-keys refresh
 }
 
-create_sway_live_config() {
-    echo "LOG: Generowanie konfiguracji Sway dla profilu Installer (LiveCD)"
-    # Przykładowa implementacja, dostosuj do swoich potrzeb
-    mkdir -p /home/live/.config/sway
-    cat <<EOF > /home/live/.config/sway/config
-    # outputs
-    output * enable bg #19120c solid_color
-    
-    # no decorations
-    default_border none
-    hide_edge_borders both
-    
-    # disable mouse focus
-    focus_follows_mouse no
-    # autostart
-    exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR calamares
-EOF
-    
-    chown -R live:users /home/live/.config/sway
-}
 create_sway_calamares_autostart() {
     echo "LOG: Generowanie konfiguracji Sway dla uruchamiania Calamares"
     # Przykładowa implementacja, dostosuj do swoich potrzeb
@@ -110,61 +89,26 @@ if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
 fi
 EOF
 }
-
-
-installer_polkit() {
-    echo "LOG: Konfiguracja Polkit dla profilu Installer (LiveCD)"
-
-cat <<EOF > /etc/polkit-1/rules.d/49-calamares.rules
-polkit.addRule(function(action, subject) {
-    if (action.id === "org.freedesktop.systemd1.manage-units" &&
-        subject.user === "live") {
-        return polkit.Result.YES;
-    }
-});
-EOF
-}
  
+echo "LOG: Konfiguracja  (LiveCD)"
 
-setup_installer() {
-    echo "LOG: Konfiguracja dla profilu Installer (LiveCD)"
+systemctl set-default graphical.target
+systemctl enable NetworkManager.service
+systemctl enable getty@tty1.service
+systemctl enable systemd-timesyncd.service
+# systemctl enable greetd.service
 
-    systemctl set-default graphical.target
-    systemctl enable NetworkManager.service
-    systemctl enable getty@tty1.service
-    systemctl enable systemd-timesyncd.service
-    # systemctl enable greetd.service
+# --- BEZPIECZNE WYŁĄCZENIE SNAPPERA DLA LIVE ISO ---
+echo "LOG: Wyłączanie usług Snappera dla środowiska Live"
+systemctl disable snapper-timeline.timer || true
+systemctl disable snapper-cleanup.timer || true
+systemctl disable snapper-boot.service || true
+# Czyszczenie domyślnych konfiguracji Snappera z obrazu live
+rm -rf /etc/snapper/configs/*
+# ----------------------------------------------------
 
-    # --- BEZPIECZNE WYŁĄCZENIE SNAPPERA DLA LIVE ISO ---
-    echo "LOG: Wyłączanie usług Snappera dla środowiska Live"
-    systemctl disable snapper-timeline.timer || true
-    systemctl disable snapper-cleanup.timer || true
-    systemctl disable snapper-boot.service || true
-    # Czyszczenie domyślnych konfiguracji Snappera z obrazu live
-    rm -rf /etc/snapper/configs/*
-    # ----------------------------------------------------
-
-    generate_repos_files
-    zypper clean -a
-    set_autologin
-    installer_polkit
-    # create_sway_live_config
-    create_sway_calamares_autostart
-    
-}
-
-
-echo "LOG: Uruchamianie skryptu konfiguracyjnego KIWI..."
-echo "LOG: Aktywne profile: $kiwi_profiles"
-
-# Sprawdzamy aktywny profil.
-case " $kiwi_profiles " in
-    *" Installer "*)
-        setup_installer
-        ;;
-
-    *)
-        echo "WAR: Nie rozpoznano profilu lub budowany jest profil domyślny!"
-        ;;
-esac
-exit 0
+generate_repos_files
+zypper clean -a
+set_autologin
+installer_polkit
+create_sway_calamares_autostart

@@ -7,7 +7,7 @@
 #
 
 Name:           veles-calamares-config
-Version:        0.1.1
+Version:        0.2.0
 Release:        1
 Summary:        Minimalistyczna konfiguracja i branding Calamares dla Veles Linux
 License:        GPL-3.0-or-later
@@ -38,6 +38,10 @@ Source7:        veles-logo.png
 Source8:        welcome.png
 Source9:        keyboard.conf
 Source10:       show.qml
+Source11:       calamares.rulesa
+Source12:       removeuser.conf
+Source13:       packages.conf
+Source14:       shellprocess.conf
 
 BuildArch:      noarch
 
@@ -60,7 +64,11 @@ install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/calamares/modules/bootloade
 install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/calamares/modules/partition.conf
 install -m 644 %{SOURCE9} %{buildroot}%{_sysconfdir}/calamares/modules/keyboard.conf
 install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.conf
+install -m 644 %{SOURCE12} %{buildroot}%{_sysconfdir}/calamares/modules/removeuser.conf
+install -m 644 %{SOURCE13} %{buildroot}%{_sysconfdir}/calamares/modules/packages.conf
+install -m 644 %{SOURCE14} %{buildroot}%{_sysconfdir}/calamares/modules/shellprocess.conf
 install -Dm 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/calamares/branding/veles/show.qml
+install -Dm 644 %{SOURCE11} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/49-calamares.rules
 
 # Branding and styling
 install -Dm 644 %{SOURCE5} %{buildroot}%{_sysconfdir}/calamares/branding/veles/branding.desc
@@ -82,11 +90,15 @@ install -m 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/calamares/branding/veles/we
 %{_sysconfdir}/calamares/modules/partition.conf
 %{_sysconfdir}/calamares/modules/keyboard.conf
 %{_sysconfdir}/calamares/modules/users.conf
+%{_sysconfdir}/calamares/modules/removeuser.conf
+%{_sysconfdir}/calamares/modules/packages.conf
+%{_sysconfdir}/calamares/modules/shellprocess.conf
 %{_sysconfdir}/calamares/branding/veles/branding.desc
 %{_sysconfdir}/calamares/branding/veles/show.qml
 %{_sysconfdir}/calamares/branding/veles/stylesheet.qss
 %{_sysconfdir}/calamares/branding/veles/veles-logo.png
 %{_sysconfdir}/calamares/branding/veles/welcome.png
+%{_sysconfdir}/polkit-1/rules.d/49-calamares.rules
 
 
 %changelog

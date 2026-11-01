@@ -1,6 +1,6 @@
 Name: vls-shell
 Version: 0.1.0
-Release: 10
+Release: 12
 Summary: VLS shell package
 License: Apache-2.0
 Group:          System/GUI/Other
@@ -34,6 +34,7 @@ install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/veles-shell-loc
 %files
 %{_bindir}/vlsmsg
 %{_datadir}/vls-shell/
+%{_datadir}/pixmaps/
 %{_datadir}/applications/
 %{_datadir}/wallpapers/
 %{_sysconfdir}/pam.d/veles-shell-lock

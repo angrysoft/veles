@@ -19,23 +19,6 @@ check_root() {
     fi
 }
 
-gen_polkit_helper() {
-    echo "LOG: Generowanie pliku reguł Polkit dla Calamares"
-cat <<EOF >${SCRIPT_DIR}/49-run0-cache.rules
-polkit.addRule(function(action, subject) {
-       if (action.id == "org.freedesktop.systemd1.manage-units" || 
-           action.id == "org.freedesktop.policykit.exec") {
-           if (subject.isInGroup("wheel")) {
-               return polkit.Result.AUTH_ADMIN_KEEP;
-           }
-       }
-   });
-EOF
-cp "${SCRIPT_DIR}/49-run0-cache.rules" /etc/polkit-1/rules.d/
-}
-
-# gen_polkit_helper
-
 check_root
 
 echo "=== KROK 1: Czyszczenie starych plików budowy ==="
@@ -43,31 +26,12 @@ $RM "${PROJECT_DIR}"
 $RM "${SCRIPT_DIR}/root"
 $MKDIR "${TARGET_BUILD_DIR}" "${LIVE_BUILD_DIR}" "${OVERLAY_IMG_DIR}"
 
-ROOTFS_CONFIG="${PROJECT_DIR}/config-rootfs.xml"
-sed '0,/image="iso"/s//image="squashfs"/' "${SCRIPT_DIR}/config.xml" > "${ROOTFS_CONFIG}"
-if ! grep -q 'image="squashfs"' "${ROOTFS_CONFIG}"; then
-    echo "Nie udało się przygotować konfiguracji KIWI dla systemu docelowego."
-    exit 1
-fi
-
-echo "=== KROK 2: Budowanie obrazu systemu docelowego (.squashfs) ==="
-kiwi-ng --kiwi-file "${ROOTFS_CONFIG}" --profile=Installer system build \
+echo "=== KROK 2: Budowanie obrazu systemu docelowego ==="
+kiwi-ng --type ise system build \
     --description "." \
     --target-dir "${TARGET_BUILD_DIR}"
 
 GENERATED_IMG=$(ls "${TARGET_BUILD_DIR}"/*.squashfs | head -n 1)
-
-echo "=== KROK 3: Kopiowanie obrazu do struktury overlay ==="
-echo "Kopiuję: ${GENERATED_IMG}"
-echo "Do: ${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
-
-# Kopiujemy pod stałą nazwą, którą wcześniej wpisaliśmy do unpackfs.conf
-$CP "${GENERATED_IMG}" "${OVERLAY_IMG_DIR}/system-rootfs.squashfs"
-
-echo "=== KROK 4: Budowanie profilu Installer (LiveISO) ==="
-kiwi-ng --profile=Installer system build \
-    --description "." \
-    --target-dir "${LIVE_BUILD_DIR}"
 
 echo "================================================="
 echo "SUKCES! Twój instalacyjny obraz ISO znajduje się w:"
