@@ -1,6 +1,6 @@
 Name: vls-shell
 Version: 0.1.0
-Release: 13
+Release: 14
 Summary: VLS shell package
 License: Apache-2.0
 Group:          System/GUI/Other
