@@ -55,14 +55,14 @@
     </packages>
     
     <packages type="image" patternType="onlyRequired">
-        <ignore name="busybox-coreutils" />
+        <!-- <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
-        <ignore name="busybox-sed" />
+        <ignore name="busybox-sed" /> -->
         
         <!-- base -->
-        <package name="veles-release" />
+        <!-- <package name="veles-release" />
         <package name="veles-base" />
-        <package name="zypper" />
+        <package name="zypper" /> -->
         
         <!-- Live system -->
         <package name="dracut-kiwi-live" />
