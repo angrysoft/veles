@@ -42,6 +42,7 @@ Source11:       calamares.rules
 Source12:       removeuser.conf
 Source13:       packages.conf
 Source14:       shellprocess.conf
+Source15:       welcome.conf
 
 BuildArch:      noarch
 
@@ -67,6 +68,7 @@ install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/calamares/modules/users.con
 install -m 644 %{SOURCE12} %{buildroot}%{_sysconfdir}/calamares/modules/removeuser.conf
 install -m 644 %{SOURCE13} %{buildroot}%{_sysconfdir}/calamares/modules/packages.conf
 install -m 644 %{SOURCE14} %{buildroot}%{_sysconfdir}/calamares/modules/shellprocess.conf
+install -m 644 %{SOURCE15} %{buildroot}%{_sysconfdir}/calamares/modules/welcome.conf
 install -Dm 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/calamares/branding/veles/show.qml
 install -Dm 644 %{SOURCE11} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/49-calamares.rules
 
@@ -95,6 +97,7 @@ install -m 644 %{SOURCE8} %{buildroot}%{_sysconfdir}/calamares/branding/veles/we
 %{_sysconfdir}/calamares/modules/removeuser.conf
 %{_sysconfdir}/calamares/modules/packages.conf
 %{_sysconfdir}/calamares/modules/shellprocess.conf
+%{_sysconfdir}/calamares/modules/welcome.conf
 %{_sysconfdir}/calamares/branding/veles/branding.desc
 %{_sysconfdir}/calamares/branding/veles/show.qml
 %{_sysconfdir}/calamares/branding/veles/stylesheet.qss
