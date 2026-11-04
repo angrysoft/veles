@@ -6,7 +6,7 @@
 
 Name:           magicq
 Version:        1.9.8.3
-Release:        14
+Release:        15
 Summary:        Lighting control software from ChamSys
 License:        custom
 URL:            https://chamsyslighting.com/products/magicq
@@ -37,12 +37,15 @@ Lighting control software from ChamSys for professional stage and event producti
 # 
 
 %install
-install -D -m 755 %{SOURCE0} %{buildroot}%{_bindir}/magicq-installer.sh
-install -D -m 755 %{SOURCE1} %{buildroot}%{_bindir}/magicq-uninstaller.sh
+install -d %{buildroot}%{_bindir}
+install  -m 755 %{SOURCE0} %{buildroot}%{_bindir}/magicq-installer.sh
+install  -m 755 %{SOURCE1} %{buildroot}%{_bindir}/magicq-uninstaller.sh
 
-%post -p %{_bindir}/magicq-installer.sh
+%post
+/usr/bin/magicq-installer.sh
 
-%postun -p %{_bindir}/magicq-uninstaller.sh
+%postun
+ /usr/bin/magicq-uninstaller.sh
 
 %files
 %{_bindir}/magicq-installer.sh
