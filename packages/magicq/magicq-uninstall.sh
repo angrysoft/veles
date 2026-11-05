@@ -14,4 +14,7 @@ rm -f /usr/share/pixmaps/magichd.png
 rm -f /usr/share/pixmaps/magicq.png
 rm -f /usr/share/pixmaps/magicvis.png
 
-update-mime-database /usr/share/mime
+if command -v update-mime-database >/dev/null 2>&1; then
+    update-mime-database /usr/share/mime || true
+fi
+exit 0

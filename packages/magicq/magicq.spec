@@ -2,20 +2,22 @@
 # spec file for package magicq
 #
 
-%define _pkgver 1_9_8_3
 
 Name:           magicq
 Version:        1.9.8.3
-Release:        15
+Release:        22
 Summary:        Lighting control software from ChamSys
 License:        custom
 URL:            https://chamsyslighting.com/products/magicq
 Source0:        magicq-installer.sh
-Source1:        magicq-uninstaller.sh
+Source1:        magicq-uninstall.sh
 
 ExclusiveArch:  x86_64
-BuildRequires:  tar
-BuildRequires:  binutils
+BuildRequires:   curl
+Requires:       tar
+Requires:       binutils
+Requires:       curl
+Requires:       shared-mime-info
 Requires:       alsa
 Requires:       libjack0
 Requires:       gstreamer-plugins-base
@@ -38,15 +40,15 @@ Lighting control software from ChamSys for professional stage and event producti
 
 %install
 install -d %{buildroot}%{_bindir}
-install  -m 755 %{SOURCE0} %{buildroot}%{_bindir}/magicq-installer.sh
-install  -m 755 %{SOURCE1} %{buildroot}%{_bindir}/magicq-uninstaller.sh
+install -m 755 %{SOURCE0} %{buildroot}%{_bindir}/magicq-installer.sh
+install -m 755 %{SOURCE1} %{buildroot}%{_bindir}/magicq-uninstall.sh
 
 %post
-/usr/bin/magicq-installer.sh
+/usr/bin/magicq-installer.sh || echo "magicq download/install failed; rerun /usr/bin/magicq-installer.sh" >&2
 
 %postun
- /usr/bin/magicq-uninstaller.sh
+/usr/bin/magicq-uninstall.sh || :
 
 %files
-%{_bindir}/magicq-installer.sh
-%{_bindir}/magicq-uninstaller.sh
+%{_bindir}/magicq-installer.sh              
+%{_bindir}/magicq-uninstall.sh
