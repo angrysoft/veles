@@ -17,6 +17,7 @@ Group:          System/Management
 Requires:       calamares
 Requires:       calamares-lang
 Requires:       cantarell-fonts
+Requires:       ckbcomp
 Requires:       sway
 Requires:       polkit
 

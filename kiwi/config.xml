@@ -45,25 +45,16 @@
         />
     </users>
     <packages type="bootstrap">
-        <ignore name="busybox-coreutils" />
+        <!-- <ignore name="busybox-coreutils" />
         <ignore name="busybox-util-linux" />
-        <ignore name="busybox-sed" />
+        <ignore name="busybox-sed" /> -->
         <package name="veles-release" />
         <package name="veles-base" />
         <!-- temporary -->
         <package name="zypper" />
     </packages>
     
-    <packages type="image" patternType="onlyRequired">
-        <!-- <ignore name="busybox-coreutils" />
-        <ignore name="busybox-util-linux" />
-        <ignore name="busybox-sed" /> -->
-        
-        <!-- base -->
-        <!-- <package name="veles-release" />
-        <package name="veles-base" />
-        <package name="zypper" /> -->
-        
+    <packages type="image" patternType="onlyRequired">  
         <!-- Live system -->
         <package name="dracut-kiwi-live" />
         <package name="cpio" />
