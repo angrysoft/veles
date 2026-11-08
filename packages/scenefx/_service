@@ -1,0 +1,6 @@
+<services>
+  <service name="download_url">
+    <param name="url">https://codeload.github.com/wlrfx/scenefx/tar.gz/refs/tags/0.5</param>
+    <param name="filename">scenefx-0.5.tar.gz</param>
+  </service>
+</services>

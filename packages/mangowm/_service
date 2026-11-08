@@ -1,0 +1,6 @@
+<services>
+  <service name="download_url">
+    <param name="url">https://github.com/mangowm/mango/archive/refs/tags/0.18.5.tar.gz</param>
+    <param name="filename">mango-0.18.5.tar.gz</param>
+  </service>
+</services>

@@ -1,6 +1,6 @@
 Name: vls-shell
-Version: 0.1.0
-Release: 17
+Version: 0.2.0
+Release: 1
 Summary: VLS shell package
 License: Apache-2.0
 Group:          System/GUI/Other
@@ -11,7 +11,8 @@ Source1:        veles-shell-lock.pam
 BuildRequires:  go
 BuildRequires:  make
 
-Requires:  sway
+Requires:  mangowm
+Requires:  wlopm
 Requires:  quickshell
 Requires:  upower
 Requires:  upower-lang
